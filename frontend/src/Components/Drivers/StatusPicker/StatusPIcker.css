@@ -1,0 +1,55 @@
+﻿.statusContainer{
+    display: flex;
+    justify-content: center;
+}
+
+.status{
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 95%;
+
+    width: 83px;
+}
+
+.status > *{
+    display: flex;
+    justify-content: center;
+
+    position: relative;
+    top: -1px;
+}
+
+.bordered{
+    cursor: pointer;
+    box-shadow: var(--box-shadow);
+}
+
+.bordered > *{
+    margin-right: 15px;
+}
+
+.active{
+    background-color: #cfe8d0;
+    color: #75c178;
+}
+
+.inactive{
+    background-color: #f3cdca;
+    color: #cb6961;
+}
+
+.atwork{
+    background-color: #f1e8ac;
+    color: #bbae5a;
+}
+
+.opened{
+    color: rgba(0,0,0,0.4)
+}
+
+.arrow{
+    position: absolute;
+    right: -9px;
+    top: 3px;
+    transition: 150ms;
+}

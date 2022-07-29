@@ -1,0 +1,28 @@
+﻿.navbar > ul {
+    /*background-color: #edf2fd;*/
+    background-color: #f5f5f5;
+    margin: 0;
+    overflow: hidden;
+    padding-inline: 25px;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.164);
+}
+
+.navbar__h1 {
+    float: left;
+    padding-inline: 10px;
+    line-height: 8px;
+}
+
+.navbar__h1 > a {
+    padding-inline: 10px;
+    text-decoration: none;
+    /*color: darkslateblue;*/
+    color: black;
+    font-weight: 600;
+    font-size: 15px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.right {
+    float: right;
+}

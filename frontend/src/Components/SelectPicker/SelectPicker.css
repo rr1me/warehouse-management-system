@@ -1,0 +1,63 @@
+﻿.devContainer{
+    /*height: 100vh;*/
+    /*width: 100vw;*/
+    display: flex;
+    /*align-items: center;*/
+    /*justify-content: center;*/
+}
+
+.selectPicker{
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 5px;
+
+    padding: 8px 12px;
+
+    display: flex;
+    /*width: 20vw;*/
+}
+
+.selectPickerContent{
+    cursor:default;
+    position: relative;
+    /*bottom:0.5px;*/
+    /*width: 50vw;*/
+}
+.selectPickerContent > * {
+    
+}
+
+.selectPicker > *{
+    /*margin-top: -4px;*/
+}
+
+/*.controls{*/
+/*    !*pad*!*/
+/*    color: rgba(0,0,0,0.4);*/
+/*    position: relative;*/
+/*    top: 2pt;*/
+/*    left: 1px;*/
+/*    transition: 150ms;*/
+/*}*/
+/*.bright{*/
+/*    color: rgba(0,0,0,0.4)*/
+/*}*/
+/*.dark{*/
+/*    color: rgba(0,0,0,1)*/
+/*}*/
+
+.separator{
+    transform: rotate(90deg) scaleX(200%) scaleY(40%);
+    /*margin-left: 10px;*/
+    color: rgba(0,0,0,0.4)
+}
+
+.closingElement{
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+}
