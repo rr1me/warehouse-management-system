@@ -1,11 +1,11 @@
-﻿import './StatusPIcker.css'
+﻿import './StatusPicker.css'
 import RelativeModal from "../../RelativeModal/RelativeModal";
 import {memo, useEffect, useState} from "react";
 import {IoIosArrowDown} from "react-icons/io";
 import {useDispatch} from "react-redux";
 import {setDriverStatus} from "../../../redux/Slices/driversSlice";
 
-const StatusPicker = memo(({status, editing, driverId}) => {
+const StatusPicker = memo(({status, editing, index}) => {
     
     const [statusModalOpened, setStatusModalOpened] = useState(false);
     
@@ -39,7 +39,7 @@ const StatusPicker = memo(({status, editing, driverId}) => {
                 if (editing){
                     setStatusModalOpened(value => !value)
                 }else if(modalOpened){
-                    dispatch(setDriverStatus({id: driverId, status: status}))
+                    dispatch(setDriverStatus({id: index, status: status}))
                 }
             }}>
                 <div>
@@ -61,7 +61,7 @@ const StatusPicker = memo(({status, editing, driverId}) => {
                 <Status status={status} editing={editing} modalOpened={statusModalOpened}/>
             </div>
             {statusModalOpened && editing ?
-                <RelativeModal id='relativeModal'>
+                <RelativeModal doubleWrap={true} id='relativeModal' modalStyle={{top: '3px', right: '3px'}} itemClassname='interactive'>
                     {getListOfStatuses()}
                 </RelativeModal> : null}
         </div>

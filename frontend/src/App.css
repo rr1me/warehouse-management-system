@@ -2,16 +2,9 @@
   display: inline-block;
   user-select: none;
   border: 1px solid transparent;
-  padding: 0.5rem 0.75rem;
-  font-size: 1.2rem;
-  line-height: 1.25;
   border-radius: 0.25rem;
-  transition: all .15s ease-in-out;
+  transition: all .05s ease-in-out;
   color: #fff;
-}
-
-.edit-btn:hover {
-  background-color: #0069d9;
 }
 
 .btn:active {
@@ -24,4 +17,20 @@
 
 .delete-btn {
   background: #d74646;
+}
+
+.edit-btn:hover {
+  background-color: #0069d9;
+}
+
+.delete-btn:hover{
+  background: #c54141;
+}
+
+.apply-btn{
+  background: #0dce0d;
+}
+
+.apply-btn:hover{
+  background: #0cb90c;
 }

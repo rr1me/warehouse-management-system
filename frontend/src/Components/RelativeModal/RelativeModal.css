@@ -1,25 +1,10 @@
 ﻿.relativeModal{
     box-shadow: 0 0 4px rgba(0,0,0, 0.3);
     position: relative;
-    top: 3px;
-    right: 3px;
-    /*margin-top:15px;*/
     border-radius: 5px;
-    /*padding: 5px 10px;*/
     background-color: white;
-    /*left: -11px;*/
 }
 
-.relativeModal > * {
-    cursor: pointer;
-    
-    border-radius: 5px;
-    padding: 3px 5px;
-}
-.relativeModal > *:hover{
-    background-color: #f1f1f1;
-}
-
-.absolute{
-    position:absolute;
-}
+/*.absolute{*/
+/*    position:absolute;*/
+/*}*/

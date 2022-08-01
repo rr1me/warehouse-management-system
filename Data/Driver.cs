@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text.Json.Serialization;
 using WebApplication1.Data.Properties;
 
@@ -11,6 +12,11 @@ public class Driver
 {
     public Driver()
     {
+    }
+
+    public Driver(int id)
+    {
+        Id = id;
     }
 
     public Driver(string name, long phoneNumber, DriverStatus status, List<Cargo>? cargoes, User? user)
@@ -35,4 +41,5 @@ public class Driver
     [JsonIgnore]public User? User { get; set; }
     
     public string Image { get; set; }
+    [NotMapped][JsonIgnore] public string ImageSrc { get; set; }
 }

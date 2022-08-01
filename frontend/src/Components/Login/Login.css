@@ -50,6 +50,10 @@
 .signIn > .btn {
     margin-top: 30px;
     height: 45px;
+    
+    padding: 0.5rem 0.75rem;
+    font-size: 1.2rem;
+    line-height: 1.25;
 }
 
 .signIn > .error{

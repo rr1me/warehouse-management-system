@@ -1,8 +1,23 @@
 ﻿.gridContainer{
-    padding-top: 50px;
+    padding-top: 25px;
     padding-inline: 15vw;
     grid-template-columns: repeat(auto-fit, 250px);
     justify-content: center;
     display: grid;
     gap: 40px;
+}
+
+.driversGridOperations{
+    grid-column: 1/-1;
+    display: flex;
+    justify-content: space-between;
+    
+    margin-bottom: -15px;
+}
+
+.driversGridOperations > * {
+    padding: 6px 12px;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: "Poppins", sans-serif;
 }

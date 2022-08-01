@@ -1,9 +1,5 @@
 ﻿.devContainer{
-    /*height: 100vh;*/
-    /*width: 100vw;*/
     display: flex;
-    /*align-items: center;*/
-    /*justify-content: center;*/
 }
 
 .selectPicker{
@@ -14,41 +10,15 @@
     padding: 8px 12px;
 
     display: flex;
-    /*width: 20vw;*/
 }
 
 .selectPickerContent{
     cursor:default;
     position: relative;
-    /*bottom:0.5px;*/
-    /*width: 50vw;*/
 }
-.selectPickerContent > * {
-    
-}
-
-.selectPicker > *{
-    /*margin-top: -4px;*/
-}
-
-/*.controls{*/
-/*    !*pad*!*/
-/*    color: rgba(0,0,0,0.4);*/
-/*    position: relative;*/
-/*    top: 2pt;*/
-/*    left: 1px;*/
-/*    transition: 150ms;*/
-/*}*/
-/*.bright{*/
-/*    color: rgba(0,0,0,0.4)*/
-/*}*/
-/*.dark{*/
-/*    color: rgba(0,0,0,1)*/
-/*}*/
 
 .separator{
     transform: rotate(90deg) scaleX(200%) scaleY(40%);
-    /*margin-left: 10px;*/
     color: rgba(0,0,0,0.4)
 }
 

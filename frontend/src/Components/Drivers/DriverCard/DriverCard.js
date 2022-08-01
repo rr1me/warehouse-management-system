@@ -1,20 +1,44 @@
 ﻿import './DriverCard.css'
-import {memo} from "react";
+import {memo, useEffect, useState} from "react";
 import {AiFillDelete, AiFillEdit, AiOutlineCheck, AiOutlinePhone} from "react-icons/ai";
 import {GiCargoShip} from "react-icons/gi";
-import {changeEdit, setDriverName, setDriverPhoneNumber} from "../../../redux/Slices/driversSlice";
+import {changeEdit, driverToDelete, setDriverName, setDriverPhoneNumber} from "../../../redux/Slices/driversSlice";
 import {useDispatch} from "react-redux";
 import Editable from "../../ULTable/Editable";
 import {Link} from "react-router-dom";
 import StatusPicker from "../StatusPicker/StatusPicker";
+import RelativeModal from "../../RelativeModal/RelativeModal";
 
-const DriverCard = memo(({driver, driverId}) => {
+const DriverCard = memo(({driver, index}) => {
+    
+    useEffect(() => {
+        const closeDp = e => {
+            if (e.composedPath()[0].id !== 'deleteModal'){
+                setDeleting(false);
+            }
+        }
+        
+        document.body.addEventListener('click', closeDp);
+        
+        return () => document.body.removeEventListener('click', closeDp);
+    })
+    
+    const [deleting, setDeleting] = useState(false);
     
     const dispatch = useDispatch();
     
     const handleEditClick = () => {
-        dispatch(changeEdit(driverId));
+        dispatch(changeEdit(index));
     };
+    
+    const handleYesDelete = () => {
+        dispatch(driverToDelete(driver.id));
+        setDeleting(false);
+    };
+    
+    const handleNoDelete = () => {
+        setDeleting(false);
+    }
     
     const getOperations = () => {
         return (
@@ -22,34 +46,45 @@ const DriverCard = memo(({driver, driverId}) => {
                 <button className='operation' onClick={handleEditClick}>
                     {driver.editing ? icons.check : icons.edit}
                 </button>
-                <button className='operation' onClick={() => {
+                <button className='operation' onClick={e => {
+                    e.stopPropagation();
+                    setDeleting(value => !value)
                 }}>
                     {icons.delete}
                 </button>
+                {deleting ? <RelativeModal doubleWrap={false} id='deleteModal' 
+                                           modalStyle={{padding: '3px 6px', width: '140px', textAlign: 'center', top: '30px', right: '65px'}} 
+                                           onClick={e => e.stopPropagation()}>
+                    <div>Are you sure you want to delete this?</div>
+                    <div className='deleteOperations'>
+                        <button className='btn apply-btn' onClick={handleYesDelete}>Yes</button>
+                        <button className='btn delete-btn' onClick={handleNoDelete}>No</button>
+                    </div>
+                </RelativeModal> : null}
             </div>
         )
     };
     
     const handleNameInput = e => {
-        dispatch(setDriverName({id: driverId, name: e.target.value}))
+        dispatch(setDriverName({id: index, name: e.target.value}))
     };
     
     const handlePhoneNumberInput = e => {
         const value = e.target.value;
         if (/\d/.test(value.slice(-1)))
-            dispatch(setDriverPhoneNumber({id: driverId, phoneNumber: value}));
+            dispatch(setDriverPhoneNumber({id: index, phoneNumber: value}));
     };
     
     return (
-        <div key={driverId} className='item'>
+        <div key={index} className='item'>
             <div className='name'>
                 <Editable state={driver.editing}>
                     <input className='col-input name' value={driver.name} onChange={handleNameInput}/>
                 </Editable>
             </div>
-            <img src={driver.image} alt='pic'/>
+            <img src={driver.imageSrc} alt='pic'/>
             <div className='side'>
-                <StatusPicker status={driver.status} editing={driver.editing} driverId={driverId}/>
+                <StatusPicker status={driver.status} editing={driver.editing} index={index}/>
                 {getOperations()}
             </div>
             <div className='about'>
