@@ -18,7 +18,6 @@ const DriversGrid = memo(() => {
                 value.editing = false;
                 return value
             }).sort((a, b) => a.id - b.id);
-            console.log(drivers);
             dispatch(setAllDrivers(drivers));
         });
     }, [dispatch]);

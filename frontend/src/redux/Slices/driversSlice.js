@@ -3,36 +3,24 @@ import {createAsyncThunk, createSlice, current} from "@reduxjs/toolkit";
 
 export const changeEditWithReq = createAsyncThunk(
     'driversSlice/setIdForAddedDriver',
-    async (id : number, {dispatch, getState}) => {
+    async (id : number, {dispatch, getState, rejectWithValue}) => {
         dispatch(changeEdit(id));
         const state = getState().driversSlice;
 
         const changed = state.drivers[id].changed;
         if(changed) {
-            const driver = state.drivers[id];
-            if (!driver.isNew){
-                updateDriver(driver).then(r => console.log(r));
+            const driver = {...state.drivers[id]};
+            
+            if (driver.isNew){
+                const {r:data} = await addDriver(driver);
+                return {driverIndex: id, driverId: data};
             }
-            else{
-                console.log("?")
-                // addDriver(current(driver));
-                const r = await addDriver(driver);
-                console.log(r);
-                
-                return {driverIndex: id, driverId: r.data};
-            }
+            
+            updateDriver(driver).then(r => console.log(r));
         }
+        return rejectWithValue(id);
     }
 );
-
-// export const testthunk = createAsyncThunk(
-//     'driversSlice/setIdForAddedDriver',
-//     async (id, thunkAPI) => {
-//         const gamno = thunkAPI.getState().driversSlice;
-//         console.log(gamno)
-//         console.log(id)
-//     }
-// )
 
 const driversSlice = createSlice({
     name: 'driversSlice',
@@ -69,17 +57,6 @@ const driversSlice = createSlice({
             }else if(driverEdit){
                 state.editing = false;
                 state.drivers[id].editing = false;
-
-                // const changed = state.drivers[id].changed;
-                // if(changed){
-                //     const driver = state.drivers[id];
-                //     if (!driver.isNew)
-                //         updateDriver(current(driver)).then(r => console.log(r));
-                //     else{
-                //         addDriver(current(driver));
-                //         delete state.drivers[id].isNew;
-                //     }
-                // }
             }
         },
         driverToDelete(state, action) {
@@ -97,16 +74,19 @@ const driversSlice = createSlice({
         addEmptyDriver(state){
             state.editing = true;
             state.drivers.unshift({name: '', phoneNumber: '', status:3, cargoes: null, image: "250x250.png", imageSrc: "http://localhost:5000/Images/250x250.png", editing: true, isNew:true});
-        }
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(changeEditWithReq.fulfilled, (state, action) => {
-            console.log(action);
             const driverIndex = action.payload.driverIndex;
             const driverId = action.payload.driverId;
 
             state.drivers[driverIndex].id = driverId;
             delete state.drivers[driverIndex].isNew;
+            delete state.drivers[driverIndex].changed;
+        }).addCase(changeEditWithReq.rejected, (state, action) => {
+            const driverIndex = action.payload;
+            delete state.drivers[driverIndex].changed;
         });
     }
 });

@@ -41,10 +41,10 @@ public class DriverController : ControllerBase
     [HttpDelete("delete/{id}")]
     public IActionResult DeleteOneDriver(int id)
     {
-        Console.WriteLine("to delete: "+id);
-        
         context.Drivers.Remove(new Driver(id));
         context.SaveChanges();
+
+        Console.WriteLine("to delete: "+id);
         
         return Ok("deleted");
     }
