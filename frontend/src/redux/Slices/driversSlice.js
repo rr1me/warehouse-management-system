@@ -1,5 +1,38 @@
-﻿import {createSlice, current} from "@reduxjs/toolkit";
-import {addDriver, deleteDriver, updateDriver} from "../../Services/DriversService";
+﻿import {addDriver, deleteDriver, updateDriver} from "../../Services/DriversService";
+import {createAsyncThunk, createSlice, current} from "@reduxjs/toolkit";
+
+export const changeEditWithReq = createAsyncThunk(
+    'driversSlice/setIdForAddedDriver',
+    async (id : number, {dispatch, getState}) => {
+        dispatch(changeEdit(id));
+        const state = getState().driversSlice;
+
+        const changed = state.drivers[id].changed;
+        if(changed) {
+            const driver = state.drivers[id];
+            if (!driver.isNew){
+                updateDriver(driver).then(r => console.log(r));
+            }
+            else{
+                console.log("?")
+                // addDriver(current(driver));
+                const r = await addDriver(driver);
+                console.log(r);
+                
+                return {driverIndex: id, driverId: r.data};
+            }
+        }
+    }
+);
+
+// export const testthunk = createAsyncThunk(
+//     'driversSlice/setIdForAddedDriver',
+//     async (id, thunkAPI) => {
+//         const gamno = thunkAPI.getState().driversSlice;
+//         console.log(gamno)
+//         console.log(id)
+//     }
+// )
 
 const driversSlice = createSlice({
     name: 'driversSlice',
@@ -36,28 +69,45 @@ const driversSlice = createSlice({
             }else if(driverEdit){
                 state.editing = false;
                 state.drivers[id].editing = false;
-                
-                const changed = state.drivers[id].changed;
-                
-                if(changed){
-                    const driver = state.drivers[id];
-                    if (driver.id !== 0)
-                        updateDriver(current(driver)).then(r => console.log(r));
-                    else
-                        addDriver(current(driver)).then(r => console.log(r));
-                }
+
+                // const changed = state.drivers[id].changed;
+                // if(changed){
+                //     const driver = state.drivers[id];
+                //     if (!driver.isNew)
+                //         updateDriver(current(driver)).then(r => console.log(r));
+                //     else{
+                //         addDriver(current(driver));
+                //         delete state.drivers[id].isNew;
+                //     }
+                // }
             }
         },
         driverToDelete(state, action) {
-            const id = action.payload;
-            console.log(id);
-            state.drivers = state.drivers.filter(x => x.id !== id);
-            deleteDriver(id).then(r => console.log(r));
+            const indexId = action.payload.index;
+            const driverId = action.payload.id
+            
+            const isNew = state.drivers[indexId].isNew;
+            
+            state.drivers = state.drivers.filter((value, index) => {
+                return index !== indexId;
+            });
+            if (isNew === undefined)
+                deleteDriver(driverId).then(r => console.log(r));
         },
         addEmptyDriver(state){
             state.editing = true;
-            state.drivers.unshift({name: '', phoneNumber: '', status:3, cargoes: null, image: "250x250.png", imageSrc: "http://localhost:5000/Images/250x250.png", editing: true});
+            state.drivers.unshift({name: '', phoneNumber: '', status:3, cargoes: null, image: "250x250.png", imageSrc: "http://localhost:5000/Images/250x250.png", editing: true, isNew:true});
         }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(changeEditWithReq.fulfilled, (state, action) => {
+            console.log(action);
+            const driverIndex = action.payload.driverIndex;
+            const driverId = action.payload.driverId;
+
+            state.drivers[driverIndex].id = driverId;
+            delete state.drivers[driverIndex].isNew;
+        });
     }
 });
 

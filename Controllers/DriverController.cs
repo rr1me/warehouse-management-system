@@ -32,16 +32,20 @@ public class DriverController : ControllerBase
     {
         context.Drivers.Update(driver);
         context.SaveChanges();
-        Console.WriteLine(driver.Id);
+        
+        Console.WriteLine("to update: "+driver.Id);
+        
         return Ok("👍");
     }
 
     [HttpDelete("delete/{id}")]
     public IActionResult DeleteOneDriver(int id)
     {
-        Console.WriteLine(id);
+        Console.WriteLine("to delete: "+id);
+        
         context.Drivers.Remove(new Driver(id));
         context.SaveChanges();
+        
         return Ok("deleted");
     }
 
@@ -50,6 +54,9 @@ public class DriverController : ControllerBase
     {
         context.Drivers.Add(driver);
         context.SaveChanges();
-        return Ok("added");
+        
+        Console.WriteLine("to add: "+driver.Id);
+
+        return Ok(driver.Id);
     }
 }

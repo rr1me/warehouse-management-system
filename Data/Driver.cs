@@ -41,5 +41,5 @@ public class Driver
     [JsonIgnore]public User? User { get; set; }
     
     public string Image { get; set; }
-    [NotMapped][JsonIgnore] public string ImageSrc { get; set; }
+    [NotMapped] public string ImageSrc { get; set; }
 }

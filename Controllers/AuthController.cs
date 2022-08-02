@@ -9,22 +9,22 @@ public class AuthController : ControllerBase
 {
 
     private readonly JwtAuthManager _jwtAuthManager;
+    private readonly DatabaseContext context;
 
-    public AuthController(JwtAuthManager jwtAuthManager)
+    public AuthController(JwtAuthManager jwtAuthManager, DatabaseContext context)
     {
         _jwtAuthManager = jwtAuthManager;
+        this.context = context;
     }
 
     [HttpPost("register")]
     [Authorize(Policy = "Admin")]
     public IActionResult Register([FromBody] User user)
     {
-        using (DatabaseContext dbContext = new DatabaseContext())
-        {
-            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
-            dbContext.Users.Add(user);
-            dbContext.SaveChangesAsync();
-        }
+        user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+        context.Users.Add(user);
+        context.SaveChangesAsync();
+        
         return Ok("👍");
     }
 

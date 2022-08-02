@@ -2,7 +2,13 @@
 import {memo, useEffect, useState} from "react";
 import {AiFillDelete, AiFillEdit, AiOutlineCheck, AiOutlinePhone} from "react-icons/ai";
 import {GiCargoShip} from "react-icons/gi";
-import {changeEdit, driverToDelete, setDriverName, setDriverPhoneNumber} from "../../../redux/Slices/driversSlice";
+import {
+    changeEdit,
+    changeEditWithReq,
+    driverToDelete,
+    setDriverName,
+    setDriverPhoneNumber, testthunk
+} from "../../../redux/Slices/driversSlice";
 import {useDispatch} from "react-redux";
 import Editable from "../../ULTable/Editable";
 import {Link} from "react-router-dom";
@@ -28,11 +34,11 @@ const DriverCard = memo(({driver, index}) => {
     const dispatch = useDispatch();
     
     const handleEditClick = () => {
-        dispatch(changeEdit(index));
+        dispatch(changeEditWithReq(index));
     };
     
     const handleYesDelete = () => {
-        dispatch(driverToDelete(driver.id));
+        dispatch(driverToDelete({index: index, id: driver.id}));
         setDeleting(false);
     };
     

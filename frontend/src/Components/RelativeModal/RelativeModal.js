@@ -4,8 +4,8 @@ import {memo} from "react";
 const RelativeModal = memo(({doubleWrap, children, id, modalStyle, itemClassname, onClick}) => {
     console.log(children)
     return (
-        <div id={id} style={{position: 'absolute'}} onClick={onClick}>
-            <div className='relativeModal' style={modalStyle}>
+        <div id={id} style={{position: 'absolute'}}>
+            <div className='relativeModal' style={modalStyle} onClick={onClick}>
                 {doubleWrap ? (children.length > 1 ? children.map((value, index) => {
                     return (
                         <div key={index} className={itemClassname}>

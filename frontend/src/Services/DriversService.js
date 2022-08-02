@@ -13,11 +13,14 @@ export const deleteDriver = id => {
 }
 
 export const addDriver = driver => {
+    console.log("?add");
     return axios.post('api/drivers/add', prepare(driver));
 }
 
 const prepare = driver => {
+    delete driver.isNew;
     delete driver.editing;
     delete driver.changed;
+    
     return driver;
 }
