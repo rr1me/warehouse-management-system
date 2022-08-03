@@ -3,11 +3,10 @@ import {memo, useEffect, useState} from "react";
 import {AiFillDelete, AiFillEdit, AiOutlineCheck, AiOutlinePhone} from "react-icons/ai";
 import {GiCargoShip} from "react-icons/gi";
 import {
-    changeEdit,
     changeEditWithReq,
     driverToDelete,
     setDriverName,
-    setDriverPhoneNumber, testthunk
+    setDriverPhoneNumber
 } from "../../../redux/Slices/driversSlice";
 import {useDispatch} from "react-redux";
 import Editable from "../../ULTable/Editable";

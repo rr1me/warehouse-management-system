@@ -1,10 +1,9 @@
 import './App.css';
-import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 
 import Login from './Components/Login/Login';
 import Private from "./Components/PrivateRoute/PrivateRoute";
 import {PageNotFound} from "./Components/PageNotFound/PageNotFound";
-import {Drivers} from "./Components/Drivers/Drivers";
 import Cargoes from "./Components/Cargoes/Cargoes";
 import DriversGrid from "./Components/Drivers/DriversGrid";
 

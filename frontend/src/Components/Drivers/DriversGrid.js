@@ -1,11 +1,13 @@
 ﻿import './DriversGrid.css'
-import {memo, useEffect, useRef} from "react";
+import {memo, useEffect, useRef, useState} from "react";
 import {getDrivers} from "../../Services/DriversService";
 import {useDispatch, useSelector} from "react-redux";
 import {addEmptyDriver, setAllDrivers} from "../../redux/Slices/driversSlice";
 import DriverCard from "./DriverCard/DriverCard";
 
 const DriversGrid = memo(() => {
+    
+    const [filterOpen, setFilterOpen] = useState(false);
     
     const gridRef = useRef();
     
@@ -26,11 +28,15 @@ const DriversGrid = memo(() => {
         dispatch(addEmptyDriver());
     };
     
+    const handleFilterClick = () => {
+        setFilterOpen(value => !value);
+    }
+    
     return (
         <div className='gridContainer' ref={gridRef}>
             <div className='driversGridOperations'>
                 <button onClick={handleAddNewClick} className='btn apply-btn'>Add new</button>
-                <button onClick={handleAddNewClick} className='btn apply-btn'>Filter</button>
+                <button onClick={handleFilterClick} className='btn apply-btn'>Filter</button>
             </div>
             {drivers[0] !== undefined ? drivers.map((value, index) => {
                 return (
