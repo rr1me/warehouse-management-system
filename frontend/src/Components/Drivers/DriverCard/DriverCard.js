@@ -57,15 +57,16 @@ const DriverCard = memo(({driver, index}) => {
                 }}>
                     {icons.delete}
                 </button>
-                {deleting ? <RelativeModal doubleWrap={false} id='deleteModal' 
-                                           modalStyle={{padding: '3px 6px', width: '140px', textAlign: 'center', top: '30px', right: '65px'}} 
-                                           onClick={e => e.stopPropagation()}>
+                <RelativeModal state={deleting}
+                               doubleWrap={false} id='deleteModal'
+                               modalStyle={{padding: '3px 6px', width: '140px', textAlign: 'center', top: '30px', right: '65px'}}
+                               onClick={e => e.stopPropagation()}>
                     <div>Are you sure you want to delete this?</div>
                     <div className='deleteOperations'>
                         <button className='btn apply-btn' onClick={handleYesDelete}>Yes</button>
                         <button className='btn delete-btn' onClick={handleNoDelete}>No</button>
                     </div>
-                </RelativeModal> : null}
+                </RelativeModal>
             </div>
         )
     };

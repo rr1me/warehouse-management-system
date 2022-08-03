@@ -42,12 +42,12 @@ const SelectPicker = memo(({children, defaultValue}) => {
                 <div className='selectPickerContent'>
                     {/*{defaultValue}*/}
                     children
-                    {open ? <RelativeModal width={selectPickerRef.current.offsetWidth}>
+                    <RelativeModal state={open} width={selectPickerRef.current.offsetWidth}>
                         <div>children</div>
                         <div>children</div>
                         <div>children</div>
                         <div>children</div>
-                    </RelativeModal> : null}
+                    </RelativeModal>
                 </div>
                 <div className='separator'>
                     {icons.separator}

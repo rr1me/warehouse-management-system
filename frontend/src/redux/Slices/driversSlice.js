@@ -25,7 +25,9 @@ export const changeEditWithReq = createAsyncThunk(
 const driversSlice = createSlice({
     name: 'driversSlice',
     initialState: {
-        drivers: {}
+        drivers: {},
+        editing: false,
+        sort: 0
     },
     reducers: {
         setAllDrivers(state, action){
@@ -75,6 +77,11 @@ const driversSlice = createSlice({
             state.editing = true;
             state.drivers.unshift({name: '', phoneNumber: '', status:3, cargoes: null, image: "250x250.png", imageSrc: "http://localhost:5000/Images/250x250.png", editing: true, isNew:true});
         },
+        sortDrivers(state, action){
+            const sortIndex = action.payload;
+            state.sort = sortIndex;
+            state.drivers = state.drivers.slice().sort(sort[sortIndex]);
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(changeEditWithReq.fulfilled, (state, action) => {
@@ -91,5 +98,11 @@ const driversSlice = createSlice({
     }
 });
 
-export const {setAllDrivers, setDriverName, setDriverStatus, changeEdit, setDriverPhoneNumber, driverToDelete, addEmptyDriver} = driversSlice.actions
+export const {setAllDrivers, setDriverName, setDriverStatus, changeEdit, setDriverPhoneNumber, driverToDelete, addEmptyDriver, sortDrivers} = driversSlice.actions
 export default driversSlice.reducer
+
+const sort = [
+    (a, b) => a.id - b.id,
+    (a, b) => a.name.localeCompare(b.name),
+    (a, b) => a.status - b.status
+]

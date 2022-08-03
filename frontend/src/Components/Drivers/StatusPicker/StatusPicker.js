@@ -12,7 +12,6 @@ const StatusPicker = memo(({status, editing, index}) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-
         const closeDP = (e) => {
             if (e.composedPath()[0].id !== 'relativeModal'){
                 setStatusModalOpened(false);
@@ -60,10 +59,12 @@ const StatusPicker = memo(({status, editing, index}) => {
             <div className='statusContainer' onClick={e => e.stopPropagation()}>
                 <Status status={status} editing={editing} modalOpened={statusModalOpened}/>
             </div>
-            {statusModalOpened && editing ?
-                <RelativeModal doubleWrap={true} id='relativeModal' modalStyle={{top: '3px', right: '3px'}} itemClassname='interactive'>
-                    {getListOfStatuses()}
-                </RelativeModal> : null}
+            <RelativeModal state={statusModalOpened && editing} 
+                           doubleWrap={true} id='relativeModal' 
+                           modalStyle={{top: '3px', right: '3px'}} 
+                           itemClassname='interactive'>
+                {getListOfStatuses()}
+            </RelativeModal>
         </div>
     )
 });
