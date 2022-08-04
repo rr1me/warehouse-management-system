@@ -43,9 +43,12 @@
 
 .table-header > .col {
     color:white;
+    height: auto;
 }
 
 .col {
+    height: 34px;
+    align-items: center;
     font-family: 'Lato', serif;
     display: flex;
 }

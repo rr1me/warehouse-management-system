@@ -28,9 +28,11 @@
 }
 
 .apply-btn{
-  background: #0dce0d;
+  /*background: #0dce0d;*/
+  background: #54bc91;
 }
 
 .apply-btn:hover{
-  background: #0cb90c;
+  /*background: #0cb90c;*/
+  background: #4ca882;
 }

@@ -14,6 +14,7 @@ export default function App() {
             <Route path="/login" element={<Login/>}/>
             
             <Route path="/" element={<Private Component={<h1>home</h1>}/> }/>
+            {/*<Route path="/cargoes" element={<Private Component={<Cargoes/>}/> }/>*/}
             <Route path="/cargoes" element={<Private Component={<Cargoes/>}/> }/>
             {/*<Route path="/drivers" element={<Private Component={<Drivers/>}/> }/>*/}
             <Route path="/drivers" element={<Private Component={<DriversGrid/>}/> }/>

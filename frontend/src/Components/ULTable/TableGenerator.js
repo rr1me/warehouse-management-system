@@ -2,9 +2,9 @@
 
 const GenerateTable = ({headerValues, rowFunctions, array}) => {
 
-    const rowValues = array.map((value, index) => {
+    const rowValues = Object.values(array).map((value, index) => {
         return rowFunctions.map((value2, index2) => {
-            const arrayVariable = Object.values(value)[index2+1];
+            const arrayVariable = Object.values(Object.values(value)[0])[index2+1];
             return arrayVariable !== undefined ? value2(arrayVariable, index) : value2(index);
         })
     });

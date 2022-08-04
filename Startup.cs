@@ -63,17 +63,17 @@ public class Startup
             RequestPath = "/Images"
         });
 
-        // using (DatabaseContext db = new DatabaseContext())
+        using (DatabaseContext db = new DatabaseContext())
+        {
+        // User user = new User
         // {
-        //     User user = new User
-        //     {
-        //         Username = "user",
-        //         Password = BCrypt.Net.BCrypt.HashPassword("123"),
-        //         Role = Roles.Admin
-        //     };
-        //     
-        //     db.Users.Add(user);
-        //     db.SaveChanges();
+        //     Username = "user",
+        //     Password = BCrypt.Net.BCrypt.HashPassword("123"),
+        //     Role = Roles.Admin
+        // };
+        //      
+        // db.Users.Add(user);
+        // db.SaveChanges();
             //
             // Driver driver = new Driver("allen", 857357158738, DriverStatus.Active, null, null);
             //
@@ -85,9 +85,13 @@ public class Startup
             //
             // user!.DriverInfo = driver;
             //
+            
+            
+            // Cargo cargo = new Cargo("trash", "hz", "hz", DateTime.UtcNow, DateTime.UtcNow, CargoStatus.Stored, null);
+            // db.Cargoes.Add(cargo);
             // db.SaveChanges();
 
-        // }
+        }
 
         app.Run();
     }

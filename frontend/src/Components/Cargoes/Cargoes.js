@@ -1,23 +1,25 @@
-﻿import {useEffect, useState} from "react";
+﻿import {useEffect} from "react";
 import {getCargoes} from "../../Services/CargoesService";
 import GenerateTable from "../ULTable/TableGenerator";
+import {useDispatch, useSelector} from "react-redux";
+import {setAllCargoes} from "../../redux/Slices/cargoesSlice";
 
 const Cargoes = () => {
     
-    const [cargoes, setCargoes] = useState(Array);
-    const [edit, setEdit] = useState({});
+    const dispatch = useDispatch();
+    
+    const {cargoesEntities, sort} = useSelector(state => state.cargoesSlice);
     
     useEffect(() => {
         getCargoes().then((res) => {
-            setCargoes(res.data);
-            setEdit(() => {
-                return res.data.map(() => {return false;});
-            })
-            console.log(res.data);
+            const arr = res.data.map(
+                v => {return {cargo: v, editing: false}}
+            );
+            dispatch(setAllCargoes(arr));
         })
-    }, [setCargoes]);
+    }, [dispatch]);
     
-    const tableHeader = ['Name', 'Arrival Address', 'Departure Address', 'Arrival Date', 'Departure Date', 'On The Way', 'Delivered'];
+    const tableHeader = ['Name', 'Arrival Address', 'Departure Address', 'Arrival Date', 'Departure Date', 'Status', 'Actions'];
     
     const rowFunctions = [
         (value) => value,
@@ -26,12 +28,15 @@ const Cargoes = () => {
         (value) => value,
         (value) => value,
         (value) => value ? 'Yes': 'No',
-        (value) => value ? 'Yes': 'No',
+        (value) => value
     ]
     
-    return (
-        <GenerateTable headerValues={tableHeader} rowFunctions={rowFunctions} array={cargoes}/>
-    )
+    if (cargoesEntities !== undefined){
+        console.log(cargoesEntities);
+        return (
+            <GenerateTable headerValues={tableHeader} rowFunctions={rowFunctions} array={cargoesEntities}/>
+        )
+    }
 }
 
 export default Cargoes;

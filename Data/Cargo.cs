@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
+using WebApplication1.Data.Properties;
 
 namespace WebApplication1.Data;
 
@@ -11,15 +12,14 @@ public class Cargo
     {
     }
 
-    public Cargo(string name, string arrivalAddress, string departureAddress, DateTime arrivalDate, DateTime departureDate, bool onTheWay, bool delivered, Driver? driver)
+    public Cargo(string name, string arrivalAddress, string departureAddress, DateTime arrivalDate, DateTime departureDate, CargoStatus cargoStatus, Driver? driver)
     {
         Name = name;
         ArrivalAddress = arrivalAddress;
         DepartureAddress = departureAddress;
         ArrivalDate = arrivalDate;
         DepartureDate = departureDate;
-        OnTheWay = onTheWay;
-        Delivered = delivered;
+        CargoStatus = cargoStatus;
         Driver = driver;
     }
 
@@ -31,9 +31,8 @@ public class Cargo
     
     public DateTime ArrivalDate { get; set; }
     public DateTime DepartureDate { get; set; }
-    
-    public bool OnTheWay { get; set; }
-    public bool Delivered { get; set; }
+
+    public CargoStatus CargoStatus { get; set; }
     
     [JsonIgnore]public int? DriverId { get; set; }
     [JsonIgnore]public Driver? Driver { get; set; }
