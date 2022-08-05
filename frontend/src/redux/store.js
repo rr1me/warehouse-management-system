@@ -3,13 +3,13 @@
 import authSlice from "./Slices/authSlice";
 import datePickerSlice from "./Slices/datePickerSlice";
 import driversSlice from "./Slices/driversSlice";
-import cargoesSlice from "./Slices/cargoesSlice";
+import cargoSlice from "./Slices/cargoSlice";
 
 // const dpSlice = combineReducers({
 //     dpSlice: datePickerSlice
 // })
 
 export const store = configureStore({
-    reducer: {authSlice, datePickerSlice, driversSlice, cargoesSlice}
+    reducer: {authSlice, datePickerSlice, driversSlice, cargoSlice}
 })
 
