@@ -1,108 +1,125 @@
-﻿import {addDriver, deleteDriver, updateDriver} from "../../Services/DriversService";
+﻿import {addDriver, deleteDriver, getDrivers, updateDriver} from "../../Services/DriversService";
 import {createAsyncThunk, createSlice, current} from "@reduxjs/toolkit";
 
-export const changeEditWithReq = createAsyncThunk(
-    'driversSlice/setIdForAddedDriver',
-    async (id : number, {dispatch, getState, rejectWithValue}) => {
-        dispatch(changeEdit(id));
-        const state = getState().driversSlice;
-
-        const changed = state.drivers[id].changed;
-        if(changed) {
-            const driver = {...state.drivers[id]};
-            
-            if (driver.isNew){
-                const {r:data} = await addDriver(driver);
-                return {driverIndex: id, driverId: data};
-            }
-            
-            updateDriver(driver).then(r => console.log(r));
-        }
-        return rejectWithValue(id);
+export const getDriversThunk = createAsyncThunk(
+    'drivers/getDriversThunk',
+    async () => {
+        const r = await getDrivers();
+        console.log(r);
+        return r.data.map(v => {
+            return {driver: {prev:v, curr: v}, states: {editing: false, isNew: false}};
+        }).sort((a, b) => a.driver.curr.id - b.driver.curr.id);
     }
 );
+
+export const deleteDriverThunk = createAsyncThunk(
+    'drivers/deleteDriver',
+    async ({index, id}) => {
+        //todo check foreignKeys, mb make deleteDeny event if driver has some cargo assigned
+        
+        const r = await deleteDriver(id);
+        console.log(r);
+        return index;
+    }
+);
+
+export const editDriverThunk = createAsyncThunk(
+    'drivers/editDriver',
+    async (index: number, {getState, rejectWithValue}) => {
+        const state = getState().driversSlice.driversEntities;
+        
+        const previous = state[index].driver.prev;
+        const current = state[index].driver.curr;
+        
+        if (previous === current)
+            return rejectWithValue("same");
+        
+        const {isNew} = state[index].states;
+        const r = isNew ? await addDriver(current) : await updateDriver(current);
+        console.log(r);
+        return index;
+    }
+)
 
 const driversSlice = createSlice({
     name: 'driversSlice',
     initialState: {
-        drivers: {},
-        editing: false,
+        driversEntities: {},
+        editingGlobal: false,
         sort: 0
     },
     reducers: {
-        setAllDrivers(state, action){
-            state.drivers = action.payload;
-        },
         setDriverName(state, action){
-            const id = action.payload.id;
-            state.drivers[id].name = action.payload.name;
-            state.drivers[id].changed = true;
-        },
-        setDriverStatus(state, action){
-            const id = action.payload.id;
-            state.drivers[id].status = action.payload.status;
-            state.drivers[id].changed = true;
+            const {index, name} = action.payload;
+            
+            state.driversEntities[index].driver.curr.name = name;
         },
         setDriverPhoneNumber(state, action){
-            const id = action.payload.id;
-            state.drivers[id].phoneNumber = action.payload.phoneNumber;
-            state.drivers[id].changed = true;
+            const {index, phoneNumber} = action.payload;
+
+            state.driversEntities[index].driver.curr.phoneNumber = phoneNumber;
         },
-        changeEdit(state, action){
-            const id = action.payload;
-            const editing = state.drivers.find(value => value.editing === true);
-            const driverEdit = state.drivers[id].editing;
+        setDriverStatus(state, action){
+            const {index, status} = action.payload;
             
-            if (editing === undefined){
-                state.editing = true;
-                state.drivers[id].editing = true;
-            }else if(driverEdit){
-                state.editing = false;
-                state.drivers[id].editing = false;
-            }
-        },
-        driverToDelete(state, action) {
-            const indexId = action.payload.index;
-            const driverId = action.payload.id
-            
-            const isNew = state.drivers[indexId].isNew;
-            
-            state.drivers = state.drivers.filter((value, index) => {
-                return index !== indexId;
-            });
-            if (isNew === undefined)
-                deleteDriver(driverId).then(r => console.log(r));
-        },
-        addEmptyDriver(state){
-            state.editing = true;
-            state.drivers.unshift({name: '', phoneNumber: '', status:3, cargoes: null, image: "250x250.png", imageSrc: "http://localhost:5000/Images/250x250.png", editing: true, isNew:true});
+            console.log(index+" "+status);
+            console.log(current(state.driversEntities[index].driver.curr))
+            state.driversEntities[index].driver.curr.status = status;
         },
         sortDrivers(state, action){
-            const sortIndex = action.payload;
-            state.sort = sortIndex;
-            state.drivers = state.drivers.slice().sort(sort[sortIndex]);
+            const sortType = action.payload;
+
+            state.driversEntities = state.driversEntities.sort(sort[sortType]);
+            state.sort = sortType;
+        },
+        addEmptyDriver(state){
+            const driver = {name: '', phoneNumber: '', status:3, cargoes: null, image: "250x250.png", imageSrc: "http://localhost:5000/Images/250x250.png"}
+            state.driversEntities.unshift({driver:{prev: driver, curr: driver}, states:{editing: true, isNew:true}})
+            state.editingGlobal = true;
+        },
+        cancelEditDriver(state, action){
+            const index = action.payload;
+            const isNew = state.driversEntities[index].states.isNew
+            
+            if (!isNew){
+                state.driversEntities[index].driver.curr = state.driversEntities[index].driver.prev;
+                state.driversEntities[index].states.editing = false;
+            }else
+                state.driversEntities = state.driversEntities.filter((v, i) => {return i !== index});
+            
+            state.editingGlobal = false;
         }
     },
-    extraReducers: (builder) => {
-        builder.addCase(changeEditWithReq.fulfilled, (state, action) => {
-            const driverIndex = action.payload.driverIndex;
-            const driverId = action.payload.driverId;
+    extraReducers: builder => {
+        builder.addCase(getDriversThunk.fulfilled, (state, action) => {
+            state.driversEntities = action.payload;
+        }).addCase(deleteDriverThunk.fulfilled, (state, action) => {
+            const index = action.payload;
 
-            state.drivers[driverIndex].id = driverId;
-            delete state.drivers[driverIndex].isNew;
-            delete state.drivers[driverIndex].changed;
-        }).addCase(changeEditWithReq.rejected, (state, action) => {
-            const driverIndex = action.payload;
-            delete state.drivers[driverIndex].changed;
-        });
+            state.driversEntities = state.driversEntities.filter((v, i) => {return i !== index});
+        }).addCase(editDriverThunk.fulfilled, (state, action) => {
+            const index = action.payload;
+            
+            state.driversEntities[index].driver.prev = state.driversEntities[index].driver.curr;
+        }).addCase(editDriverThunk.pending, (state, action) => {
+            const index = action.meta.arg;
+
+            const editingGlobal = state.editingGlobal;
+            const editingLocal = state.driversEntities[index].states.editing
+            
+            if (!editingGlobal || editingLocal){
+                state.driversEntities[index].states.editing = !editingLocal;
+                state.editingGlobal = !editingLocal;
+            }
+        }); 
     }
 });
 
-export const {setAllDrivers, setDriverName, setDriverStatus, changeEdit, setDriverPhoneNumber, driverToDelete, addEmptyDriver, sortDrivers} = driversSlice.actions
+export const {setDriverName, setDriverPhoneNumber, setDriverStatus, sortDrivers, addEmptyDriver, cancelEditDriver} = driversSlice.actions
 export default driversSlice.reducer
 
 const sort = [
-    (a, b) => a.id - b.id,
-    (a, b) => a.name.localeCompare(b.name),
-    (a, b) => a.status - b.status
+    (a, b) => a.driver.curr.id - b.driver.curr.id,
+    (a, b) => a.driver.curr.name.localeCompare(b.driver.curr.name),
+    (a, b) => a.driver.curr.status - b.driver.curr.status
 ]

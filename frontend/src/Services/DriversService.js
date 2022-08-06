@@ -5,7 +5,7 @@ export const getDrivers = () => {
 }
 
 export const updateDriver = driver => {
-    return axios.patch('api/drivers/update', prepare(driver));
+    return axios.patch('api/drivers/update', driver);
 }
 
 export const deleteDriver = id => {
@@ -13,13 +13,5 @@ export const deleteDriver = id => {
 }
 
 export const addDriver = driver => {
-    return axios.post('api/drivers/add', prepare(driver));
-}
-
-const prepare = driver => {
-    delete driver.isNew;
-    delete driver.editing;
-    delete driver.changed;
-    
-    return driver;
+    return axios.post('api/drivers/add', driver);
 }

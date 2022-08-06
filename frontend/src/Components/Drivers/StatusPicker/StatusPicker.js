@@ -38,7 +38,7 @@ const StatusPicker = memo(({status, editing, index}) => {
                 if (editing){
                     setStatusModalOpened(value => !value)
                 }else if(modalOpened){
-                    dispatch(setDriverStatus({id: index, status: status}))
+                    dispatch(setDriverStatus({index: index, status: status}))
                 }
             }}>
                 <div>

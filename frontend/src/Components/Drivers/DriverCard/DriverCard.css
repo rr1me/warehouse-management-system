@@ -47,15 +47,3 @@
     padding-right: 5px;
     z-index: -1;
 }
-
-.array{
-    color: #6C7A89;
-    list-style-type: none;
-}
-.comma:after{
-    content: ",\00a0";
-}
-
-.array > a{
-    color: black;
-}

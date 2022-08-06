@@ -1,11 +1,11 @@
 ﻿import RelativeModal from "../RelativeModal/RelativeModal";
 import {useDispatch} from "react-redux";
-import {changeEditWithReq, driverToDelete} from "../../redux/Slices/driversSlice";
 import {AiFillDelete, AiFillEdit, AiOutlineCheck} from "react-icons/ai";
+import {FcCancel} from "react-icons/fc";
 import {useEffect, useState} from "react";
 import './Operations.css';
 
-const Operations = ({index, driver}) => {
+const Operations = ({index, editing, id, editDispatch, deleteDispatch, cancelEditDispatch}) => {
 
     useEffect(() => {
         const closeDp = e => {
@@ -24,11 +24,20 @@ const Operations = ({index, driver}) => {
     const dispatch = useDispatch();
 
     const handleEditClick = () => {
-        dispatch(changeEditWithReq(index));
+        dispatch(editDispatch(index));
     };
+    
+    const handleDeleteClick = e => {
+        if (!editing){
+            e.stopPropagation();
+            setDeleting(value => !value);
+        }else{
+            dispatch(cancelEditDispatch(index));
+        }
+    }
 
     const handleYesDelete = () => {
-        dispatch(driverToDelete({index: index, id: driver.id}));
+        dispatch(deleteDispatch({index: index, id: id}));
         setDeleting(false);
     };
 
@@ -39,13 +48,10 @@ const Operations = ({index, driver}) => {
     return (
         <div className='operationContainer'>
             <button className='operation' onClick={handleEditClick}>
-                {driver.editing ? icons.check : icons.edit}
+                {editing ? icons.check : icons.edit}
             </button>
-            <button className='operation' onClick={e => {
-                e.stopPropagation();
-                setDeleting(value => !value)
-            }}>
-                {icons.delete}
+            <button className='operation' onClick={handleDeleteClick}>
+                {editing ? icons.cancel : icons.delete}
             </button>
             <RelativeModal state={deleting}
                            doubleWrap={false} id='deleteModal'
@@ -66,5 +72,6 @@ export default Operations;
 const icons = {
     check: <AiOutlineCheck className='icon'/>,
     edit: <AiFillEdit className='icon'/>,
-    delete: <AiFillDelete className='icon'/>
+    delete: <AiFillDelete className='icon'/>,
+    cancel: <FcCancel className='icon'/>
 };
