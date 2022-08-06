@@ -1,5 +1,4 @@
-﻿
-.item{
+﻿.item{
     padding: 10px;
     box-shadow: 0 0 6px 0 rgba(0,0,0,0.3);
     border-radius: 10px;
@@ -37,28 +36,6 @@
     gap:5px;
 }
 
-.operationContainer{
-    display: flex;
-    justify-content: space-between;
-}
-.operation {
-    padding: 2px 12px;
-    background: none;
-    border: 1px solid #6C7A89; /*todo choose color*/
-    border-radius: 3px;
-    transition: 180ms;
-}
-.operation:hover{
-    box-shadow: var(--box-shadow);
-}
-.operation:active{
-    background: none;
-    transform: scale(calc(100% + 15%));
-}
-.operation > *{
-    transform: scale(120%);
-}
-
 .icon {
     padding-top: 1px;
 }
@@ -81,29 +58,4 @@
 
 .array > a{
     color: black;
-}
-
-.col-input {
-    font-weight: bold;
-    border: var(--border);
-    border-radius: 3px;
-}
-.col-input:focus {
-    box-shadow: var(--box-shadow);
-    outline: none;
-}
-
-.deleteOperations{
-    padding-top: 5px;
-    display: flex;
-    justify-content: center;
-    column-gap: 15px;
-}
-
-.deleteOperations > * {
-    padding: 3px 8px;
-    font-size: 14px;
-    font-weight: 600;
-    font-family: "Poppins", sans-serif;
-    -webkit-font-smoothing: unset;
 }

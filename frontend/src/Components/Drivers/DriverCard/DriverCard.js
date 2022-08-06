@@ -1,75 +1,17 @@
 ﻿import './DriverCard.css'
-import {memo, useEffect, useState} from "react";
+import {memo} from "react";
 import {AiFillDelete, AiFillEdit, AiOutlineCheck, AiOutlinePhone} from "react-icons/ai";
 import {GiCargoShip} from "react-icons/gi";
-import {
-    changeEditWithReq,
-    driverToDelete,
-    setDriverName,
-    setDriverPhoneNumber
-} from "../../../redux/Slices/driversSlice";
+import {setDriverName, setDriverPhoneNumber} from "../../../redux/Slices/driversSlice";
 import {useDispatch} from "react-redux";
-import Editable from "../../ULTable/Editable";
+import Editable from "../../Properties/Editable";
 import {Link} from "react-router-dom";
 import StatusPicker from "../StatusPicker/StatusPicker";
-import RelativeModal from "../../RelativeModal/RelativeModal";
+import Operations from "../../Properties/Operations";
 
 const DriverCard = memo(({driver, index}) => {
     
-    useEffect(() => {
-        const closeDp = e => {
-            if (e.composedPath()[0].id !== 'deleteModal'){
-                setDeleting(false);
-            }
-        }
-        
-        document.body.addEventListener('click', closeDp);
-        
-        return () => document.body.removeEventListener('click', closeDp);
-    })
-    
-    const [deleting, setDeleting] = useState(false);
-    
     const dispatch = useDispatch();
-    
-    const handleEditClick = () => {
-        dispatch(changeEditWithReq(index));
-    };
-    
-    const handleYesDelete = () => {
-        dispatch(driverToDelete({index: index, id: driver.id}));
-        setDeleting(false);
-    };
-    
-    const handleNoDelete = () => {
-        setDeleting(false);
-    }
-    
-    const getOperations = () => {
-        return (
-            <div className='operationContainer'>
-                <button className='operation' onClick={handleEditClick}>
-                    {driver.editing ? icons.check : icons.edit}
-                </button>
-                <button className='operation' onClick={e => {
-                    e.stopPropagation();
-                    setDeleting(value => !value)
-                }}>
-                    {icons.delete}
-                </button>
-                <RelativeModal state={deleting}
-                               doubleWrap={false} id='deleteModal'
-                               modalStyle={{padding: '3px 6px', width: '140px', textAlign: 'center', top: '30px', right: '65px'}}
-                               onClick={e => e.stopPropagation()}>
-                    <div>Are you sure you want to delete this?</div>
-                    <div className='deleteOperations'>
-                        <button className='btn apply-btn' onClick={handleYesDelete}>Yes</button>
-                        <button className='btn delete-btn' onClick={handleNoDelete}>No</button>
-                    </div>
-                </RelativeModal>
-            </div>
-        )
-    };
     
     const handleNameInput = e => {
         dispatch(setDriverName({id: index, name: e.target.value}))
@@ -91,7 +33,7 @@ const DriverCard = memo(({driver, index}) => {
             <img src={driver.imageSrc} alt='pic'/>
             <div className='side'>
                 <StatusPicker status={driver.status} editing={driver.editing} index={index}/>
-                {getOperations()}
+                <Operations driver={driver} index={index}/>
             </div>
             <div className='about'>
                 <div>{icons.phone} +

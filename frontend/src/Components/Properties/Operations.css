@@ -1,0 +1,56 @@
+﻿:root{
+    --color-green: #55be92;
+    --box-shadow: 0 0 4px 0 var(--color-green);
+    --border:1px solid var(--color-green);
+}
+
+.operationContainer{
+    display: flex;
+    justify-content: space-between;
+}
+
+.operation {
+    padding: 2px 12px;
+    background: none;
+    border: 1px solid #6C7A89; /*todo choose color*/
+    border-radius: 3px;
+    transition: 180ms;
+}
+
+.operation:hover{
+    box-shadow: var(--box-shadow);
+}
+
+.operation:active{
+    background: none;
+    transform: scale(calc(100% + 15%));
+}
+
+.operation > *{
+    transform: scale(120%);
+}
+
+.col-input {
+    font-weight: bold;
+    border: var(--border);
+    border-radius: 3px;
+}
+.col-input:focus {
+    box-shadow: var(--box-shadow);
+    outline: none;
+}
+
+.deleteOperations{
+    padding-top: 5px;
+    display: flex;
+    justify-content: center;
+    column-gap: 15px;
+}
+
+.deleteOperations > * {
+    padding: 3px 8px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: "Poppins", sans-serif;
+    -webkit-font-smoothing: unset;
+}
