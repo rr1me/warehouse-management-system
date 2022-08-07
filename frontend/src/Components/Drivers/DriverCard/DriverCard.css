@@ -47,3 +47,13 @@
     padding-right: 5px;
     z-index: -1;
 }
+
+.col-input {
+    font-weight: bold;
+    border: var(--border);
+    border-radius: 3px;
+}
+.col-input:focus {
+    box-shadow: var(--box-shadow);
+    outline: none;
+}

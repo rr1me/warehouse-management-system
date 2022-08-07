@@ -30,16 +30,6 @@
     transform: scale(120%);
 }
 
-.col-input {
-    font-weight: bold;
-    border: var(--border);
-    border-radius: 3px;
-}
-.col-input:focus {
-    box-shadow: var(--box-shadow);
-    outline: none;
-}
-
 .deleteOperations{
     padding-top: 5px;
     display: flex;
