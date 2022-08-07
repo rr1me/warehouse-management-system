@@ -1,61 +1,50 @@
 ﻿import {useSelector} from "react-redux";
-import {memo, useState} from "react";
+import {memo, useEffect, useState} from "react";
 
 import './DatePicker.css';
 import {DatePickerModule} from "./DatePickerModule";
+import {MdEditCalendar} from "react-icons/md";
 
 export const DatePicker = memo(() => {
 
+    useEffect(() => {
+        const closeDP = (e) => {
+            if (e.composedPath()[0].id !== 'datePicker'){
+                setDPState(false);
+            }
+        };
+
+        document.body.addEventListener('click', closeDP);
+
+        return () => document.body.removeEventListener('click', closeDP);
+    }, []);
+
     const {inputState} = useSelector(state => state.datePickerSlice);
     
-    // useEffect(() => {
-    //     const closeDP = (e) => {
-    //         if (e.composedPath()[0].name !== 'firstDatePicker'){
-    //             setDPState(false);
-    //         }
-    //     };
-    //    
-    //     document.body.addEventListener('click', closeDP);
-    //    
-    //     return () => document.body.removeEventListener('click', closeDP);
-    // }, []);
+    const inputElement = document.getElementById("datePicker");
 
     const [dpState, setDPState] = useState(false)
 
     const stopPropagationDiv = () => {
         return(
-            <>
-                <div className='special' onClick={() => setDPState(false)}></div>
-                <div onClick={e => e.stopPropagation()}>
-                    <DatePickerModule/>
-                </div>
-            </>
+            <div onClick={e => e.stopPropagation()}>
+                <DatePickerModule coords={inputElement.getBoundingClientRect()}/>
+            </div>
         )
     };
     
     const handleInputClick = () => {
-        setDPState(true);
+        setDPState(value => !value);
         console.log(document);
     }
     
     return (
         <div className='dpContainer'>
-            {/*<input className='dpInput' name="firstDatePicker" type='datetime-local' readOnly={true} value={inputState} onClick={() => {*/}
-            {/*    setDPState(true);*/}
-            {/*    console.log(document);*/}
-            {/*}}/>*/}
-            <div className='dpInput' id='firstDatePicker' onClick={handleInputClick}>
+            <div className='dpInput' id='datePicker' onClick={handleInputClick}>
                 {inputState}
+                <MdEditCalendar className='dpInputIcon'/>
             </div>
             {dpState ? stopPropagationDiv() : null}
         </div>
     )
 });
-
-// const makeDateForInput = (date) => {
-//     const year = date.getFullYear();
-//     const month = date.getMonth()+1;
-//     const day = date.getDate();
-//
-//     return year+"-"+(month < 10 ? "0"+ month : month)+"-"+(day < 10 ? "0"+ day : day);
-// };

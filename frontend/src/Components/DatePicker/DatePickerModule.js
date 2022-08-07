@@ -8,7 +8,7 @@ import {overallDateReducer, selectedDateReducer} from "../../redux/Slices/datePi
 const CURRENT_DATE = new Date();
 const YEAR_RANGE = 2;
 
-export const DatePickerModule = () => {
+export const DatePickerModule = ({coords}) => {
     
     const dispatch = useDispatch();
 
@@ -94,7 +94,7 @@ export const DatePickerModule = () => {
     }
 
     return (
-        <div className="datepicker">
+        <div className="datepicker" style={{left: coords.left, top: coords.top+coords.height+5}}>
             <header>
                 <button className='dpBtn' onClick={() => handleMonthButtonClick(false)}>{'<'}</button>
                 
@@ -134,6 +134,10 @@ export const DatePickerModule = () => {
                     )}
                 </tbody>
             </table>
+            <hr className='dpSeparator'/>
+            <div className='dpTime'>
+                <input/>:<input/>
+            </div>
         </div>
     )
 };
