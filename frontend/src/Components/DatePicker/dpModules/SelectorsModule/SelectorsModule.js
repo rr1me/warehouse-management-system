@@ -1,28 +1,32 @@
 ﻿import './SelectorsModule.css';
-import {overallDateReducer} from "../../../../redux/Slices/datePickerSlice";
 
 const CURRENT_DATE = new Date();
 
-const SelectorsModule = ({dispatch, overallDate, selectProps}) => {
+const SelectorsModule = ({overallDate, setOverallDate, selectProps}) => {
+    
+    const overallDateMonth = overallDate.month;
+    const overallDateYear = overallDate.year;
+    // console.log(overallDateYear+" "+overallDateMonth);
 
     const handleMonthButtonClick = (operator) => {
-        const month = overallDate.getMonth() + (operator ? 1 : -1);
-        const year = overallDate.getFullYear();
+        const month = overallDateMonth + (operator ? 1 : -1);
 
-        const yearDistinction = year - CURRENT_DATE.getFullYear();
+        const yearDistinction = overallDateYear - CURRENT_DATE.getFullYear();
 
         if( !( (yearDistinction === 2 && month === 12)
             || (yearDistinction === -2 && month === -1) ) ){
-            dispatch(overallDateReducer({month: month, year: year}));
+            // dispatch(overallDateReducer({month: month, year: year}));
+            setOverallDate({month: month, year: overallDateYear});
         }
     };
 
     const handleSelectChange = e => {
         const value = Number(e.target.value);
-        const month = (value < 12 ? value : overallDate.getMonth());
-        const year = (value > 11 ? value : overallDate.getFullYear());
+        const month = (value < 12 ? value : overallDateMonth);
+        const year = (value > 11 ? value : overallDateYear);
 
-        dispatch(overallDateReducer({month: month, year: year}));
+        // dispatch(overallDateReducer({month: month, year: year}));
+        setOverallDate({month: month, year: year});
     };
     
     return (
@@ -31,7 +35,7 @@ const SelectorsModule = ({dispatch, overallDate, selectProps}) => {
 
             <select className='dpSelect' onChange={(e) => {
                 handleSelectChange(e);
-            }} value={overallDate.getMonth()}>
+            }} value={overallDateMonth}>
                 {selectProps.monthNames.map((name, index) =>
                     <option key={name} value={index}>{name}</option>
                 )}
@@ -39,7 +43,7 @@ const SelectorsModule = ({dispatch, overallDate, selectProps}) => {
 
             <select className='dpSelect' onChange={(e) => {
                 handleSelectChange(e);
-            }} value={overallDate.getFullYear()}>
+            }} value={overallDateYear}>
                 {selectProps.years.map(year =>
                     <option key={year} value={year}>{year}</option>
                 )}

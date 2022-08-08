@@ -1,13 +1,13 @@
-﻿import {setSelectedDate} from "../Properties/dpStateSetters";
-import getMonthData from "../Properties/getMonthData";
+﻿import getMonthData from "../Properties/getMonthData";
 import './DaysModule.css';
 
-const DaysModule = ({selectProps, dispatch, overallDate, selectedDate, CURRENT_DATE}) => {
+const DaysModule = ({selectProps, dispatch, overallDate, selectedDate, setDateDispatch, CURRENT_DATE}) => {
 
-    const monthData = getMonthData(overallDate.getFullYear(), overallDate.getMonth());
+    const monthData = getMonthData(overallDate);
 
     const handleDayClick = date => {
-        setSelectedDate(dispatch, date);
+        // setSelectedDate(dispatch, date);
+        dispatch(setDateDispatch(date.toJSON()));
     };
 
     const makeDay = (date, index) => {
