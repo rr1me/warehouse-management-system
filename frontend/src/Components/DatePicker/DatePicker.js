@@ -11,6 +11,7 @@ export const DatePicker = memo(() => {
         const closeDP = (e) => {
             if (e.composedPath()[0].id !== 'datePicker'){
                 setDPState(false);
+                console.log("?")
             }
         };
 
@@ -42,7 +43,7 @@ export const DatePicker = memo(() => {
         <div className='dpContainer'>
             <div className='dpInput' id='datePicker' onClick={handleInputClick}>
                 {inputState}
-                <MdEditCalendar className='dpInputIcon'/>
+                <MdEditCalendar className='dpInputIcon' id='datePicker'/>
             </div>
             {dpState ? stopPropagationDiv() : null}
         </div>

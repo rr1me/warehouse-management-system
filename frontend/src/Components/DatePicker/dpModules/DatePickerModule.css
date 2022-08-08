@@ -22,49 +22,6 @@
     align-content: center;
 }
 
-.datepicker th {
-    vertical-align: middle;
-    text-align: center;
-}
-
-.datepicker .day {
-    padding: 4px 8px;
-    vertical-align: middle;
-    text-align: center;
-    border: 2px solid transparent;
-}
-
-.datepicker .aesthetics{
-    opacity: .3;
-    cursor: default;
-}
-
-.datepicker .practice:hover {
-    background-color: #eaeaea;
-    cursor: pointer;
-}
-
-.datepicker .day.selected {
-    border: 2px solid dodgerblue;
-}
-
-.datepicker .day.today {
-    background-color: dodgerblue;
-    color: white;
-}
-
-.datepicker .day.today:hover {
-    background-color: #0081ff;
-}
-
-.datepicker .day.today.selected {
-    border: 2px solid lightgray;
-}
-
-.datepicker .weekends {
-    color: #e80000;
-}
-
 .datepicker > header > select {
   padding: .2em .4em;
 }
@@ -76,26 +33,4 @@
     border-top: 1px solid #ccc;
     margin: 0.5em;
     padding: 0;
-}
-
-.dpTime{
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    align-items: center;
-}
-
-.dpTime > *{
-    width: 25px;
-    padding: 5px;
-    border: 1px solid #9ec1ef;
-    border-radius: 3px;
-    font-size: 16px;
-    font-family: "Roboto", sans-serif;
-    letter-spacing: 2px;
-    text-align: center;
-}
-
-.dpTime > *:focus{
-    outline: none;
 }

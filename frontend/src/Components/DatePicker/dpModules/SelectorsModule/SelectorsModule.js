@@ -13,12 +13,7 @@ const SelectorsModule = ({dispatch, overallDate, selectProps}) => {
 
         if( !( (yearDistinction === 2 && month === 12)
             || (yearDistinction === -2 && month === -1) ) ){
-            // const date = new Date(year, month);
-
-            // dispatch(overallDateReducer(date));
-            // setOverallDate(dispatch, date);
             dispatch(overallDateReducer({month: month, year: year}));
-            // setSelectState({year: date.getFullYear(), month: date.getMonth()});
         }
     };
 
@@ -27,10 +22,6 @@ const SelectorsModule = ({dispatch, overallDate, selectProps}) => {
         const month = (value < 12 ? value : overallDate.getMonth());
         const year = (value > 11 ? value : overallDate.getFullYear());
 
-        // dispatch(overallDateReducer(new Date(year, month)));
-        // setSelectedDate(dispatch, new Date(year, month));
-        // setSelectState({year: year, month: month});
-        // console.log(value);
         dispatch(overallDateReducer({month: month, year: year}));
     };
     
