@@ -65,27 +65,6 @@
     color: #e80000;
 }
 
-.dpBtn, .dpSelect, .dpInput {
-  /*height: 2em;*/
-  font-size: 1rem;
-  background-color: #fff;
-  color: #363636;
-  border: 1px solid #dbdbdb;
-  border-radius: 4px;
-  cursor: pointer;
-  transform: scale(95%);
-}
-
-.dpBtn:focus, .dpSelect:focus {
-  outline: none;
-}
-
-.dpBtn, .dpInput {
-  justify-content: center;
-  padding: .2em .7em;
-  text-align: center;
-}
-
 .datepicker > header > select {
   padding: .2em .4em;
 }

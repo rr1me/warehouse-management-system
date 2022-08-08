@@ -1,4 +1,4 @@
-﻿export const getMonthData = (year, month) => {
+﻿const getMonthData = (year, month) => {
     const date = new Date(year, month)
     
     let day = 1;
@@ -22,6 +22,8 @@
     });
 };
 
+export default getMonthData;
+
 const getDaysInMonth = (month, year) => {
     const daysInMonths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
@@ -43,4 +45,4 @@ const getDayWhenMonthStatsOn = date => {
     if (day === 0) return 6; //if sunday with index 0 we returning index 6 like we have european calendar
     
     return day - 1;
-}
+};

@@ -2,7 +2,7 @@
 import {memo, useEffect, useState} from "react";
 
 import './DatePicker.css';
-import {DatePickerModule} from "./DatePickerModule";
+import {DatePickerModule} from "./dpModules/DatePickerModule";
 import {MdEditCalendar} from "react-icons/md";
 
 export const DatePicker = memo(() => {

@@ -6,15 +6,17 @@ const makeDateForInput = (date) => {
     const year = date.getFullYear();
     const month = date.getMonth()+1;
     const day = date.getDate();
-
-    // return year+"-"+(month < 10 ? "0"+ month : month)+"-"+(day < 10 ? "0"+ day : day)+"T00:00";
+    
     return year+"."+(month < 10 ? "0"+ month : month)+"."+(day < 10 ? "0"+ day : day)+" 00:00";
 };
 
 const dpDate = createSlice({
     name: "dpDate",
     initialState: {
-        overallDate: initialDate.getTime(),
+        overallDate: {
+            year: initialDate.getFullYear(),
+            month: initialDate.getMonth()
+        },
         selectedDate: null,
         inputState: makeDateForInput(initialDate)
     },

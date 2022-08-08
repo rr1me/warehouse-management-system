@@ -16,4 +16,9 @@
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="frontend\src\Components\DatePicker\dpModules\DaysModule" />
+      <Folder Include="frontend\src\Components\DatePicker\dpModules\TimeModule" />
+    </ItemGroup>
+
 </Project>
