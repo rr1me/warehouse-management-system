@@ -57,3 +57,7 @@
     box-shadow: var(--box-shadow);
     outline: none;
 }
+
+.side > .operationContainer{
+    justify-content: space-between;
+}

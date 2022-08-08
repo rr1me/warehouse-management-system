@@ -47,10 +47,10 @@ const Operations = ({index, editing, id, editDispatch, deleteDispatch, cancelEdi
     
     return (
         <div className='operationContainer'>
-            <button className='operation' onClick={handleEditClick}>
+            <button className='operation edit' onClick={handleEditClick}>
                 {editing ? icons.check : icons.edit}
             </button>
-            <button className='operation' onClick={handleDeleteClick}>
+            <button className='operation delete' onClick={handleDeleteClick}>
                 {editing ? icons.cancel : icons.delete}
             </button>
             <RelativeModal state={deleting}

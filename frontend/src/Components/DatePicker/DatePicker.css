@@ -7,11 +7,18 @@
     
     padding: 3px 8px;
     font-family: Tahoma, sans-serif;
+    cursor: pointer;
+    /*display: flex;*/
+    /*width: 150px;*/
+}
+
+.noEdit{
+    cursor: unset;
 }
 
 .dpContainer{
     display: flex;
-    justify-content: center;
+    /*justify-content: center;*/
 }
 .menu{
     box-shadow: 0 0 4px rgba(0,0,0, 0.3);

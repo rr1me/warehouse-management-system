@@ -12,6 +12,11 @@ public class Cargo
     {
     }
 
+    public Cargo(int id)
+    {
+        Id = id;
+    }
+
     public Cargo(string name, string arrivalAddress, string departureAddress, DateTime arrivalDate, DateTime departureDate, CargoStatus cargoStatus, Driver? driver)
     {
         Name = name;

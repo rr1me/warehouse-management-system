@@ -5,15 +5,18 @@
     color: #363636;
     border: 1px solid #dbdbdb;
     border-radius: 4px;
-    cursor: pointer;
     transform: scale(95%);
+}
+
+.dpBtn, .dpSelect{
+    cursor: pointer;
 }
 
 .dpBtn:focus, .dpSelect:focus {
     outline: none;
 }
 
-.dpBtn, .dpInput {
+.dpBtn {
     justify-content: center;
     padding: .2em .7em;
     text-align: center;

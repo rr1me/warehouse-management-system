@@ -5,9 +5,9 @@ import DaysModule from "./DaysModule/DaysModule";
 import {useState} from "react";
 import BottomModule from "./BottomModule/BottomModule";
 
-const DatePickerBuilder = ({dateObject, setDateDispatch, mainElement, state}) => {
+const DatePickerBuilder = ({dateObject, setDateDispatch, dispatchIndex, mainElement, state}) => {
     
-    const coords = mainElement ? mainElement.getBoundingClientRect() : null;
+    const coords = mainElement.current !== undefined ? mainElement.current.getBoundingClientRect() : null;
     
     const dispatch = useDispatch();
     
@@ -20,10 +20,12 @@ const DatePickerBuilder = ({dateObject, setDateDispatch, mainElement, state}) =>
         return (
             <div className="datepicker" style={{left: coords.left, top: coords.top+coords.height+5}} onClick={e=>e.stopPropagation()}>
                 <SelectorsModule overallDate={overallDate} setOverallDate={setOverallDate} selectProps={selectProps}/>
-                <DaysModule dispatch={dispatch} selectProps={selectProps} overallDate={overallDate} CURRENT_DATE={CURRENT_DATE} selectedDate={dateObject} 
-                            setDateDispatch={setDateDispatch} time={{hours: dateObject.getHours(), minutes: dateObject.getMinutes()}}/>
+                <DaysModule dispatch={dispatch} setDateDispatch={setDateDispatch} dispatchIndex={dispatchIndex} 
+                            selectProps={selectProps} overallDate={overallDate} CURRENT_DATE={CURRENT_DATE} 
+                            selectedDate={dateObject} time={{hours: dateObject.getHours(), minutes: dateObject.getMinutes()}}/>
                 <hr className='dpSeparator'/>
-                <BottomModule dispatch={dispatch} dateObject={dateObject} setDateDispatch={setDateDispatch}/>
+                <BottomModule dispatch={dispatch} setDateDispatch={setDateDispatch} dispatchIndex={dispatchIndex}
+                              dateObject={dateObject}/>
             </div>
         )
     }
