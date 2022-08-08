@@ -1,9 +1,9 @@
 ﻿import './DatePickerBuilder.css'
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import SelectorsModule from "./SelectorsModule/SelectorsModule";
 import DaysModule from "./DaysModule/DaysModule";
-import TimeModule from "./TimeModule/TimeModule";
 import {useState} from "react";
+import BottomModule from "./BottomModule/BottomModule";
 
 const DatePickerBuilder = ({dateObject, setDateDispatch, mainElement, state}) => {
     
@@ -16,21 +16,14 @@ const DatePickerBuilder = ({dateObject, setDateDispatch, mainElement, state}) =>
         month: CURRENT_DATE.getMonth()
     });
 
-    // const {overallDate} = useSelector(state => {
-    //     const dates = state.datePickerSlice;
-    //     return {
-    //         overallDate: new Date(dates.overallDate.year, dates.overallDate.month),
-    //         // selectedDate: dates.selectedDate ? new Date(dates.selectedDate) : null
-    //     };
-    // });
-
     if (state){
         return (
             <div className="datepicker" style={{left: coords.left, top: coords.top+coords.height+5}} onClick={e=>e.stopPropagation()}>
                 <SelectorsModule overallDate={overallDate} setOverallDate={setOverallDate} selectProps={selectProps}/>
-                <DaysModule dispatch={dispatch} selectProps={selectProps} overallDate={overallDate} CURRENT_DATE={CURRENT_DATE} selectedDate={dateObject} setDateDispatch={setDateDispatch}/>
+                <DaysModule dispatch={dispatch} selectProps={selectProps} overallDate={overallDate} CURRENT_DATE={CURRENT_DATE} selectedDate={dateObject} 
+                            setDateDispatch={setDateDispatch} time={{hours: dateObject.getHours(), minutes: dateObject.getMinutes()}}/>
                 <hr className='dpSeparator'/>
-                <TimeModule/>
+                <BottomModule dispatch={dispatch} dateObject={dateObject} setDateDispatch={setDateDispatch}/>
             </div>
         )
     }

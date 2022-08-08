@@ -1,0 +1,9 @@
+﻿.bottomModule{
+    display: flex;
+    justify-content: space-between;
+    padding-inline: 6px;
+}
+
+.today{
+    padding: 5px;
+}

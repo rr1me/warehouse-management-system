@@ -1,4 +1,4 @@
-﻿const getMonthData = (overallDate) => {
+﻿const getMonthData = (overallDate, time) => {
     const {year, month} = overallDate;
     const date = new Date(overallDate)
     
@@ -17,7 +17,7 @@
             }else if (day > daysInMonth){
                 return daysInNextMonth - (daysInNextMonth - (day++ - daysInMonth));
             }else{
-                return new Date(year, month, day++);
+                return new Date(year, month, day++, time.hours, time.minutes);
             }
         });
     });

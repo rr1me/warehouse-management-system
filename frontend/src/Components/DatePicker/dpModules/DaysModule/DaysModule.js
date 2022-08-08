@@ -1,12 +1,11 @@
 ﻿import getMonthData from "../Properties/getMonthData";
 import './DaysModule.css';
 
-const DaysModule = ({selectProps, dispatch, overallDate, selectedDate, setDateDispatch, CURRENT_DATE}) => {
+const DaysModule = ({selectProps, dispatch, overallDate, selectedDate, setDateDispatch, CURRENT_DATE, time}) => {
 
-    const monthData = getMonthData(overallDate);
+    const monthData = getMonthData(overallDate, time);
 
     const handleDayClick = date => {
-        // setSelectedDate(dispatch, date);
         dispatch(setDateDispatch(date.toJSON()));
     };
 

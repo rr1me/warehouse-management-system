@@ -6,7 +6,6 @@ const SelectorsModule = ({overallDate, setOverallDate, selectProps}) => {
     
     const overallDateMonth = overallDate.month;
     const overallDateYear = overallDate.year;
-    // console.log(overallDateYear+" "+overallDateMonth);
 
     const handleMonthButtonClick = (operator) => {
         const month = overallDateMonth + (operator ? 1 : -1);
@@ -14,18 +13,15 @@ const SelectorsModule = ({overallDate, setOverallDate, selectProps}) => {
         const yearDistinction = overallDateYear - CURRENT_DATE.getFullYear();
 
         if( !( (yearDistinction === 2 && month === 12)
-            || (yearDistinction === -2 && month === -1) ) ){
-            // dispatch(overallDateReducer({month: month, year: year}));
+            || (yearDistinction === -2 && month === -1) ) )
             setOverallDate({month: month, year: overallDateYear});
-        }
     };
 
     const handleSelectChange = e => {
         const value = Number(e.target.value);
         const month = (value < 12 ? value : overallDateMonth);
         const year = (value > 11 ? value : overallDateYear);
-
-        // dispatch(overallDateReducer({month: month, year: year}));
+        
         setOverallDate({month: month, year: year});
     };
     
