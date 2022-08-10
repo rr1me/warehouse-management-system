@@ -1,17 +1,15 @@
 ﻿import './DriversGrid.css'
 import {memo, useEffect, useRef, useState} from "react";
-import {getDrivers} from "../../Services/DriversService";
 import {useDispatch, useSelector} from "react-redux";
-import {addEmptyDriver, getDriversThunk, setAllDrivers} from "../../redux/Slices/driversSlice";
+import {addEmptyDriver, getDriversThunk, sortDrivers} from "../../redux/Slices/driversSlice";
 import DriverCard from "./DriverCard/DriverCard";
-import BulletList from "./BulletList/BulletList";
+import BulletList from "../Properties/BulletList/BulletList";
 
 const DriversGrid = memo(() => {
     
     const [filterOpen, setFilterOpen] = useState(false);
     
     const gridRef = useRef();
-    const filterButtonRef = useRef();
     
     const dispatch = useDispatch();
     const {driversEntities, sort} = useSelector(state => state.driversSlice);
@@ -41,9 +39,9 @@ const DriversGrid = memo(() => {
         <div className='gridContainer' ref={gridRef}>
             <div className='driversGridOperations'>
                 <button onClick={handleAddNewClick} className='btn apply-btn'>Add new</button>
-                <button onClick={handleFilterClick} className='btn apply-btn' ref={filterButtonRef}>
+                <button onClick={handleFilterClick} className='btn apply-btn'>
                     Filter
-                    <BulletList filterOpen={filterOpen} sort={sort}/>
+                    <BulletList openState={filterOpen} bulletState={sort} bulletList={rows} bulletStateDispatch={sortDrivers}/>
                 </button>
             </div>
             {driversEntities.length !== undefined ? driversEntities.map((value, index) => {
@@ -56,3 +54,9 @@ const DriversGrid = memo(() => {
 });
 
 export default DriversGrid;
+
+const rows = [
+    'By id',
+    'By name',
+    'By status'
+]

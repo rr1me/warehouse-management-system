@@ -50,10 +50,15 @@ const cargoSlice = createSlice({
     },
     reducers: {
         setCargoName(state, action){
+            const {index, name} = action.payload;
             
+            state.cargoEntities[index].cargo.curr.name = name;
         },
         setArrivalAddress(state, action){
-            
+            const {index, arrivalAddress} = action.payload;
+            console.log(index+" "+arrivalAddress);
+
+            state.cargoEntities[index].cargo.curr.arrivalAddress = arrivalAddress;
         },
         setArrivalDate(state, action){
             const {index, date} = action.payload;

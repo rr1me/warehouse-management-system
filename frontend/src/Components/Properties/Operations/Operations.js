@@ -1,9 +1,9 @@
-﻿import RelativeModal from "../RelativeModal/RelativeModal";
+﻿import './Operations.css';
+import {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import {AiFillDelete, AiFillEdit, AiOutlineCheck} from "react-icons/ai";
 import {FcCancel} from "react-icons/fc";
-import {useEffect, useState} from "react";
-import './Operations.css';
+import RelativeModal from "../../RelativeModal/RelativeModal";
 
 const Operations = ({index, editing, id, editDispatch, deleteDispatch, cancelEditDispatch}) => {
 

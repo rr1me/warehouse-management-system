@@ -9,6 +9,6 @@ export const PageNotFound = () => {
     
     return (
         // <h1>404</h1>
-        <DatePicker id='pnfDP' incomeDate={date} setDateDispatch={setDate}/>
+        <DatePicker id='pnfDP' incomeDate={date} setDateDispatch={setDate} editState={true}/>
     )
 }

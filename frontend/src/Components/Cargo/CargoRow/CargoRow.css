@@ -1,0 +1,4 @@
+﻿.gridItem > .col-input{
+    line-break: anywhere;
+    width: max-content;
+}

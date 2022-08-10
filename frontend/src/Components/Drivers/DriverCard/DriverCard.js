@@ -13,8 +13,8 @@ import {useDispatch} from "react-redux";
 import Editable from "../../Properties/Editable";
 import {Link} from "react-router-dom";
 import StatusPicker from "../StatusPicker/StatusPicker";
-import Operations from "../../Properties/Operations";
 import React from 'react';
+import Operations from "../../Properties/Operations/Operations";
 
 const DriverCard = memo(({driverEntity, index}) => {
     const {driver, states} = driverEntity;

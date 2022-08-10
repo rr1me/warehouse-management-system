@@ -15,7 +15,8 @@
     display: grid;
     /*justify-content: space-between;*/
     /*grid-template-columns: 5% repeat(3, 15%) 14% 14% 14% min-content;*/
-    grid-template-columns: 5% repeat(3, 15%) repeat(2, 1fr) 10% min-content;
+    grid-template-columns: 5% repeat(3, minmax(5%, 15%)) repeat(2, 1fr) 10% max-content;
+    grid-gap: 10px;
     /*grid-auto-columns: minmax(10px, 150px);*/
     /*display: flex;*/
     /*flex-direction: row;*/
@@ -27,7 +28,8 @@
     /*border: 1px solid black;*/
     /*width: 0;*/
     /*flex-basis: 12.5%;*/
-    white-space: normal;
+    /*white-space: normal;*/
+    word-breaK: break-word;
 }
 
 .item_0{
@@ -44,6 +46,7 @@
     /*flex-basis: 15%;*/
     padding-left: -5px;
     margin-left: -5px;
+    /*white-space: nowrap;*/
 }
 
 /*.item_4{*/
@@ -71,4 +74,9 @@
     text-transform: uppercase;
     letter-spacing: 0.03em;
     color: white;
+}
+
+.cargoGrid > .driversGridOperations{
+    margin-bottom: 0;
+    /*padding-bottom: 15px;*/
 }
