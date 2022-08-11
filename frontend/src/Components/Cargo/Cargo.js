@@ -17,8 +17,7 @@ const Cargo = () => {
         dispatch(thunkCargo());
     }, [dispatch])
 
-    const handleFilterClick = e => {
-        // e.stopPropagation();
+    const handleFilterClick = () => {
         setFilterOpen(value => !value);
     };
     
@@ -37,15 +36,15 @@ const Cargo = () => {
                         <BulletList openState={filterOpen} bulletState={sort} bulletList={rows} bulletStateDispatch={sortCargo}/>
                     </button>
                 </div>
-                <div className='gridHeader gridRow'>
-                    <div className={'gridItem headerItem_'+headerItemIndex++}>Id</div>
-                    <div className={'gridItem headerItem_'+headerItemIndex++}>Name</div>
-                    <div className={'gridItem headerItem_'+headerItemIndex++}>Arrival Address</div>
-                    <div className={'gridItem headerItem_'+headerItemIndex++}>Departure Address</div>
-                    <div className={'gridItem headerItem_'+headerItemIndex++}>Arrival Date</div>
-                    <div className={'gridItem headerItem_'+headerItemIndex++}>Departure Date</div>
-                    <div className={'gridItem headerItem_'+headerItemIndex++}>Status</div>
-                    <div className={'gridItem headerItem_'+headerItemIndex++}>Operations</div>
+                <div className='cargoGridHeader cargoGridRow'>
+                    <div className={'cargoGridItem cargoHeaderItem_'+headerItemIndex++}>Id</div>
+                    <div className={'cargoGridItem cargoHeaderItem_'+headerItemIndex++}>Name</div>
+                    <div className={'cargoGridItem cargoHeaderItem_'+headerItemIndex++}>Arrival Address</div>
+                    <div className={'cargoGridItem cargoHeaderItem_'+headerItemIndex++}>Departure Address</div>
+                    <div className={'cargoGridItem cargoHeaderItem_'+headerItemIndex++}>Arrival Date</div>
+                    <div className={'cargoGridItem cargoHeaderItem_'+headerItemIndex++}>Departure Date</div>
+                    <div className={'cargoGridItem cargoHeaderItem_'+headerItemIndex++}>Status</div>
+                    <div className={'cargoGridItem cargoHeaderItem_'+headerItemIndex++}>Operations</div>
                 </div>
                 {cargoEntities.map((value, index) => {
                     const current = value.cargo.curr;
@@ -53,25 +52,6 @@ const Cargo = () => {
                     
                     let itemIndex = 0;
                     return (
-                        // <div key={index} className='gridRow'>
-                        //     <div className={'gridItem item_'+itemIndex++}>{current.id}</div>
-                        //     <div className={'gridItem item_'+itemIndex++}>{current.name}</div>
-                        //     <Editable state={states.editing}>
-                        //         <input className='col-input name' value={current.name} onChange={handlePhoneNumberInput}/>
-                        //     </Editable>
-                        //     <div className={'gridItem item_'+itemIndex++}>{current.arrivalAddress}</div>
-                        //     <div className={'gridItem item_'+itemIndex++}>{current.departureAddress}</div>
-                        //     <div className={'gridItem item_'+itemIndex++}>
-                        //         <DatePicker id={'ardate_'+index} incomeDate={current.arrivalDate} setDateDispatch={setArrivalDate} dispatchIndex={index} editState={states.editing}/>
-                        //     </div>
-                        //     <div className={'gridItem item_'+itemIndex++}>
-                        //         <DatePicker id={'ardate_'+index} incomeDate={current.departureDate} setDateDispatch={setArrivalDate} dispatchIndex={index} editState={false}/>
-                        //     </div>
-                        //     <div className={'gridItem item_'+itemIndex++}>{current.cargoStatus}</div>
-                        //     <div className={'gridItem item_'+itemIndex++}>
-                        //         <Operations id={current.id} editing={states.editing} index={index} editDispatch={editCargoThunk} cancelEditDispatch={cancelEditCargo} deleteDispatch={deleteCargoThunk}/>
-                        //     </div>
-                        // </div>
                         <CargoRow key={index} index={index} itemIndex={itemIndex} current={current} states={states}/>
                     )
                 })}

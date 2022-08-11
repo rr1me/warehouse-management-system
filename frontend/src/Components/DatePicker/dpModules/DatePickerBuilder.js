@@ -9,7 +9,6 @@ import RelativeModal from "../../RelativeModal/RelativeModal";
 const DatePickerBuilder = ({dateObject, setDateDispatch, dispatchIndex, mainElement, state}) => {
     
     const coords = mainElement.current !== undefined ? mainElement.current.getBoundingClientRect() : null;
-    
     const dispatch = useDispatch();
     
     const [overallDate, setOverallDate] = useState({
@@ -28,7 +27,7 @@ const DatePickerBuilder = ({dateObject, setDateDispatch, dispatchIndex, mainElem
             //     <BottomModule dispatch={dispatch} setDateDispatch={setDateDispatch} dispatchIndex={dispatchIndex}
             //                   dateObject={dateObject}/>
             // </div>
-            <RelativeModal doubleWrap={false} state={true} modalStyle={{zIndex: '1'}} onClick={e=>e.stopPropagation()}>
+            <RelativeModal doubleWrap={false} state={true} modalStyle={{zIndex: '1', top: 10+coords.height+'px', left: '5px'}} onClick={e=>e.stopPropagation()}>
                 <div className='datepicker'>
                     <SelectorsModule overallDate={overallDate} setOverallDate={setOverallDate} selectProps={selectProps}/>
                     <DaysModule dispatch={dispatch} setDateDispatch={setDateDispatch} dispatchIndex={dispatchIndex}

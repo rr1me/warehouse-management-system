@@ -1,6 +1,6 @@
 ﻿import './TimeModule.css';
 
-const TimeModule = ({dispatch, dateObject, setDateDispatch}) => {
+const TimeModule = ({dispatch, dateObject, setDateDispatch, dispatchIndex}) => {
 
     const handleHoursInput = e => {
         let value = e.target.value;
@@ -10,8 +10,9 @@ const TimeModule = ({dispatch, dateObject, setDateDispatch}) => {
                 value = 0;
             else if(value > 23)
                 value = 23
-            
-            dispatch(setDateDispatch(dateObject.setHours(value)));
+            console.log(dateObject.setHours(value));
+            dateObject.setHours(value)
+            dispatch(setDateDispatch({index: dispatchIndex, date: dateObject.toJSON()}));
         }
     }
     
@@ -23,8 +24,8 @@ const TimeModule = ({dispatch, dateObject, setDateDispatch}) => {
                 value = 0;
             else if(value > 59)
                 value = 59;
-            
-            dispatch(setDateDispatch(dateObject.setMinutes(value)));
+            dateObject.setMinutes(value);
+            dispatch(setDateDispatch({index: dispatchIndex, date: dateObject.toJSON()}));
         }
     };
     

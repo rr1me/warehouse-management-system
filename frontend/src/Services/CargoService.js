@@ -13,5 +13,6 @@ export const deleteCargo = id => {
 };
 
 export const addCargo = cargo => {
+    console.log(cargo);
     return axios.post('api/cargo/add', cargo);
 };

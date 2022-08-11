@@ -1,4 +1,34 @@
-﻿.gridItem > .col-input{
-    line-break: anywhere;
-    width: max-content;
+﻿.cargoGridItem > .col-input{
+    width: 100%;
+    white-space: break-spaces;
+    resize: none;
+    overflow:hidden;
+    margin-top: 5px;
+    font-size: 13px;
+    letter-spacing: 0.15pt;
+}
+
+.cargoGridRow{
+    padding: 10px 25px;
+    border-radius: 6px;
+    align-items: center;
+
+    display: grid;
+    grid-template-columns: 5% repeat(3, minmax(5%, 15%)) repeat(2, 1fr) 10% max-content;;
+    grid-gap: 10px;
+    box-shadow: 0 0 6px 0 rgba(0,0,0,0.2);
+    font-family: Poppins, serif;
+}
+
+.cargoGridItem{
+    word-breaK: break-word;
+}
+
+.cargoGridItem > .operationContainer{
+    justify-content: space-between;
+    width: 105%;
+}
+
+.cargoGridItem > .dpContainer{
+    margin-left: -5px;
 }

@@ -32,10 +32,10 @@ public class Cargo
     public string Name { get; set; }
     
     public string ArrivalAddress { get; set; }
-    public string DepartureAddress { get; set; }
+    public string? DepartureAddress { get; set; }
     
     public DateTime ArrivalDate { get; set; }
-    public DateTime DepartureDate { get; set; }
+    public DateTime? DepartureDate { get; set; }
 
     public CargoStatus CargoStatus { get; set; }
     

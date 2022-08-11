@@ -9,7 +9,7 @@ const BottomModule = ({dispatch, setDateDispatch, dispatchIndex, dateObject}) =>
     
     return ( //todo make set overall date after pressing Today button
         <div className='bottomModule'>
-            <TimeModule dispatch={dispatch} dateObject={dateObject} setDateDispatch={setDateDispatch}/>
+            <TimeModule dispatch={dispatch} dateObject={dateObject} setDateDispatch={setDateDispatch} dispatchIndex={dispatchIndex}/>
             <button onClick={handleTodayClick} className='btn apply-btn today'>Today</button>
         </div>
     )

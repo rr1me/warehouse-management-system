@@ -37,7 +37,7 @@ public class CargoController : ControllerBase
     }
 
     [HttpDelete("delete/{id}")]
-    public IActionResult DeleteOneDriver(int id)
+    public IActionResult DeleteOneCargo(int id)
     {
         context.Cargoes.Remove(new Cargo(id));
         context.SaveChanges();
@@ -48,7 +48,7 @@ public class CargoController : ControllerBase
     }
 
     [HttpPost("add")]
-    public IActionResult AddOneDriver(Cargo cargo)
+    public IActionResult AddOneCargo(Cargo cargo)
     {
         context.Cargoes.Add(cargo);
         context.SaveChanges();

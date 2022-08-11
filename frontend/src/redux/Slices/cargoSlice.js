@@ -1,6 +1,5 @@
-﻿import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+﻿import {createAsyncThunk, createSlice, current} from "@reduxjs/toolkit";
 import {addCargo, deleteCargo, getCargo, updateCargo} from "../../Services/CargoService";
-import {addDriver, deleteDriver, updateDriver} from "../../Services/DriversService";
 
 export const thunkCargo = createAsyncThunk(
     'getCargoes/cargoesSlice',
@@ -14,7 +13,7 @@ export const thunkCargo = createAsyncThunk(
 );
 
 export const deleteCargoThunk = createAsyncThunk(
-    'drivers/deleteDriver',
+    'cargo/deleteCargo',
     async ({index, id}) => {
         const r = await deleteCargo(id);
         console.log(r);
@@ -35,9 +34,15 @@ export const editCargoThunk = createAsyncThunk(
 
         const {isNew} = state[index].states;
         console.log("?");
-        const r = isNew ? await addCargo(current) : await updateCargo(current);
+        let r;
+        try{
+            r = isNew ? await addCargo(current) : await updateCargo(current);
+        }catch (e) {
+            console.log(e);
+        }//todo MB THAT SHIT IS THROWING ERROR WHICH I CAN CATCH IN TRY-CATCH?????? .then and .catch on axios request mb let me get an error;
+        console.log("?")
         console.log(r);
-        return index;
+        return {index: index, id: (isNew ? r.data : 0)};
     }
 );
 
@@ -72,9 +77,9 @@ const cargoSlice = createSlice({
             state.cargoEntities = state.cargoEntities.sort(sort[sortType]);
             state.sort = sortType;
         },
-        addEmptyCargo(state, action){
+        addEmptyCargo(state){
             const currentDate = new Date().toJSON();
-            const cargo = {name: '', arrivalAddress: '', departureAddress: '', arrivalDate: currentDate, departureDate: currentDate, cargoStatus: 0};
+            const cargo = {name: null, arrivalAddress: null, departureAddress: null, arrivalDate: currentDate, departureDate: null, cargoStatus: 0};
             
             state.cargoEntities.unshift({cargo:{prev: cargo, curr: cargo}, states:{editing: true, isNew: true}});
             state.editingGlobal = true;
@@ -100,7 +105,13 @@ const cargoSlice = createSlice({
 
             state.cargoEntities = state.cargoEntities.filter((v, i) => {return i !== index});
         }).addCase(editCargoThunk.fulfilled, (state, action) => {
-            const index = action.payload;
+            const {index, id} = action.payload;
+
+            const isNew = state.cargoEntities[index].states.isNew;
+            if (isNew){
+                state.cargoEntities[index].cargo.curr.id = id;
+                state.cargoEntities[index].states.isNew = false;
+            }
 
             state.cargoEntities[index].cargo.prev = state.cargoEntities[index].cargo.curr;
         }).addCase(editCargoThunk.pending, (state, action) => {
