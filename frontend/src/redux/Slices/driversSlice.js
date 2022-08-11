@@ -35,9 +35,15 @@ export const editDriverThunk = createAsyncThunk(
             return rejectWithValue("same");
         
         const {isNew} = state[index].states;
-        const r = isNew ? await addDriver(current) : await updateDriver(current);
+        let r;
+        try{
+            r = isNew ? await addDriver(current) : await updateDriver(current);
+        }catch(e){
+            rejectWithValue(e);
+        }
+        
         console.log(r);
-        return index;
+        return {index: index, id: (isNew ? r.data : 0)};
     }
 )
 
@@ -98,7 +104,13 @@ const driversSlice = createSlice({
 
             state.driversEntities = state.driversEntities.filter((v, i) => {return i !== index});
         }).addCase(editDriverThunk.fulfilled, (state, action) => {
-            const index = action.payload;
+            const {index, id} = action.payload;
+            
+            const isNew = state.driversEntities[index].states.isNew;
+            if (isNew){
+                state.driversEntities[index].driver.curr.id = id;
+                state.driversEntities[index].states.isNew = false;
+            }
             
             state.driversEntities[index].driver.prev = state.driversEntities[index].driver.curr;
         }).addCase(editDriverThunk.pending, (state, action) => {

@@ -1,10 +1,8 @@
-﻿import {sortDrivers} from "../../../redux/Slices/driversSlice";
-import {useDispatch} from "react-redux";
+﻿import {useDispatch} from "react-redux";
 import './BulletList.css';
 import RelativeModal from "../../RelativeModal/RelativeModal";
 
-const BulletList = ({openState, bulletState, bulletList, bulletStateDispatch}) => {
-// const BulletList = ({filterOpen, sort}) => {
+const BulletList = ({openState, bulletState, bulletList, bulletStateDispatch, id}) => {
     
     const dispatch = useDispatch();
 
@@ -26,7 +24,7 @@ const BulletList = ({openState, bulletState, bulletList, bulletStateDispatch}) =
     return (
         <RelativeModal state={openState}
                        doubleWrap={true} itemClassname='bulletMenu'
-                       id='filterModal'
+                       id={id}
                        modalStyle={{right: '115px', bottom: '30px', padding: '2px'}}>
             {list}
         </RelativeModal>

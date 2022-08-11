@@ -1,4 +1,4 @@
-﻿import {createAsyncThunk, createSlice, current} from "@reduxjs/toolkit";
+﻿import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {addCargo, deleteCargo, getCargo, updateCargo} from "../../Services/CargoService";
 
 export const thunkCargo = createAsyncThunk(
@@ -19,7 +19,7 @@ export const deleteCargoThunk = createAsyncThunk(
         console.log(r);
         return index;
     }
-); 
+);
 
 export const editCargoThunk = createAsyncThunk(
     'cargo/editCargo',
@@ -33,14 +33,14 @@ export const editCargoThunk = createAsyncThunk(
             return rejectWithValue("same");
 
         const {isNew} = state[index].states;
-        console.log("?");
+        
         let r;
         try{
             r = isNew ? await addCargo(current) : await updateCargo(current);
         }catch (e) {
-            console.log(e);
-        }//todo MB THAT SHIT IS THROWING ERROR WHICH I CAN CATCH IN TRY-CATCH?????? .then and .catch on axios request mb let me get an error;
-        console.log("?")
+            rejectWithValue(e);
+        }
+        
         console.log(r);
         return {index: index, id: (isNew ? r.data : 0)};
     }
@@ -61,13 +61,11 @@ const cargoSlice = createSlice({
         },
         setArrivalAddress(state, action){
             const {index, arrivalAddress} = action.payload;
-            console.log(index+" "+arrivalAddress);
 
             state.cargoEntities[index].cargo.curr.arrivalAddress = arrivalAddress;
         },
         setArrivalDate(state, action){
             const {index, date} = action.payload;
-            console.log(index+" "+date);
             
             state.cargoEntities[index].cargo.curr.arrivalDate = date;
         },
@@ -79,7 +77,7 @@ const cargoSlice = createSlice({
         },
         addEmptyCargo(state){
             const currentDate = new Date().toJSON();
-            const cargo = {name: null, arrivalAddress: null, departureAddress: null, arrivalDate: currentDate, departureDate: null, cargoStatus: 0};
+            const cargo = {name: '', arrivalAddress: '', departureAddress: '', arrivalDate: currentDate, departureDate: null, cargoStatus: 0};
             
             state.cargoEntities.unshift({cargo:{prev: cargo, curr: cargo}, states:{editing: true, isNew: true}});
             state.editingGlobal = true;

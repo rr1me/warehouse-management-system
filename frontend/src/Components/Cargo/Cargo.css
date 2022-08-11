@@ -6,7 +6,7 @@
     grid-gap: 15px;
 }
 
-.cargoGridHeader{
+.cargoHeader{
     background-color: var(--color-green);
     font-size: 12px;
     font-weight: bold;

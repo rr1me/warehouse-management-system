@@ -1,4 +1,4 @@
-﻿.cargoGridItem > .col-input{
+﻿.cargoRowItem > .col-input{
     width: 100%;
     white-space: break-spaces;
     resize: none;
@@ -8,7 +8,7 @@
     letter-spacing: 0.15pt;
 }
 
-.cargoGridRow{
+.cargoHeader, .cargoRow {
     padding: 10px 25px;
     border-radius: 6px;
     align-items: center;
@@ -16,19 +16,22 @@
     display: grid;
     grid-template-columns: 5% repeat(3, minmax(5%, 15%)) repeat(2, 1fr) 10% max-content;;
     grid-gap: 10px;
-    box-shadow: 0 0 6px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
+
+    word-breaK: break-word;
     font-family: Poppins, serif;
 }
 
-.cargoGridItem{
-    word-breaK: break-word;
+.cargoRowItem{
+    font-size: 15px;
 }
 
-.cargoGridItem > .operationContainer{
+.cargoRowItem > .operationContainer{
     justify-content: space-between;
     width: 105%;
 }
 
-.cargoGridItem > .dpContainer{
+.cargoRowItem > .dpContainer{
     margin-left: -5px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
