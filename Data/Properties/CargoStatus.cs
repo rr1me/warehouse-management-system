@@ -2,7 +2,8 @@
 
 public enum CargoStatus
 {
+    Unaccepted,
     Stored,
-    OnTheWay,
-    Delivered
+    Dispatched,
+    Lost
 }

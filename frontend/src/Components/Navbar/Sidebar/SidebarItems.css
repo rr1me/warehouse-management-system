@@ -1,0 +1,26 @@
+﻿.sbItem{
+    text-decoration: none;
+    color: white;
+    background-color: var(--color-green);
+    
+    display: grid;
+    align-items: center;
+    justify-content: start;
+    gap: 7px;
+    
+    grid-template-areas: 'icon name';
+    
+    border-radius: 3px;
+    padding: 3px 7px;
+    
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.sbItemIcon{
+    grid-area: icon;
+}
+
+.adIcon{
+    transform: scale(145%);
+}

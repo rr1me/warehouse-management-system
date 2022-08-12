@@ -23,6 +23,4 @@ public class User
     // [JsonConverter(typeof(JsonStringEnumConverter))]
     [Required]
     public Roles? Role { get; set; }
-
-    public Driver? DriverInfo { get; set; }
 }

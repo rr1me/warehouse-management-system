@@ -7,6 +7,10 @@ public class DatabaseContext : DbContext
     public DbSet<Driver> Drivers { get; set; }
     public DbSet<Cargo> Cargoes { get; set; }
     
+    public DbSet<AcceptanceAndDispatching> AcceptanceAndDispatching { get; set; }
+    
+    public DbSet<InnerWork> InnerWorks { get; set; }
+
     public DbSet<User> Users { get; set; }
 
     public DatabaseContext()
@@ -22,8 +26,8 @@ public class DatabaseContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.UseSerialColumns();
-        modelBuilder.Entity<Cargo>().HasOne(x => x.Driver).WithMany(x => x.Cargoes).HasForeignKey(x => x.DriverId).IsRequired(false);
+        modelBuilder.Entity<Cargo>().HasMany(x => x.AcceptanceAndDispatching).WithMany(x => x.AssignedCargo);
 
-        modelBuilder.Entity<Driver>().HasOne(x => x.User).WithOne(x => x.DriverInfo).HasForeignKey<Driver>(x => x.UserId).IsRequired(false);
+        modelBuilder.Entity<Cargo>().HasMany(x => x.AssignedInnerWorks).WithMany(x => x.AffectedCargo);
     }
 }

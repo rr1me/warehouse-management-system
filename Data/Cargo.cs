@@ -1,8 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.CodeAnalysis;
-using System.Text.Json.Serialization;
-using WebApplication1.Data.Properties;
+﻿using WebApplication1.Data.Properties;
 
 namespace WebApplication1.Data;
 
@@ -17,28 +13,23 @@ public class Cargo
         Id = id;
     }
 
-    public Cargo(string name, string arrivalAddress, string departureAddress, DateTime arrivalDate, DateTime departureDate, CargoStatus cargoStatus, Driver? driver)
+    public Cargo(long stickerId, string? description, CargoStatus cargoStatus, CargoQuality cargoQuality, List<AcceptanceAndDispatching> acceptanceAndDispatching, List<InnerWork>? assignedInnerWorks)
     {
-        Name = name;
-        ArrivalAddress = arrivalAddress;
-        DepartureAddress = departureAddress;
-        ArrivalDate = arrivalDate;
-        DepartureDate = departureDate;
+        StickerId = stickerId;
+        Description = description;
         CargoStatus = cargoStatus;
-        Driver = driver;
+        CargoQuality = cargoQuality;
+        AcceptanceAndDispatching = acceptanceAndDispatching;
+        AssignedInnerWorks = assignedInnerWorks;
     }
 
     public int Id { get; set; }
-    public string Name { get; set; }
+    public long StickerId { get; set; }
+    public string? Description { get; set; }
     
-    public string ArrivalAddress { get; set; }
-    public string? DepartureAddress { get; set; }
-    
-    public DateTime ArrivalDate { get; set; }
-    public DateTime? DepartureDate { get; set; }
-
     public CargoStatus CargoStatus { get; set; }
+    public CargoQuality CargoQuality { get; set; }
     
-    [JsonIgnore]public int? DriverId { get; set; }
-    [JsonIgnore]public Driver? Driver { get; set; }
+    public List<AcceptanceAndDispatching> AcceptanceAndDispatching { get; set; }
+    public List<InnerWork>? AssignedInnerWorks { get; set; }
 }

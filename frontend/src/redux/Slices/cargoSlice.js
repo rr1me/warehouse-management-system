@@ -29,7 +29,7 @@ export const editCargoThunk = createAsyncThunk(
         const previous = state[index].cargo.prev;
         const current = state[index].cargo.curr;
 
-        if (previous === current)
+        if (JSON.stringify(previous) === JSON.stringify(current))
             return rejectWithValue("same");
 
         const {isNew} = state[index].states;

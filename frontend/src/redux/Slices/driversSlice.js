@@ -1,5 +1,5 @@
 ﻿import {addDriver, deleteDriver, getDrivers, updateDriver} from "../../Services/DriversService";
-import {createAsyncThunk, createSlice, current} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 
 export const getDriversThunk = createAsyncThunk(
     'drivers/getDriversThunk',
@@ -31,7 +31,7 @@ export const editDriverThunk = createAsyncThunk(
         const previous = state[index].driver.prev;
         const current = state[index].driver.curr;
         
-        if (previous === current)
+        if (JSON.stringify(previous) === JSON.stringify(current))
             return rejectWithValue("same");
         
         const {isNew} = state[index].states;
@@ -68,8 +68,6 @@ const driversSlice = createSlice({
         setDriverStatus(state, action){
             const {index, status} = action.payload;
             
-            console.log(index+" "+status);
-            console.log(current(state.driversEntities[index].driver.curr))
             state.driversEntities[index].driver.curr.status = status;
         },
         sortDrivers(state, action){

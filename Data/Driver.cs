@@ -19,12 +19,11 @@ public class Driver
         Id = id;
     }
 
-    public Driver(string name, long phoneNumber, DriverStatus status, List<Cargo>? cargoes, User? user)
+    public Driver(string name, long phoneNumber, DriverStatus status, User? user)
     {
         Name = name;
         PhoneNumber = phoneNumber;
         Status = status;
-        Cargoes = cargoes;
         User = user;
     }
 
@@ -35,7 +34,7 @@ public class Driver
 
     public DriverStatus Status { get; set; }
     
-    public List<Cargo>? Cargoes { get; set; }
+    // public List<Cargo>? Cargoes { get; set; }
     
     [JsonIgnore]public int? UserId { get; set; }
     [JsonIgnore]public User? User { get; set; }

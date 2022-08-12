@@ -19,7 +19,7 @@ public class DriverController : ControllerBase
     [HttpGet("getAll")]
     public List<Driver> GetDrivers()
     {
-        Console.WriteLine(context.Cargoes.Where(x => x.DriverId != null).ToList().Count);
+        // Console.WriteLine(context.Cargoes.Where(x => x.DriverId != null).ToList().Count);
         return context.Drivers.Pipe(x =>
         {
             var fileName = x.Image;

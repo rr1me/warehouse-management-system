@@ -6,6 +6,7 @@ import Private from "./Components/PrivateRoute/PrivateRoute";
 import {PageNotFound} from "./Components/PageNotFound/PageNotFound";
 import Cargo from "./Components/Cargo/Cargo";
 import DriversGrid from "./Components/Drivers/DriversGrid";
+import AcceptanceAndDispatching from "./Components/AcceptanceAndDispatching/AcceptanceAndDispatching";
 
 export default function App() {
   return (
@@ -14,8 +15,9 @@ export default function App() {
             <Route path="/login" element={<Login/>}/>
             
             <Route path="/" element={<Private Component={<h1>home</h1>}/> }/>
-            <Route path="/cargoes" element={<Private Component={<Cargo/>}/> }/>
+            <Route path="/cargo" element={<Private Component={<Cargo/>}/> }/>
             <Route path="/drivers" element={<Private Component={<DriversGrid/>}/> }/>
+            <Route path="/ad" element={<Private Component={<AcceptanceAndDispatching/>}/> }/>
 
             <Route path="*" element={<PageNotFound/>}/>
             <Route path="heroes/:id" element={<h1>?</h1>}/>
