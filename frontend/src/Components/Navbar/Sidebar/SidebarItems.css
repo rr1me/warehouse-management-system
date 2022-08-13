@@ -1,7 +1,7 @@
 ﻿.sbItem{
     text-decoration: none;
-    color: white;
-    background-color: var(--color-green);
+    color: #797979;
+    /*background-color: var(--color-green);*/
     
     display: grid;
     align-items: center;
@@ -19,6 +19,7 @@
 
 .sbItemIcon{
     grid-area: icon;
+    color: #4781af;
 }
 
 .adIcon{

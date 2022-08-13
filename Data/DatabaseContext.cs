@@ -7,7 +7,7 @@ public class DatabaseContext : DbContext
     public DbSet<Driver> Drivers { get; set; }
     public DbSet<Cargo> Cargoes { get; set; }
     
-    public DbSet<AcceptanceAndDispatching> AcceptanceAndDispatching { get; set; }
+    public DbSet<Transit> Transits { get; set; }
     
     public DbSet<InnerWork> InnerWorks { get; set; }
 
@@ -26,7 +26,7 @@ public class DatabaseContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.UseSerialColumns();
-        modelBuilder.Entity<Cargo>().HasMany(x => x.AcceptanceAndDispatching).WithMany(x => x.AssignedCargo);
+        modelBuilder.Entity<Cargo>().HasMany(x => x.Transits).WithMany(x => x.AssignedCargo);
 
         modelBuilder.Entity<Cargo>().HasMany(x => x.AssignedInnerWorks).WithMany(x => x.AffectedCargo);
     }

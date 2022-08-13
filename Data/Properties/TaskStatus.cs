@@ -1,6 +1,6 @@
 ﻿namespace WebApplication1.Data.Properties;
 
-public enum ADStatus
+public enum TransitStatus
 {
     Planned,
     Completed,

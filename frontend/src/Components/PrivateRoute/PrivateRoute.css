@@ -1,0 +1,39 @@
+﻿.privateRoute{
+    display: grid;
+    grid-template-columns: 15% 85%;
+    /*grid-template-areas: */
+    /*        'logo nav'*/
+    /*        'side main';*/
+    
+    background-color: #d3d3d3;
+    grid-gap: 1px;
+    /*grid-template-rows: 15% 85%;*/
+    grid-template-rows: 1fr 100%;
+    height: auto;
+}
+
+.prWrapper{
+    background-color: white;
+    /*height: 50vh;*/
+    /*width: 100%;*/
+}
+
+/*.logo{*/
+/*    grid-area: logo;*/
+/*}*/
+
+/*.nav{*/
+/*    grid-area: nav;*/
+/*}*/
+
+.side{
+    /*grid-area: side;*/
+    /*height: 100%;*/
+    /*grid-row: 1;*/
+}
+
+.main{
+    /*overflow: scroll;*/
+    /*height: available;*/
+    /*grid-area: main;*/
+}

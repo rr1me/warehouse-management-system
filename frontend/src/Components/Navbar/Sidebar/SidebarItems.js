@@ -28,7 +28,7 @@ const SidebarList = [ //todo roleAccess?
         className: itemClassName
     },
     {
-        name: 'Acceptance and Dispatching',
+        name: 'Transit',
         icon: <BiTransferAlt className={itemIconClassName+' adIcon'}/>,
         to: '/ad',
         className: itemClassName

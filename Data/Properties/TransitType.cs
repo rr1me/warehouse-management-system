@@ -1,6 +1,6 @@
 ﻿namespace WebApplication1.Data.Properties;
 
-public enum ADType
+public enum TransitType
 {
     Acceptance,
     Dispatching

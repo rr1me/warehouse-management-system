@@ -72,7 +72,7 @@ public class Startup
         //     Password = BCrypt.Net.BCrypt.HashPassword("123"),
         //     Role = Roles.Admin
         // };
-        //       
+        //        
         // db.Users.Add(user);
         // db.SaveChanges();
             //

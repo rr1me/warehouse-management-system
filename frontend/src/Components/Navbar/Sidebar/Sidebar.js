@@ -19,11 +19,11 @@ const Sidebar = ({sidebarState, setSidebarState, handleSidebarButtonClick}) => {
     })
     
     return (
-        <div className={sidebarState ? 'sidebar sidebar-active' : 'sidebar'} id='sidebar' onClick={e=>e.stopPropagation()}>
+        <div className='sidebar' id='sidebar' onClick={e=>e.stopPropagation()}>
             <div onClick={handleSidebarButtonClick} className='sbContent'>
-                <button className='sbClose'>
-                    <AiOutlineClose className='sbCloseIcon'/>
-                </button>
+                {/*<button className='sbClose'>*/}
+                {/*    <AiOutlineClose className='sbCloseIcon'/>*/}
+                {/*</button>*/}
                 {/*<Link className='navlink' to="/">*/}
                 {/*    <AiFillHome className='sidebarItemIcon'/>*/}
                 {/*    Home*/}

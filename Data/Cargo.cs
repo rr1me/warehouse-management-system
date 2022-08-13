@@ -13,13 +13,13 @@ public class Cargo
         Id = id;
     }
 
-    public Cargo(long stickerId, string? description, CargoStatus cargoStatus, CargoQuality cargoQuality, List<AcceptanceAndDispatching> acceptanceAndDispatching, List<InnerWork>? assignedInnerWorks)
+    public Cargo(long stickerId, string? description, CargoStatus cargoStatus, CargoQuality cargoQuality, List<Transit> transits, List<InnerWork>? assignedInnerWorks)
     {
         StickerId = stickerId;
         Description = description;
         CargoStatus = cargoStatus;
         CargoQuality = cargoQuality;
-        AcceptanceAndDispatching = acceptanceAndDispatching;
+        Transits = transits;
         AssignedInnerWorks = assignedInnerWorks;
     }
 
@@ -30,6 +30,6 @@ public class Cargo
     public CargoStatus CargoStatus { get; set; }
     public CargoQuality CargoQuality { get; set; }
     
-    public List<AcceptanceAndDispatching> AcceptanceAndDispatching { get; set; }
+    public List<Transit> Transits { get; set; }
     public List<InnerWork>? AssignedInnerWorks { get; set; }
 }

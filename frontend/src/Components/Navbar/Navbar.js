@@ -17,22 +17,15 @@ const Navbar = () => {
         dispatch(unlogged());
         logoutRequest();
     }
-    
-    const [sidebarState, setSidebarState] = useState(false);
-    
-    const handleSidebarButtonClick = e => {
-        e.stopPropagation();
-        setSidebarState(value => !value);
-    }
 
     return (
         <nav className='navbar'>
             <ul>
-                <div className='rightsideNavbar'>
-                    <button className='sidebarButton' onClick={handleSidebarButtonClick}>
-                        <FaBars className='sidebarIcon'/>
-                    </button>
-                </div>
+                {/*<div className='rightsideNavbar'>*/}
+                {/*    <button className='sidebarButton' onClick={handleSidebarButtonClick}>*/}
+                {/*        <FaBars className='sidebarIcon'/>*/}
+                {/*    </button>*/}
+                {/*</div>*/}
 
                 <div className='leftsideNavbar'>
                     <Link className='navlink' to="/1">{username}</Link>
@@ -62,7 +55,7 @@ const Navbar = () => {
                 {/*        </Link>*/}
                 {/*    </div>*/}
                 {/*</div>*/}
-                <Sidebar sidebarState={sidebarState} setSidebarState={setSidebarState} handleSidebarButtonClick={handleSidebarButtonClick}/>
+                {/*<Sidebar sidebarState={sidebarState} setSidebarState={setSidebarState} handleSidebarButtonClick={handleSidebarButtonClick}/>*/}
             </ul>
         </nav>
     )

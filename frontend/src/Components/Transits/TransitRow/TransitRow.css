@@ -1,0 +1,21 @@
+.transitRow{
+    /*padding: 8px;*/
+}
+
+.odd{
+    background-color: #e8e8e8;
+}
+
+.transitRow:hover{
+    background-color: #d9d9d9;
+}
+
+.transitRowItem{
+    /*border: 1px solid blue;*/
+    /*padding: 8px;*/
+    padding: 8px;
+}
+
+.transitRowItem > .dpContainer {
+    margin-left: -6px;
+}
