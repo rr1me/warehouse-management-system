@@ -1,7 +1,6 @@
 ﻿.sbItem{
     text-decoration: none;
     color: #797979;
-    /*background-color: var(--color-green);*/
     
     display: grid;
     align-items: center;
@@ -15,6 +14,12 @@
     
     font-size: 15px;
     font-weight: 500;
+    
+    transition: 50ms;
+}
+
+.sbItem:hover{
+    background-color: #e5f5ff;
 }
 
 .sbItemIcon{

@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebApplication1.Data;
 
 namespace WebApplication1.Controllers;
 
 [Authorize(Policy = "Manager")]
-[Route("transit")]
+[Route("transits")]
 public class TransitController : ControllerBase
 {
     private readonly DatabaseContext context; 
@@ -18,8 +19,7 @@ public class TransitController : ControllerBase
     [HttpGet("getall")]
     public List<Transit> GetAllAd()
     {
-        Console.WriteLine("????");
-        return context.Transits.ToList();
+        return context.Transits.Include(x=>x.AssignedCargo).ToList();
     }
 
     [HttpPost("update")]
@@ -37,10 +37,4 @@ public class TransitController : ControllerBase
 
         return Ok(transit.Id);
     }
-
-    // [HttpDelete("delete")]
-    // public IActionResult DeleteOneAd(AcceptanceAndDispatching ad)
-    // {
-    //     context.AcceptanceAndDispatching
-    // }
 }

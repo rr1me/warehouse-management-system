@@ -16,6 +16,10 @@ const Transits = () => {
     
     return (
         <div className='transitContainer'>
+            <div className='elementHeader'>
+                <div className='elementTitle'>Transits</div>
+                <button>Add new</button>
+            </div>
             <div className='transitGrid'>
                 <div className='transitHeader'>
                     <div className='transitHeaderItem'>Id</div>
@@ -29,7 +33,6 @@ const Transits = () => {
                 {transitEntities.length !== undefined ? transitEntities.map((value, index) => {
                     const current = value.transit.curr;
                     const states = value.states;
-                    // console.log(index % 2);
                     return (
                         <TransitRow key={index} id={current.id} isOdd={index % 2} current={current}/>
                     )

@@ -4,7 +4,13 @@ import {getTransits} from "../../Services/transitService";
 export const thunkTransits = createAsyncThunk(
     'getAD',
     async () => {
-        const r = await getTransits();
+        let r;
+        try{
+            r = await getTransits();
+        }catch(e){
+            console.log(e);
+            
+        }
         console.log(r);
         return r.data.map(v => {
             return {transit: {prev: v, curr: v}, states: {editing: false}};

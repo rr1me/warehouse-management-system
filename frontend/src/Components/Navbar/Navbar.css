@@ -1,13 +1,10 @@
-﻿.navbar > ul {
-    /*background-color: white;*/
+﻿.navbar {
     margin: 0;
     overflow: hidden;
-    /*box-shadow: 0 3px 7px rgba(0, 0, 0, 0.164);*/
-    /*border: 1px solid #c9c9c9;*/
     display: flex;
-    padding: 15px 25px;
-    /*justify-content: space-between;*/
-    align-content: flex-end;
+    padding: 13px 25px;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .navlink {
@@ -34,4 +31,10 @@
     background: none;
     border-radius: 1px;
     transition: 0.4s ease;
+}
+
+.myWMS{
+    font-size: 17px;
+    font-family: "Poppins SemiBold", serif;
+    color: #4781af;
 }

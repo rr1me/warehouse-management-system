@@ -16,9 +16,7 @@ const TransitRow = ({current, isOdd, id}) => {
             <div className='transitRowItem'>{current.id}</div>
             <div className='transitRowItem'>{current.transitType}</div>
             <div className='transitRowItem'>{current.transitStatus}</div>
-            <div className='transitRowItem'>
-                {current.client}
-            </div>
+            <div className='transitRowItem'>{current.client}</div>
             <div className='transitRowItem'>
                 <DatePicker editState={false} incomeDate={current.date}/>
             </div>

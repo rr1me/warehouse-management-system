@@ -14,44 +14,13 @@ const Private = ({Component}) => {
     
     return auth ? (
         <div className='privateRoute'>
-            <div className='prWrapper logo'><div>MyWMS</div></div>
-            <div className='prWrapper nav'><Navbar/></div>
-            <div className='prWrapper side'><Sidebar sidebarState={sidebarState} setSidebarState={setSidebarState}/></div>
-            <div className='prWrapper main'>
-                {Component}
-                {Component}
-                {Component}
-                {Component}
-                {Component}
-                {Component}
-                {Component}
-                {Component}
-                {Component}
-                {Component}
-                {Component}
-                {Component}
-                {Component}
-                {Component}
-                {Component}
-                {Component}
-                {Component}
-                {Component}
-                {Component}
-                {Component}
-                {Component}
-                {Component}
-                {Component}
-                {Component}
-                {Component}
-                {Component}
+            <Navbar/>
+            <div className='main'>
+                <Sidebar sidebarState={sidebarState} setSidebarState={setSidebarState}/>
+                <div className='innerContent'>
+                    {Component}
+                </div>
             </div>
-            {/*<div>MyWMS</div>*/}
-            {/*<div>MyWMS</div>*/}
-            {/*<div>MyWMS</div>*/}
-            {/*<div>MyWMS</div>*/}
-            {/*<Navbar/>*/}
-            {/*<Sidebar sidebarState={sidebarState} setSidebarState={setSidebarState}/>*/}
-            {/*{Component}*/}
         </div>
     ) : <Navigate to="/login" />
 }

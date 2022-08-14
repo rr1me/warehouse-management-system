@@ -4,14 +4,13 @@
 
 .transitGrid{
     display: grid;
-    /*gap: 15px;*/
     
     border: 1px solid #c1d8ea;
 }
 
 .transitHeader, .transitRow{
     display:grid;
-    grid-template-columns: 5% repeat(5, 15%) 1fr;
+    grid-template-columns: 5% repeat(5, 1fr) 1fr;
 }
 
 .transitHeaderItem{
@@ -25,4 +24,14 @@
     padding: 8px;
 
     background-color: #cee1f2;
+}
+
+.elementTitle{
+    color: #c0c0c0;
+    font: 25px "Poppins Medium", serif;
+}
+
+.elementHeader{
+    display: flex;
+    padding-bottom: 10px;
 }

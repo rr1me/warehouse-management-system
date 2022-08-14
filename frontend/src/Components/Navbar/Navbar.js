@@ -19,45 +19,16 @@ const Navbar = () => {
     }
 
     return (
-        <nav className='navbar'>
-            <ul>
-                {/*<div className='rightsideNavbar'>*/}
-                {/*    <button className='sidebarButton' onClick={handleSidebarButtonClick}>*/}
-                {/*        <FaBars className='sidebarIcon'/>*/}
-                {/*    </button>*/}
-                {/*</div>*/}
-
-                <div className='leftsideNavbar'>
-                    <Link className='navlink' to="/1">{username}</Link>
-                    <Link className='navlink' onClick={() => { logout() }} to="/login">Logout</Link>
-                </div>
-                
-                {/*<div className={sidebar ? 'sidebar sidebar-active' : 'sidebar'} id={sidebar} onClick={e=>e.stopPropagation()}>*/}
-                {/*    <div onClick={handleSidebarButtonClick} className='sidebarContent'>*/}
-                {/*        <button className='sbClose'>*/}
-                {/*            <AiOutlineClose className='sidebarIcon'/>*/}
-                {/*        </button>*/}
-                {/*        <Link className='navlink' to="/">*/}
-                {/*            <AiFillHome className='sidebarItemIcon'/>*/}
-                {/*            Home*/}
-                {/*        </Link>*/}
-                {/*        <Link className='navlink' to="/cargoes">*/}
-                {/*            <FaWarehouse className='sidebarItemIcon'/>*/}
-                {/*            Stored cargo*/}
-                {/*        </Link>*/}
-                {/*        <Link className='navlink' to="/drivers">*/}
-                {/*            <BsFillPeopleFill className='sidebarItemIcon'/>*/}
-                {/*            Workers*/}
-                {/*        </Link>*/}
-                {/*        <Link className='navlink AD' to="/ad">*/}
-                {/*            <BiTransferAlt className='sidebarItemIcon'/>*/}
-                {/*            Acceptance and Dispatching*/}
-                {/*        </Link>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
-                {/*<Sidebar sidebarState={sidebarState} setSidebarState={setSidebarState} handleSidebarButtonClick={handleSidebarButtonClick}/>*/}
-            </ul>
-        </nav>
+        <div className='navbar'>
+            <div>
+                <Link className='navlink myWMS' to='/'>MyWMS</Link>
+            </div>
+            
+            <div className='leftsideNavbar'>
+                <Link className='navlink' to="/1">{username}</Link>
+                <Link className='navlink' onClick={() => { logout() }} to="/login">Logout</Link>
+            </div>
+        </div>
     )
 };
 

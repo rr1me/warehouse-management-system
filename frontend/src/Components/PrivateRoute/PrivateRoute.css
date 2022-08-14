@@ -1,39 +1,25 @@
-﻿.privateRoute{
-    display: grid;
-    grid-template-columns: 15% 85%;
-    /*grid-template-areas: */
-    /*        'logo nav'*/
-    /*        'side main';*/
+﻿.main{
+    padding-top: 5px;
+    gap:5px;
     
-    background-color: #d3d3d3;
-    grid-gap: 1px;
-    /*grid-template-rows: 15% 85%;*/
-    grid-template-rows: 1fr 100%;
-    height: auto;
+    display: flex;
 }
 
-.prWrapper{
+.privateRoute{
+    background-color: #f7f7f7;
+}
+
+.innerContent{
     background-color: white;
-    /*height: 50vh;*/
-    /*width: 100%;*/
+    width: 100%;
+    min-height: calc(100vh - 65px);
 }
 
-/*.logo{*/
-/*    grid-area: logo;*/
-/*}*/
-
-/*.nav{*/
-/*    grid-area: nav;*/
-/*}*/
-
-.side{
-    /*grid-area: side;*/
-    /*height: 100%;*/
-    /*grid-row: 1;*/
+.innerContent, .sidebar{
+    border-radius: 7px;
 }
 
-.main{
-    /*overflow: scroll;*/
-    /*height: available;*/
-    /*grid-area: main;*/
+.innerContent, .sidebar, .navbar{
+    border: #e8e8e8 1px solid;
+    box-shadow: 0 0 3px 0 #c0c0c0;
 }
