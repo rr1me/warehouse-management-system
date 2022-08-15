@@ -20,13 +20,15 @@ const Navbar = () => {
 
     return (
         <div className='navbar'>
-            <div>
-                <Link className='navlink myWMS' to='/'>MyWMS</Link>
-            </div>
-            
-            <div className='leftsideNavbar'>
-                <Link className='navlink' to="/1">{username}</Link>
-                <Link className='navlink' onClick={() => { logout() }} to="/login">Logout</Link>
+            <div className='navInner'>
+                <div>
+                    <Link className='navlink myWMS' to='/'>MyWMS</Link>
+                </div>
+
+                <div className='leftsideNavbar'>
+                    <Link className='navlink' to="/1">{username}</Link>
+                    <Link className='navlink' onClick={() => { logout() }} to="/login">Logout</Link>
+                </div>
             </div>
         </div>
     )

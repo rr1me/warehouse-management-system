@@ -1,13 +1,11 @@
 ﻿import axios from "axios";
 
-export const getTransits = () => {
-    return axios.get('api/transits/getAll').catch(v=>{throw v;});
-};
+export const getTransits = () => axios.get('/api/transits').catch(catcher);
 
-export const updateTransits = transit => {
-    return axios.post('api/transits/update').catch(v=>{throw v;});
-};
+export const getOneTransit = id => axios.get('/api/transits/'+id).catch(catcher);
 
-export const addTransits = transit => {
-    return axios.post('api/transits/add').catch(v=>{throw v;});
-};
+export const updateTransits = transit => axios.post('/api/transits/update').catch(catcher);
+
+export const addTransits = transit => axios.post('/api/transits/add').catch(catcher);
+
+const catcher = v => {throw v};

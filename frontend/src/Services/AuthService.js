@@ -1,7 +1,7 @@
 ﻿import axios from "axios"
 
 export const loginRequest = (username, password) => {
-    return axios.post('api/login', {
+    return axios.post('/api/login', {
         username: username,
         password: password
     }).then((res) => {
@@ -11,7 +11,7 @@ export const loginRequest = (username, password) => {
 };
 
 export const logoutRequest = () => {
-    axios.get("api/logout").then((res) => {
+    axios.get("/api/logout").then((res) => {
         console.log(res.data);
     })
 }

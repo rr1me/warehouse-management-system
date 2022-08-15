@@ -22,7 +22,7 @@ const DriversGrid = memo(() => {
     return (
         <div className='gridContainer'>
             <div className='driversGridOperations'>
-                <button onClick={handleAddNewClick} className='btn apply-btn'>Add new</button>
+                <button onClick={handleAddNewClick} className='btn apply-btn tableButton'>Add new</button>
                 <FilterButton id='driverFilter' sortType={sort} sortList={rows} sortDispatch={sortDrivers}/>
             </div>
             {driversEntities.length !== undefined ? driversEntities.map((value, index) => {

@@ -10,7 +10,7 @@
 
 .transitHeader, .transitRow{
     display:grid;
-    grid-template-columns: 5% repeat(5, 1fr) 1fr;
+    grid-template-columns: 5% repeat(6, 1fr);
 }
 
 .transitHeaderItem{
@@ -34,4 +34,6 @@
 .elementHeader{
     display: flex;
     padding-bottom: 10px;
+    
+    justify-content: space-between;
 }

@@ -4,6 +4,7 @@ import './Transits.css';
 import axios from "axios";
 import TransitRow from "./TransitRow/TransitRow";
 import {thunkTransits} from "../../redux/Slices/transitSlice";
+import {useNavigate} from "react-router-dom";
 
 const Transits = () => {
     
@@ -14,11 +15,17 @@ const Transits = () => {
         dispatch(thunkTransits());
     }, [dispatch]);
     
+    const navigate = useNavigate();
+    
+    const handleAddNewClick = () => {
+        navigate('/transits/add');
+    }
+    
     return (
         <div className='transitContainer'>
             <div className='elementHeader'>
                 <div className='elementTitle'>Transits</div>
-                <button>Add new</button>
+                <button className="btn apply-btn tableButton" onClick={handleAddNewClick}>Add new</button>
             </div>
             <div className='transitGrid'>
                 <div className='transitHeader'>

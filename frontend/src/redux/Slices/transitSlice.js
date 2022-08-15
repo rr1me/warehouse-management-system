@@ -9,7 +9,6 @@ export const thunkTransits = createAsyncThunk(
             r = await getTransits();
         }catch(e){
             console.log(e);
-            
         }
         console.log(r);
         return r.data.map(v => {

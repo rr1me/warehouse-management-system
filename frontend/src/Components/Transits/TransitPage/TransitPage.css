@@ -1,0 +1,39 @@
+﻿.transitPage{
+    padding: 15px;
+    font-size: 25px;
+    
+    /*display: flex;*/
+    /*display: grid;*/
+    /*grid-template-columns: 1fr 1fr;*/
+    /*grid-gap: 15px;*/
+}
+
+.trInfoMain{
+    padding: 50px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 15px;
+}
+
+.trInfoElem{
+    color: #505050;
+}
+
+.trElemName{
+    font-size: 20px;
+}
+
+.trElemInfo{
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    
+    width: 90%;
+}
+
+/*.trId{*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*    gap:5px;*/
+/*}*/

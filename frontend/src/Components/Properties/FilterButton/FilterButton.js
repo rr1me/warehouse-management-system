@@ -21,7 +21,7 @@ const FilterButton = ({sortType, sortList, sortDispatch, id}) => {
     };
     
     return (
-        <button onClick={handleFilterClick} className='btn apply-btn'>
+        <button onClick={handleFilterClick} className='btn apply-btn tableButton'>
             Filter
             <BulletList id={id} openState={filterOpen} bulletState={sortType} bulletList={sortList} bulletStateDispatch={sortDispatch}/>
         </button>

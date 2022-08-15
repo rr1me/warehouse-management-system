@@ -16,14 +16,21 @@ public class TransitController : ControllerBase
         this.context = context;
     }
 
-    [HttpGet("getall")]
-    public List<Transit> GetAllAd()
+    [HttpGet]
+    public List<Transit> GetAllTransits()
     {
         return context.Transits.Include(x=>x.AssignedCargo).ToList();
     }
 
+    [HttpGet("{id}")]
+    public Transit GetOneTransit()
+    {
+        int id = 1;
+        return context.Transits.Include(x => x.AssignedCargo).Single(x => x.Id == id);
+    }
+
     [HttpPost("update")]
-    public IActionResult UpdateOneAd(Transit transit)
+    public IActionResult UpdateOneTransit(Transit transit)
     {
         context.Transits.Update(transit);
 
@@ -31,7 +38,7 @@ public class TransitController : ControllerBase
     }
 
     [HttpPut("add")]
-    public IActionResult AddOneAd(Transit transit)
+    public IActionResult AddOneTransit(Transit transit)
     {
         context.Transits.Add(transit);
 

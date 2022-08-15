@@ -34,9 +34,16 @@
 }
 
 .apply-btn{
-  background: #54bc91;
+  background: #4781af;
 }
 
 .apply-btn:hover{
-  background: #4ca882;
+  background: #3a6a8d;
+}
+
+.tableButton{
+  padding: 6px 12px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
 }
