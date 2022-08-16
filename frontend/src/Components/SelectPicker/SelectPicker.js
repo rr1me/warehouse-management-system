@@ -36,11 +36,11 @@ const SelectPicker = memo(({children, defaultValue}) => {
     return (
         <div className='devContainer'>
             {open ? closingElement() : null}
-            <div className='selectPicker' onClick={() => {console.log(selectPickerRef.current.offsetWidth);setOpen(value => !value)}} ref={selectPickerRef}>
+            <div className='selectPicker' onClick={() => {setOpen(value => !value)}} ref={selectPickerRef}>
                 <div className='selectPickerContent'>
                     someSelected
                     <RelativeModal state={open} 
-                                   modalStyle={{width: (selectPickerRef.current !== undefined ? selectPickerRef.current.offsetWidth+'px' : null), right: '10px', top: '15px'}} 
+                                   modalStyle={{width: (selectPickerRef.current !== undefined ? selectPickerRef.current.offsetWidth-20+'px' : null), right: '10px', top: '15px', padding: '10px'}} 
                                    doubleWrap={false}>
                         <div>children</div>
                         <div>children</div>

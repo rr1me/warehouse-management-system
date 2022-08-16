@@ -32,6 +32,10 @@
     width: 90%;
 }
 
+.trElemSelector{
+    padding-top: 3px;
+}
+
 /*.trId{*/
 /*    display: flex;*/
 /*    flex-direction: row;*/

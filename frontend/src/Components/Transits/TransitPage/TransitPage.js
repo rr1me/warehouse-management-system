@@ -35,16 +35,18 @@ const TransitPage = () => {
                         <input className='trElemInfo' defaultValue={transit.client}/>
                     </div>
                     <div className='trInfoElem elementTitle'>
-                        <div className='trElemName'>Id</div>
-                        <SelectPicker className='trElemInfo' defaultValue={transit.client}>
-                            <div>ewwe</div>
-                            <div>ewwe</div>
-                            <div>ewwe</div>
-                            <div>ewwe</div>
-                        </SelectPicker>
+                        <div className='trElemName'>Type</div>
+                        <div className='trElemSelector'>
+                            <SelectPicker>
+                                <div>ewwe</div>
+                                <div>ewwe</div>
+                                <div>ewwe</div>
+                                <div>ewwe</div>
+                            </SelectPicker>
+                        </div>
                     </div>
                     <div className='trInfoElem elementTitle'>
-                        <div className='trElemName'>Id</div>
+                        <div className='trElemName'>Status</div>
                         <input className='trElemInfo' defaultValue={transit.client}/>
                     </div>
                 </div>
