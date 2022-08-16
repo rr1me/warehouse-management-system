@@ -7,27 +7,57 @@
     border: 1px solid rgba(0,0,0,0.1);
     border-radius: 5px;
 
-    padding: 8px 12px;
+    padding: 0 10px;
 
     display: flex;
+    /*flex-direction: row;*/
+    justify-content: space-between;
+    width: 100%;
+    /*align-items: center;*/
 }
 
 .selectPickerContent{
     cursor:default;
     position: relative;
+    bottom: 1px;
+    align-self: center;
+    
+    font: 20px Lato, serif;
 }
 
 .separator{
-    transform: rotate(90deg) scaleX(200%) scaleY(40%);
-    color: rgba(0,0,0,0.4)
+    transform: rotate(90deg) scaleX(150%) scaleY(40%);
+    color: rgba(79, 79, 79, 0.4);
+    margin-inline: -5px;
+    
+    transition: 50ms;
 }
 
-.closingElement{
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    position: fixed;
-    height: 100vh;
-    width: 100vw;
+.darkArr{
+    color: rgb(63, 63, 63);
 }
+
+.brightArr{
+    color: rgb(108, 108, 108);
+}
+
+.spArrow{
+    position: relative;
+    top: 5px;
+    left: 1px;
+    transform: scale(85%);
+}
+
+.spControls{
+    display: flex;
+}
+
+/*.closingElement{*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    right: 0;*/
+/*    bottom: 0;*/
+/*    position: fixed;*/
+/*    height: 100vh;*/
+/*    width: 100vw;*/
+/*}*/

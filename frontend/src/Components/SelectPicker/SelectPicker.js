@@ -14,8 +14,6 @@ const SelectPicker = memo(({children, defaultValue}) => {
             }
         )
     }, []);
-
-    console.log(children);
     
     // useEffect(() => {
     //     children = children.map(value => {
@@ -38,22 +36,25 @@ const SelectPicker = memo(({children, defaultValue}) => {
     return (
         <div className='devContainer'>
             {open ? closingElement() : null}
-            <div className='selectPicker' onClick={() => {setOpen(value => !value)}} ref={selectPickerRef}>
+            <div className='selectPicker' onClick={() => {console.log(selectPickerRef.current.offsetWidth);setOpen(value => !value)}} ref={selectPickerRef}>
                 <div className='selectPickerContent'>
-                    {/*{defaultValue}*/}
-                    children
-                    <RelativeModal state={open} width={selectPickerRef.current.offsetWidth}>
+                    someSelected
+                    <RelativeModal state={open} 
+                                   modalStyle={{width: (selectPickerRef.current !== undefined ? selectPickerRef.current.offsetWidth+'px' : null), right: '10px', top: '15px'}} 
+                                   doubleWrap={false}>
                         <div>children</div>
                         <div>children</div>
                         <div>children</div>
                         <div>children</div>
                     </RelativeModal>
                 </div>
-                <div className='separator'>
-                    {icons.separator}
-                </div>
-                <div className={'controls'+(open ? ' dark': ' bright')}>
-                    {icons.arrow}
+                <div className='spControls'>
+                    <div className='separator'>
+                        {icons.separator}
+                    </div>
+                    <div className={'spArrow'+(open ? ' darkArr' : ' brightArr')}>
+                        {icons.arrow}
+                    </div>
                 </div>
             </div>
         </div>

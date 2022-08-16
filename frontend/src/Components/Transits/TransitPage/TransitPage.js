@@ -2,7 +2,8 @@
 import {useLocation} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {getOneTransit} from "../../../Services/transitService";
-import axios from "axios";
+import {Selector} from "react-redux";
+import SelectPicker from "../../SelectPicker/SelectPicker";
 
 const TransitPage = () => {
 
@@ -35,7 +36,12 @@ const TransitPage = () => {
                     </div>
                     <div className='trInfoElem elementTitle'>
                         <div className='trElemName'>Id</div>
-                        <input className='trElemInfo' defaultValue={transit.client}/>
+                        <SelectPicker className='trElemInfo' defaultValue={transit.client}>
+                            <div>ewwe</div>
+                            <div>ewwe</div>
+                            <div>ewwe</div>
+                            <div>ewwe</div>
+                        </SelectPicker>
                     </div>
                     <div className='trInfoElem elementTitle'>
                         <div className='trElemName'>Id</div>
@@ -43,7 +49,6 @@ const TransitPage = () => {
                     </div>
                 </div>
             </div>
-            // <button onClick={hoba}>?</button>
         )
     }
 };

@@ -1,7 +1,6 @@
 ﻿import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import './Transits.css';
-import axios from "axios";
 import TransitRow from "./TransitRow/TransitRow";
 import {thunkTransits} from "../../redux/Slices/transitSlice";
 import {useNavigate} from "react-router-dom";

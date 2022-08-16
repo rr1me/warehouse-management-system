@@ -3,9 +3,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import {unlogged} from "../../redux/Slices/authSlice";
 import {logoutRequest} from "../../Services/AuthService";
-import {useState} from "react";
-import {FaBars} from "react-icons/fa";
-import Sidebar from "./Sidebar/Sidebar";
 
 const Navbar = () => {
 
