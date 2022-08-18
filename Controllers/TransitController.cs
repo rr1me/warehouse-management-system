@@ -44,4 +44,10 @@ public class TransitController : ControllerBase
 
         return Ok(transit.Id);
     }
+
+    [HttpGet("getCargo/{id}")]
+    public List<Cargo> GetAssignedCargo(int id)
+    {
+        return context.Cargoes.Where(x => x.Transits.Exists(y => y.Id == id)).ToList();
+    }
 }

@@ -13,7 +13,6 @@
 }
 
 .innerContent{
-    background-color: white;
     width: 100%;
     min-height: calc(100vh - 65px);
 }
@@ -25,4 +24,6 @@
 .innerContent, .sidebar, .navbar{
     border: #e8e8e8 1px solid;
     box-shadow: 0 0 3px 0 #c0c0c0;
+
+    background-color: white;
 }

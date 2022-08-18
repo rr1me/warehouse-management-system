@@ -1,9 +1,4 @@
-﻿.devContainer{
-    display: flex;
-    height: 39px;
-}
-
-.selectPicker{
+﻿.selectPicker{
     background-color: rgb(255, 255, 255);
     border: 1px solid rgba(0,0,0,0.1);
     border-radius: 5px;
@@ -11,19 +6,16 @@
     padding: 0 10px;
 
     display: flex;
-    /*flex-direction: row;*/
     justify-content: space-between;
     width: 100%;
-    /*align-items: center;*/
 }
 
 .selectPickerContent{
-    cursor:default;
     position: relative;
     bottom: 1px;
     align-self: center;
     
-    font: 20px Lato, serif;
+    font: 15px Lato, serif;
 }
 
 .separator{
@@ -52,13 +44,3 @@
 .spControls{
     display: flex;
 }
-
-/*.closingElement{*/
-/*    top: 0;*/
-/*    left: 0;*/
-/*    right: 0;*/
-/*    bottom: 0;*/
-/*    position: fixed;*/
-/*    height: 100vh;*/
-/*    width: 100vw;*/
-/*}*/

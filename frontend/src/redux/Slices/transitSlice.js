@@ -23,6 +23,11 @@ const transitSlice = createSlice({
         transitEntities: {},
         sort: 0
     },
+    reducers: {
+        getAssignedCargo(state,action){
+            
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(thunkTransits.fulfilled, (state, action) => {
             state.transitEntities = action.payload;

@@ -13,8 +13,8 @@ public class Transit
     {
         Client = client;
         Date = date;
-        TransitType = transitType;
-        TransitStatus = transitStatus;
+        Type = transitType;
+        Status = transitStatus;
         AssignedCargo = assignedCargo;
         AdditionalTasks = additionalTasks;
         Commentary = commentary;
@@ -24,8 +24,10 @@ public class Transit
     public string Client { get; set; }
     public DateTime Date { get; set; }
 
-    [JsonConverter(typeof(JsonStringEnumConverter))]public TransitType TransitType { get; set; }
-    [JsonConverter(typeof(JsonStringEnumConverter))]public TransitStatus TransitStatus { get; set; }
+    // [JsonConverter(typeof(JsonStringEnumConverter))]
+    public TransitType Type { get; set; }
+    // [JsonConverter(typeof(JsonStringEnumConverter))]
+    public TransitStatus Status { get; set; }
     
     public List<Cargo> AssignedCargo { get; set; }
     public TaskStatus AdditionalTasks { get; set; }

@@ -1,11 +1,6 @@
 ﻿.transitPage{
     padding: 15px;
     font-size: 25px;
-    
-    /*display: flex;*/
-    /*display: grid;*/
-    /*grid-template-columns: 1fr 1fr;*/
-    /*grid-gap: 15px;*/
 }
 
 .trInfoMain{
@@ -13,11 +8,14 @@
 
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 15px;
+    grid-gap: 35px;
+    grid-row-gap: 20px;
 }
 
 .trInfoElem{
     color: #505050;
+    display: flex;
+    flex-direction: column;
 }
 
 .trElemName{
@@ -26,18 +24,22 @@
 
 .trElemInfo{
     padding: 10px;
-    border: 1px solid #ced4da;
+    border: 1px solid rgba(0,0,0,0.1);
     border-radius: 5px;
     
-    width: 90%;
+    width: 100%;
+    height: 100%;
 }
 
-.trElemSelector{
-    padding-top: 3px;
+.trInfoElem > .dpContainer{
+    /*height: 100%;*/
+    /*width: 100%;*/
+    /*align-items: center;*/
+    /*display: unset;*/
+    /*margin-left: -5px;*/
 }
 
-/*.trId{*/
-/*    display: flex;*/
-/*    flex-direction: row;*/
-/*    gap:5px;*/
-/*}*/
+.trInfoElem > .dpContainer > .dpInput{
+    /*height: 100%;*/
+    /*width: 100%;*/
+}

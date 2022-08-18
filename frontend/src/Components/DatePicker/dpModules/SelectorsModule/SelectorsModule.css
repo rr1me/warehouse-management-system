@@ -1,11 +1,11 @@
 ﻿.dpBtn, .dpSelect, .dpInput {
-    /*height: 2em;*/
-    font-size: 1rem;
+    height: 2em;
+    font-size: 15px;
     background-color: #fff;
     color: #363636;
     border: 1px solid #dbdbdb;
     border-radius: 4px;
-    transform: scale(95%);
+    /*transform: scale(95%);*/
 }
 
 .dpBtn, .dpSelect{

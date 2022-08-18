@@ -27,34 +27,22 @@ const SelectPicker = memo(({children, defaultValue}) => {
     
     const selectPickerRef = useRef();
     
-    const closingElement = () => {
-        return (
-            <div className='closingElement' onClick={() => {setOpen(false)}}></div>
-        )
-    }
-    
     return (
-        <div className='devContainer'>
-            {open ? closingElement() : null}
-            <div className='selectPicker' onClick={() => {setOpen(value => !value)}} ref={selectPickerRef}>
-                <div className='selectPickerContent'>
-                    someSelected
-                    <RelativeModal state={open} 
-                                   modalStyle={{width: (selectPickerRef.current !== undefined ? selectPickerRef.current.offsetWidth-20+'px' : null), right: '10px', top: '15px', padding: '10px'}} 
-                                   doubleWrap={false}>
-                        <div>children</div>
-                        <div>children</div>
-                        <div>children</div>
-                        <div>children</div>
-                    </RelativeModal>
+        <div className='selectPicker' onClick={() => {setOpen(value => !value)}} ref={selectPickerRef}>
+            <div className='selectPickerContent'>
+                {defaultValue}
+                <RelativeModal state={open}
+                               modalStyle={{width: (selectPickerRef.current !== undefined ? selectPickerRef.current.offsetWidth-22+'px' : null), right: '10px', top: '15px', padding: '5px 10px'}}
+                               doubleWrap={false}>
+                    {children}
+                </RelativeModal>
+            </div>
+            <div className='spControls'>
+                <div className='separator'>
+                    {icons.separator}
                 </div>
-                <div className='spControls'>
-                    <div className='separator'>
-                        {icons.separator}
-                    </div>
-                    <div className={'spArrow'+(open ? ' darkArr' : ' brightArr')}>
-                        {icons.arrow}
-                    </div>
+                <div className={'spArrow'+(open ? ' darkArr' : ' brightArr')}>
+                    {icons.arrow}
                 </div>
             </div>
         </div>
