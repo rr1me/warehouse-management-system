@@ -1,4 +1,4 @@
-﻿import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+﻿import {createAsyncThunk, createSlice, current} from "@reduxjs/toolkit";
 import {getTransits} from "../../Services/transitService";
 
 export const thunkTransits = createAsyncThunk(
@@ -12,28 +12,50 @@ export const thunkTransits = createAsyncThunk(
         }
         console.log(r);
         return r.data.map(v => {
-            return {transit: {prev: v, curr: v}, states: {editing: false}};
-        }).sort((a,b) => a.transit.curr.date - b.transit.curr.date);
+            return v;
+        }).sort((a,b) => a.date - b.date);
     }
 );
 
 const transitSlice = createSlice({
     name: 'transits',
     initialState: {
-        transitEntities: {},
-        sort: 0
+        transits: {},
+        sort: 0,
+        transitPage: {}
     },
     reducers: {
-        getAssignedCargo(state,action){
+        getTransitForPage(state, action){
+            // const transit = {id: 'new', date: new Date()};
+            // state.transitEntities.unshift({transit: {prev: transit, curr: transit, states: {editing: true}}});
+            const id = action.payload;
             
+            let transit;
+            if (id === 'new')
+                transit = {id: 'new', date: new Date()};
+            else{
+                console.log(current(state.transits));
+                transit = state.transits.filter(v=>v.id === id);
+            }
+            
+            state.transitPage = {prev: transit, curr: transit};
+        },
+        setTransitPageClient(state, action){
+            state.transitPage.curr.client = action.payload;
+        },
+        cancelTransitEdit(state){
+            const {prev, curr} = state.transitPage
+            
+            if (JSON.stringify(prev) !== JSON.stringify(curr))
+                state.transitPage.curr = state.transitPage.prev;
         }
     },
     extraReducers: (builder) => {
         builder.addCase(thunkTransits.fulfilled, (state, action) => {
-            state.transitEntities = action.payload;
+            state.transits = action.payload;
         })
     }
 });
 
-export const {} = transitSlice.actions;
+export const {getTransitForPage, setTransitPageClient, cancelTransitEdit} = transitSlice.actions;
 export default transitSlice.reducer;

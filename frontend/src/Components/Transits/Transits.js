@@ -8,11 +8,12 @@ import {useNavigate} from "react-router-dom";
 const Transits = () => {
     
     const dispatch = useDispatch();
-    const {transitEntities, sort} = useSelector(state => state.transitSlice);
+    const {transits, sort} = useSelector(state => state.transitSlice);
     
     useEffect(() => {
-        dispatch(thunkTransits());
-    }, [dispatch]);
+        if (transits.length === undefined)
+            dispatch(thunkTransits());
+    }, [dispatch, transits.length]);
     
     const navigate = useNavigate();
     
@@ -36,11 +37,11 @@ const Transits = () => {
                     <div className='transitHeaderItem'>Additional Tasks</div>
                     <div className='transitHeaderItem'>Commentary</div>
                 </div>
-                {transitEntities.length !== undefined ? transitEntities.map((value, index) => {
-                    const current = value.transit.curr;
-                    const states = value.states;
+                {transits.length !== undefined ? transits.map((value, index) => {
+                    // const transit = value.transit;
+                    // const states = value.states;
                     return (
-                        <TransitRow key={index} id={current.id} isOdd={index % 2} current={current}/>
+                        <TransitRow key={index} id={value.id} isOdd={index % 2} current={value}/>
                     )
                 }) : null}
             </div>
