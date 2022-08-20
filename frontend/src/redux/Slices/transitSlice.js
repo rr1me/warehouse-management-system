@@ -1,9 +1,9 @@
-﻿import {createAsyncThunk, createSlice, current} from "@reduxjs/toolkit";
-import {getTransits} from "../../Services/transitService";
+﻿import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {addTransit, getTransits, updateTransit, updateTransits} from "../../Services/transitService";
 
 export const thunkTransits = createAsyncThunk(
-    'getAD',
-    async () => {
+    'getTransits',
+    async (index : number) => {
         let r;
         try{
             r = await getTransits();
@@ -11,11 +11,27 @@ export const thunkTransits = createAsyncThunk(
             console.log(e);
         }
         console.log(r);
-        return r.data.map(v => {
-            return v;
-        }).sort((a,b) => a.date - b.date);
+        return {transits: r.data.map(v => {
+                return v;
+            }).sort((a,b) => a.date - b.date), transitPage: index};
     }
 );
+
+export const updateTransitThunk = createAsyncThunk(
+    'updateTransit',
+    async (index, {getState}) => {
+        const transit = getState().transitSlice.transitPage.curr;
+        if (index === 'add'){
+            const r = await addTransit(transit);
+            return {transit: r.data, index: index};
+        }else{
+            const r = await updateTransit(transit)
+            console.log(r);
+            console.log(transit);
+            return {transit: r.data, index: Number(index)};
+        }
+    }
+)
 
 const transitSlice = createSlice({
     name: 'transits',
@@ -25,17 +41,15 @@ const transitSlice = createSlice({
         transitPage: {}
     },
     reducers: {
-        getTransitForPage(state, action){
-            // const transit = {id: 'new', date: new Date()};
-            // state.transitEntities.unshift({transit: {prev: transit, curr: transit, states: {editing: true}}});
+        getTransitForPage(state, action){ //todo check if there is same object in transitPage
             const id = action.payload;
-            
+            console.log(id);
             let transit;
-            if (id === 'new')
-                transit = {id: 'new', date: new Date()};
+            if (id === 'add')
+                transit = {id: 'new', date: new Date().toJSON()};
             else{
-                console.log(current(state.transits));
-                transit = state.transits.filter(v=>v.id === id);
+                console.log(state.transits+' '+Number(id));
+                transit = state.transits.find(v=>v.id === Number(id));
             }
             
             state.transitPage = {prev: transit, curr: transit};
@@ -52,7 +66,19 @@ const transitSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(thunkTransits.fulfilled, (state, action) => {
-            state.transits = action.payload;
+            const {transits, transitPage} = action.payload;
+            state.transits = transits;
+            
+            if (transitPage !== undefined)
+                transitSlice.caseReducers.getTransitForPage(state, {payload: transitPage});
+        }).addCase(updateTransitThunk.fulfilled, (state, action) => {
+            const {transit, index} = action.payload;
+            
+            if (index === 'add'){
+                state.transits.push(transit)
+            }else{
+                state.transits[index] = transit;
+            }
         })
     }
 });

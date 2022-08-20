@@ -1,16 +1,15 @@
 ﻿import './TransitPage.css';
 import {useLocation, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {getOneTransit} from "../../../Services/transitService";
 import SelectPicker from "../../SelectPicker/SelectPicker";
 import {useDispatch, useSelector} from "react-redux";
 import {DatePicker} from "../../DatePicker/DatePicker";
 import {setArrivalDate} from "../../../redux/Slices/cargoSlice";
 import {
-    addEmptyTransit, cancelTransitEdit,
+    cancelTransitEdit,
     getTransitForPage,
     setTransitPageClient,
-    thunkTransits
+    thunkTransits, updateTransitThunk
 } from "../../../redux/Slices/transitSlice";
 
 const TransitPage = () => {
@@ -20,58 +19,38 @@ const TransitPage = () => {
     
     const [edit, setEdit] = useState(false);
     
-    // const [transitPage, setTransit] = useState(Object);
     const {transits, transitPage} = useSelector(state=>state.transitSlice);
     const dispatch = useDispatch();
-    
+
+    const id = /s\/(.*)/.exec(location.pathname)[1];
     useEffect(() => {
-        const id = /s\/(.*)/.exec(location.pathname)[1];
-        // console.log("?");
-        // if (id !== 'add') {
-        //     console.log(transitEntities.length);
-        //     const isBlank = transitEntities.length !== undefined;
-        //    
-        //     if (isBlank){
-        //         console.log("!")
-        //         const _transit = transitEntities[id].transitPage;
-        //         setTransit({prev: _transit, curr: _transit});
-        //     }else{
-        //         console.log("?")
-        //         getOneTransit(id).then(v=>{
-        //             const _transit = v.data;
-        //             setTransit({prev: _transit, curr: _transit});
-        //         });
-        //     }
-        // }else{
-        //     setTransit({id: 'new', date: new Date()})
-        //     setEdit(true);
-        // }
-        // if (id !== 'add' && transits.length === undefined) {
-        //     dispatch(thunkTransits());
-        // }else{
-        //     dispatch(addEmptyTransit());
-        // }
-        // dispatch(getTransitForPage(id));
+        // const id = /s\/(.*)/.exec(location.pathname)[1];
         
-        if (transits.length === undefined){
+        if (transits.length === undefined && id !== 'add'){
             console.log('dispatched')
-            dispatch(thunkTransits());
+            dispatch(thunkTransits(id));
+        }else{
+            console.log('gtfp')
+            dispatch(getTransitForPage(id));
+            if (id === 'add')
+                setEdit(true);
         }
         
-        dispatch(getTransitForPage(id));
-        
-    }, [dispatch, location.pathname, transits.length]);
+    }, [dispatch, location.pathname]);
     
     const handleEditButton = () => {
-        setEdit(value => !value)
+        setEdit(value => {
+            if (value)
+                dispatch(updateTransitThunk(id));
+            
+            return !value;
+        })
     };
     const handleCancelButton = () => {
         if (transitPage.id === 'new'){
             navigate('/transits');
             return;
         }
-        // if (JSON.stringify(transitPage.curr) !== JSON.stringify(transitPage.prev))
-        //     transitPage.curr = transitPage.prev;
         
         dispatch(cancelTransitEdit());
         
@@ -81,7 +60,6 @@ const TransitPage = () => {
     const makeStyle = style => style+(edit ? ' editing' : ' readonly');
     
     const handleClientInput = e => {
-        // setTransit({...transitPage, curr:{...transitPage.curr, client:e.target.value}});
         dispatch(setTransitPageClient(e.target.value));
     };
     

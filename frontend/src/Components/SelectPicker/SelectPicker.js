@@ -14,14 +14,6 @@ const SelectPicker = memo(({children, defaultValue, id, customStyle, activeStyle
             }
         )
     }, []);
-    
-    // useEffect(() => {
-    //     children = children.map(value => {
-    //         value.props.className += ' SPChildren'
-    //     })
-    // })
-    // const childrenRef = useRef(children)
-    // console.log(childrenRef);
 
     const spRef = useRef(false);
     

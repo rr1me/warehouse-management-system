@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.Data;
 
 namespace WebApplication1.Controllers;
 
+[ApiController] //todo ASHDAKJSDHKJASDHKJH HOW DID THIS WORKS MAN [FROMBODY] HAHAHAHA?!?!?!?!
 [Authorize(Policy = "Manager")]
 [Route("transits")]
 public class TransitController : ControllerBase
@@ -32,8 +35,17 @@ public class TransitController : ControllerBase
     [HttpPost("update")]
     public IActionResult UpdateOneTransit(Transit transit)
     {
+        // Console.WriteLine(transit.Client);
+        // Console.WriteLine(transit.Date);
+        // Console.WriteLine(transit.Status);
+        Console.WriteLine(JsonSerializer.Serialize(transit, new JsonSerializerOptions()
+        {
+            ReferenceHandler = ReferenceHandler.IgnoreCycles
+        }));
         context.Transits.Update(transit);
-
+        context.SaveChanges();
+        
+        Console.WriteLine("update: "+transit.Id);
         return Ok("!");
     }
 

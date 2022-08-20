@@ -1,10 +1,4 @@
 ﻿.selectPicker{
-    /*background-color: rgb(255, 255, 255);*/
-    /*border: 1px solid rgba(0,0,0,0.1);*/
-    /*border-radius: 5px;*/
-    
-    /*padding: 0 10px;*/
-
     padding: 0 10px;
     background-color: rgb(255, 255, 255);
     border-radius: 5px;
@@ -15,11 +9,8 @@
 }
 
 .selectPickerStyle{
-    /*background-color: rgb(255, 255, 255);*/
     border: 1px solid rgba(0,0,0,0.1);
     border-radius: 5px;
-
-    /*padding: 0 10px;*/
 }
 
 .selectPickerContent{

@@ -67,8 +67,6 @@
 
 .editing{
     border: 1px solid #2cff2c !important;
-    
-    /*padding: 15px;*/
 }
 
 .editing:focus{

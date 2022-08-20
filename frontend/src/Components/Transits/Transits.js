@@ -38,8 +38,6 @@ const Transits = () => {
                     <div className='transitHeaderItem'>Commentary</div>
                 </div>
                 {transits.length !== undefined ? transits.map((value, index) => {
-                    // const transit = value.transit;
-                    // const states = value.states;
                     return (
                         <TransitRow key={index} id={value.id} isOdd={index % 2} current={value}/>
                     )

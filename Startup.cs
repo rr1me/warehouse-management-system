@@ -1,7 +1,9 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using WebApplication1.CustomAuthentication;
@@ -21,6 +23,8 @@ public class Startup
         services.AddControllers().AddJsonOptions(options => 
         { 
             options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+            // options.JsonSerializerOptions.
+            
             options.JsonSerializerOptions.WriteIndented = true;
         });;
         
@@ -115,8 +119,21 @@ public class Startup
             //         Console.WriteLine(p.Id);
             //     });
             // });
-            
-            
+
+            // var transit = db.Transits.Include(x => x.AssignedCargo).Single(x => x.Id == 1);
+            // transit.Client = "govnoed";
+
+            // transit.AssignedCargo.ForEach(x =>
+            // {
+            //     Console.WriteLine(x.StickerId);
+            // });
+            // transit.AssignedCargo[1].StickerId = 00123;
+            // Console.WriteLine(JsonSerializer.Serialize(transit, new JsonSerializerOptions()
+            // {
+            //     ReferenceHandler = ReferenceHandler.IgnoreCycles
+            // }));
+            // db.Transits.Update(transit);
+            // db.SaveChanges();
 
         }
 

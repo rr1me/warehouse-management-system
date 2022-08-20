@@ -1,4 +1,5 @@
-﻿using WebApplication1.Data.Properties;
+﻿using System.Text.Json.Serialization;
+using WebApplication1.Data.Properties;
 
 namespace WebApplication1.Data;
 
@@ -30,6 +31,6 @@ public class Cargo
     public CargoStatus CargoStatus { get; set; }
     public CargoQuality CargoQuality { get; set; }
     
-    public List<Transit> Transits { get; set; }
+    public virtual List<Transit>? Transits { get; set; }
     public List<InnerWork>? AssignedInnerWorks { get; set; }
 }

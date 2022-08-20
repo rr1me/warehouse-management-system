@@ -29,7 +29,7 @@ public class Transit
     // [JsonConverter(typeof(JsonStringEnumConverter))]
     public TransitStatus Status { get; set; }
     
-    public List<Cargo> AssignedCargo { get; set; }
+    public virtual List<Cargo>? AssignedCargo { get; set; }
     public TaskStatus AdditionalTasks { get; set; }
     
     public string? Commentary { get; set; }
