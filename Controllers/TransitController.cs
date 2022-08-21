@@ -35,15 +35,56 @@ public class TransitController : ControllerBase
     [HttpPost("update")]
     public IActionResult UpdateOneTransit(Transit transit)
     {
-        // Console.WriteLine(transit.Client);
-        // Console.WriteLine(transit.Date);
-        // Console.WriteLine(transit.Status);
         Console.WriteLine(JsonSerializer.Serialize(transit, new JsonSerializerOptions()
         {
-            ReferenceHandler = ReferenceHandler.IgnoreCycles
+            ReferenceHandler = ReferenceHandler.Preserve
         }));
-        context.Transits.Update(transit);
-        context.SaveChanges();
+
+        // var transits = new List<Transit>();
+        // transits.Add(transit);
+        // transit.AssignedCargo?.ForEach(x =>
+        // {
+        //     x.Transits = transits;
+        // });
+
+        using (DatabaseContext db = new DatabaseContext())
+        {
+            // db.AttachRange(transit.AssignedCargo);
+            db.Attach(transit);
+            
+            // var transits = new List<Transit>();
+            // transits.Add(transit);
+            // transit.AssignedCargo?.ForEach(x =>
+            // {
+            //     x.Transits = transits;
+            // });
+            // Console.WriteLine(transit.AssignedCargo[0].StickerId);
+            
+            // var tr = db.Transits.Include(x => x.AssignedCargo).Single(y => y.Id == transit.Id);
+            // Console.WriteLine(transit.AssignedCargo?.Equals(tr?.AssignedCargo));
+        
+            if (transit.AssignedCargo != null)
+            {
+                transit.AssignedCargo.ForEach(x =>
+                {
+                    if (x.Id == 0)
+                        db.Cargoes.Add(x);
+                    else
+                        db.Cargoes.Update(x);
+                });
+            }
+            else
+            {
+                // db.Cargoes.Include(x=>x.Transits).Select(x =>
+                // {
+                //     x.Description = "lkajdf";
+                //     return x;
+                // })
+            }
+            db.Transits.Update(transit);
+            // db.Cargoes.UpdateRange(transit.AssignedCargo);
+            db.SaveChanges();
+        }
         
         Console.WriteLine("update: "+transit.Id);
         return Ok("!");

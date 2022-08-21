@@ -9,12 +9,12 @@ public class Transit
     {
     }
 
-    public Transit(string client, DateTime date, TransitType transitType, TransitStatus transitStatus, List<Cargo> assignedCargo, TaskStatus additionalTasks, string? commentary)
+    public Transit(string client, DateTime date, TransitType type, TransitStatus status, List<Cargo>? assignedCargo, TaskStatus additionalTasks, string? commentary)
     {
         Client = client;
         Date = date;
-        Type = transitType;
-        Status = transitStatus;
+        Type = type;
+        Status = status;
         AssignedCargo = assignedCargo;
         AdditionalTasks = additionalTasks;
         Commentary = commentary;
@@ -29,7 +29,8 @@ public class Transit
     // [JsonConverter(typeof(JsonStringEnumConverter))]
     public TransitStatus Status { get; set; }
     
-    public virtual List<Cargo>? AssignedCargo { get; set; }
+    public List<Cargo>? AssignedCargo { get; set; }
+
     public TaskStatus AdditionalTasks { get; set; }
     
     public string? Commentary { get; set; }
