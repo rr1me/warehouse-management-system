@@ -1,16 +1,3 @@
-.transitRow{
-    cursor: pointer;
-    transition: 150ms ease;
-}
-
-.odd{
-    background-color: #f3f3f3;
-}
-
-.transitRow:hover{
-    background-color: #e5e5e5;
-}
-
 .transitRowItem{
     padding: 8px;
 }

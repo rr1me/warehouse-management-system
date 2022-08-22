@@ -1,18 +1,10 @@
 ﻿import './TransitRow.css';
-import {useNavigate} from "react-router-dom";
 import {DatePicker} from "../../DatePicker/DatePicker";
 
-const TransitRow = ({current, isOdd, id}) => {
-
-    const navigate = useNavigate();
-    
-    const handleRowClick = () => {
-        console.log(current);
-        navigate('/transits/'+id);
-    }
+const TransitRow = ({current}) => {
     
     return (
-        <div className={'transitRow'+(isOdd ? ' odd' : '')} onClick={handleRowClick}>
+        <>
             <div className='transitRowItem'>{current.id}</div>
             <div className='transitRowItem'>{current.transitType}</div>
             <div className='transitRowItem'>{current.transitStatus}</div>
@@ -22,7 +14,7 @@ const TransitRow = ({current, isOdd, id}) => {
             </div>
             <div className='transitRowItem'>{current.additionalTasks}</div>
             <div className='transitRowItem'>{current.commentary ? current.commentary : 'No'}</div>
-        </div>
+        </>
     )
 };
 

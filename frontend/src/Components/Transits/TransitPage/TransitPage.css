@@ -2,11 +2,16 @@
     padding: 15px;
     font-size: 25px;
 
-    --tr-box-shadow: 0 0 4px 0 #94ff94
+    --tr-box-shadow: 0 0 4px 0 #94ff94;
+    --tr-border: 1px solid rgba(0,0,0,0.1);
+    --tr-border-radius: 5px;
+}
+
+.trFullRow{
+    grid-column: 1/-1;
 }
 
 .trClAndDesc{
-    grid-column: 1/-1;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 40px;
@@ -43,11 +48,10 @@
 
 .trInput{
     padding: 10px;
-    border: 1px solid rgba(0,0,0,0.1);
-    border-radius: 5px;
+    border: var(--tr-border);
+    border-radius: var(--tr-border-radius);
     
     width: 100%;
-    /*height: 100%;*/
     height: 50px;
     
     resize: none;
@@ -55,6 +59,12 @@
 
 .trInput:focus{
     outline: none;
+}
+
+.trCargoElem{
+    grid-column: 1/-1;
+    border: var(--tr-border);
+    border-radius: var(--tr-border-radius);
 }
 
 .trInfoElem > .dpContainer{
@@ -84,7 +94,7 @@
 }
 
 .trSelectPicker{
-    border: 1px solid rgba(0,0,0,0.1);
+    border: var(--tr-border);
     
     transition: 350ms;
 }

@@ -2,15 +2,8 @@
     padding: 15px;
 }
 
-.transitGrid{
-    display: grid;
-    
-    border: 1px solid #c1d8ea;
-}
-
-.transitHeader, .transitRow{
-    display:grid;
-    grid-template-columns: 5% repeat(6, 1fr);
+.transitGridTemplate{
+    grid-template-columns: 5% repeat(6, 1fr)
 }
 
 .transitHeaderItem{

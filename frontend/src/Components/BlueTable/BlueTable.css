@@ -1,0 +1,41 @@
+﻿.bt_headerItem{
+    font-family: "Poppins Medium", serif;
+    font-size: 14px;
+    letter-spacing: -0.5px;
+    color: #739cad;
+    text-transform: uppercase;
+
+    border: 1px solid #c1d8ea;
+    padding: 8px;
+
+    background-color: #cee1f2;
+}
+
+.blueTable{
+    display: grid;
+
+    border: 1px solid #c1d8ea;
+}
+
+.bt_header, .bt_row{
+    display:grid;
+}
+
+.bt_row{
+    align-items: center;
+    
+    /*cursor: pointer;*/
+    transition: 150ms ease;
+}
+
+.bt_clickable{
+    cursor: pointer;
+}
+
+.bt_clickable:hover{
+    background-color: #e5e5e5;
+}
+
+.bt_odd{
+    background-color: #f3f3f3;
+}
