@@ -62,7 +62,6 @@ public class TransitController : ControllerBase
             
             // var tr = db.Transits.Include(x => x.AssignedCargo).Single(y => y.Id == transit.Id);
             // Console.WriteLine(transit.AssignedCargo?.Equals(tr?.AssignedCargo));
-        
             if (transit.AssignedCargo != null)
             {
                 transit.AssignedCargo.ForEach(x =>
@@ -73,15 +72,17 @@ public class TransitController : ControllerBase
                         db.Cargoes.Update(x);
                 });
             }
-            else
-            {
-                // db.Cargoes.Include(x=>x.Transits).Select(x =>
-                // {
-                //     x.Description = "lkajdf";
-                //     return x;
-                // })
-            }
-            db.Transits.Update(transit);
+            // else
+            // {
+            //     var cargoToChange = db.Cargoes.Include(x => x.Transits).ToList();
+            //     var cargoes = cargoToChange.Where(x => x.Transits[0].Id == transit.Id).Select(y =>
+            //     {
+            //         y.Transits = null;
+            //         return y;
+            //     }).ToList();
+            //     db.Cargoes.UpdateRange(cargoes);
+            // }
+            db.Transits.Add(transit);
             // db.Cargoes.UpdateRange(transit.AssignedCargo);
             db.SaveChanges();
         }

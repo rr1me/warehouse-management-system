@@ -76,9 +76,15 @@ const TransitPage = () => {
                     </div>
                 </div>
                 <div className='trInfoMain'>
-                    <div className='trInfoElem elementTitle'>
-                        <div className='trElemName'>Client</div>
-                        <input className={makeStyle('trInput')} value={transitPage.curr.client} onChange={handleClientInput} readOnly={!edit}/>
+                    <div className='trClAndDesc'>
+                        <div className='trInfoElem elementTitle'>
+                            <div className='trElemName'>Client</div>
+                            <textarea className={makeStyle('trInput')} value={transitPage.curr.client} onChange={handleClientInput} readOnly={!edit}/>
+                        </div>
+                        <div className='trInfoElem elementTitle'>
+                            <div className='trElemName'>Description</div>
+                            <textarea  className={makeStyle('trInput')} value={transitPage.curr.description} onChange={handleClientInput} readOnly={!edit}/>
+                        </div>
                     </div>
                     <div className='trInfoElem elementTitle'>
                         <div className='trElemName'>Type</div>
@@ -122,6 +128,9 @@ const TransitPage = () => {
                     <div className='trInfoElem elementTitle'>
                         <div className='trElemName'>Date</div>
                         <DatePicker incomeDate={transitPage.curr.date} editState={true} dispatchIndex={transitPage.curr.id} id='trDP' setDateDispatch={setArrivalDate}/>
+                    </div>
+                    <div className='trInfoElem elementTitle'>
+                        <div>Cargo</div>
                     </div>
                 </div>
             </div>
