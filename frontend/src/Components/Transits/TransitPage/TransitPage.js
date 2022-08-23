@@ -9,8 +9,11 @@ import {
     cancelTransitEdit,
     getTransitForPage,
     setTransitPageClient,
-    thunkTransits, updateTransitThunk
+    thunkTransits,
+    updateTransitThunk
 } from "../../../redux/Slices/transitSlice";
+import BlueTable from "../../BlueTable/BlueTable";
+import {cargoHeader} from "../../Cargo/Cargo";
 
 const TransitPage = () => {
 
@@ -24,8 +27,6 @@ const TransitPage = () => {
 
     const id = /s\/(.*)/.exec(location.pathname)[1];
     useEffect(() => {
-        // const id = /s\/(.*)/.exec(location.pathname)[1];
-        
         if (transits.length === undefined && id !== 'add'){
             console.log('dispatched')
             dispatch(thunkTransits(id));
@@ -133,7 +134,35 @@ const TransitPage = () => {
                         <div className='trInfoElem elementTitle'>
                             <div className='trElemName'>Cargo</div>
                             <div className='trCargoElem'>
-                                
+                                {/*<BlueTable clickable={false} header={cargoHeader} gridTemplate='cargoGridTemplate'>*/}
+                                {/*    {transitPage.curr.assignedCargo.map((value, index) => {*/}
+                                {/*        return {element: <div>*/}
+                                {/*                <div>{value.stickerId}</div>*/}
+                                {/*                <div>{value.description}</div>*/}
+                                {/*                <div>{value.cargoStatus}</div>*/}
+                                {/*                <div>{value.cargoQuality}</div>*/}
+                                {/*                <div>{value.assignedInnerWorks}</div>*/}
+                                {/*            </div>, id: value.id};*/}
+                                {/*    })}*/}
+                                {/*</BlueTable>*/}
+                                <div className='trCargoControls'>
+                                    <button className='trCargoBtn'>fuck you</button>
+                                    <button className='trCargoBtn'>Add new</button>
+                                </div>
+                                <div className='lightTable'>
+                                    <div className='lt_header'>
+                                        <div className='lt_headerItem'>yo</div>
+                                        <div className='lt_headerItem'>yo</div>
+                                    </div>
+                                    <div className='lt_rows'>
+                                        <div>asdasd</div>
+                                        <div>asdasd</div>
+                                    </div>
+                                    <div className='lt_rows'>
+                                        <div>asdasd</div>
+                                        <div>asdasd</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

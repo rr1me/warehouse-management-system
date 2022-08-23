@@ -65,6 +65,8 @@
     grid-column: 1/-1;
     border: var(--tr-border);
     border-radius: var(--tr-border-radius);
+    
+    padding: 5px;
 }
 
 .trInfoElem > .dpContainer{
@@ -101,4 +103,54 @@
 
 .trSelectPickerActive{
     box-shadow: var(--tr-box-shadow);
+}
+
+
+
+
+.lightTable{
+    display: grid;
+    grid-gap: 15px;
+    /*grid-template-columns: 1fr 1fr;*/
+}
+
+.lt_header{
+    background-color: #cee1f2;
+}
+
+.lt_rows{
+    box-shadow: 0 0 4px 0 #b4b4b4;
+}
+
+.lt_header, .lt_rows{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 5px;
+    font-family: "Poppins Medium", serif;
+    font-size: 17px;
+
+    border-radius: 5px;
+}
+
+.lt_headerItem{
+    /*font-family: "Poppins Medium", serif;*/
+    color: #739cad;
+}
+
+.trCargoControls{
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 15px;
+    padding-inline: 1px;
+}
+
+.trCargoBtn{
+    /*outline: none;*/
+    border: var(--tr-border);
+    box-shadow: 0 0 2px 0 #cbcbcb;
+    font-size: 14px;
+    font-family: "Poppins", serif;
+    padding: 4px 10px;
+    
+    border-radius: 5px;
 }

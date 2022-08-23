@@ -28,22 +28,6 @@ const Transits = () => {
                 <div className='elementTitle'>Transits</div>
                 <button className="btn apply-btn tableButton" onClick={handleAddNewClick}>Add new</button>
             </div>
-            {/*<div className='transitGrid'>*/}
-            {/*    <div className='transitHeader'>*/}
-            {/*        <div className='transitHeaderItem'>Id</div>*/}
-            {/*        <div className='transitHeaderItem'>Type</div>*/}
-            {/*        <div className='transitHeaderItem'>Status</div>*/}
-            {/*        <div className='transitHeaderItem'>Client</div>*/}
-            {/*        <div className='transitHeaderItem'>Date</div>*/}
-            {/*        <div className='transitHeaderItem'>Additional Tasks</div>*/}
-            {/*        <div className='transitHeaderItem'>Commentary</div>*/}
-            {/*    </div>*/}
-            {/*    {transits.length !== undefined ? transits.map((value, index) => {*/}
-            {/*        return (*/}
-            {/*            <TransitRow key={index} id={value.id} isOdd={index % 2} current={value}/>*/}
-            {/*        )*/}
-            {/*    }) : null}*/}
-            {/*</div>*/}
             <BlueTable header={trHeader} gridTemplate='transitGridTemplate' clickable={true}>
                 {transits.length !== undefined ? transits.map((value, index) => {
                     return {element: <TransitRow key={index} current={value}/>, id: value.id}

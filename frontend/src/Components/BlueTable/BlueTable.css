@@ -23,8 +23,6 @@
 
 .bt_row{
     align-items: center;
-    
-    /*cursor: pointer;*/
     transition: 150ms ease;
 }
 

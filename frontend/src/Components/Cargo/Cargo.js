@@ -54,4 +54,12 @@ const rows = [
     'By id',
     'By name',
     'By status'
+];
+
+export const cargoHeader = [
+    'Id',
+    'StickerId',
+    'Description',
+    'Status',
+    'Quality'
 ]

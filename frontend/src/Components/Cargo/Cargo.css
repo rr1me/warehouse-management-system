@@ -18,3 +18,7 @@
 .cargoGrid > .driversGridOperations{
     margin-bottom: 0;
 }
+
+.cargoGridTemplate{
+    grid-template-columns: repeat(5, 1fr);
+}
