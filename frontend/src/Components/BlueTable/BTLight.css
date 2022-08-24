@@ -1,0 +1,25 @@
+﻿.lightTable{
+    display: grid;
+    grid-gap: 10px;
+    
+}
+
+.bt_light{
+    grid-gap: 5px;
+}
+
+.bt_light_header{
+    
+}
+
+.bt_light_row{
+    border: var(--tr-border);
+}
+
+.bt_light_header, .bt_light_row{
+    
+    border-radius: 5px;
+}
+
+.bt_light_headerItem{
+}

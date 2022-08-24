@@ -13,7 +13,6 @@ import {
     updateTransitThunk
 } from "../../../redux/Slices/transitSlice";
 import BlueTable from "../../BlueTable/BlueTable";
-import {cargoHeader} from "../../Cargo/Cargo";
 
 const TransitPage = () => {
 
@@ -40,6 +39,7 @@ const TransitPage = () => {
     }, [dispatch, location.pathname]);
     
     const handleEditButton = () => {
+        console.log(transitPage);
         setEdit(value => {
             if (value)
                 dispatch(updateTransitThunk(id));
@@ -149,20 +149,30 @@ const TransitPage = () => {
                                     <button className='trCargoBtn'>fuck you</button>
                                     <button className='trCargoBtn'>Add new</button>
                                 </div>
-                                <div className='lightTable'>
-                                    <div className='lt_header'>
-                                        <div className='lt_headerItem'>yo</div>
-                                        <div className='lt_headerItem'>yo</div>
-                                    </div>
-                                    <div className='lt_rows'>
-                                        <div>asdasd</div>
-                                        <div>asdasd</div>
-                                    </div>
-                                    <div className='lt_rows'>
-                                        <div>asdasd</div>
-                                        <div>asdasd</div>
-                                    </div>
-                                </div>
+                                {/*<div className='lightTable'>*/}
+                                {/*    <div className='lt_header'>*/}
+                                {/*        <div className='lt_headerItem'>yo</div>*/}
+                                {/*        <div className='lt_headerItem'>yo</div>*/}
+                                {/*    </div>*/}
+                                {/*    <div className='lt_rows'>*/}
+                                {/*        <div>asdasd</div>*/}
+                                {/*        <div>asdasd</div>*/}
+                                {/*    </div>*/}
+                                {/*    <div className='lt_rows'>*/}
+                                {/*        <div>asdasd</div>*/}
+                                {/*        <div>asdasd</div>*/}
+                                {/*    </div>*/}
+                                {/*</div>*/}
+                                <BlueTable header={cargoHeader} gridTemplate='trCargoGridTemplate' clickable={false} lightStyle={false}>
+                                    {transitPage.curr.assignedCargo ?
+                                        transitPage.curr.assignedCargo.map((value, index) => {
+                                            console.log(value);
+                                            return {element: <div>{value.id}</div>, id: value.id};
+                                        })    
+                                    :null}
+                                    {/*{getElem()}*/}
+                                    {/*{getElem()}*/}
+                                </BlueTable>
                             </div>
                         </div>
                     </div>
@@ -171,6 +181,17 @@ const TransitPage = () => {
         )
     }
 };
+
+const getElem = () => {
+    return {element: <div>asda</div>, id: 0}
+}
+
+const cargoHeader = [
+    'Id',
+    'Sticker id',
+    'Inner works',
+    'Description'
+];
 
 const types = [
     'Acceptance',

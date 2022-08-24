@@ -20,6 +20,7 @@ const Transits = () => {
     
     const handleAddNewClick = () => {
         navigate('/transits/add');
+        console.log(transits);
     }
     
     return (
@@ -28,7 +29,7 @@ const Transits = () => {
                 <div className='elementTitle'>Transits</div>
                 <button className="btn apply-btn tableButton" onClick={handleAddNewClick}>Add new</button>
             </div>
-            <BlueTable header={trHeader} gridTemplate='transitGridTemplate' clickable={true}>
+            <BlueTable header={trHeader} gridTemplate='transitGridTemplate' clickable={true} lightStyle={false}>
                 {transits.length !== undefined ? transits.map((value, index) => {
                     return {element: <TransitRow key={index} current={value}/>, id: value.id}
                 }) : null}

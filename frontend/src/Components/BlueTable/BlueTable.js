@@ -1,32 +1,51 @@
 ﻿import './BlueTable.css';
+import './BTHard.css'
+import './BTLight.css';
+
+import './BlueTable.sass'
+
 import {useNavigate} from "react-router-dom";
 
-const BlueTable = ({header, children, gridTemplate, clickable}) => {
+const BlueTable = ({header, children, gridTemplate, clickable, lightStyle}) => {
     
     const navigate = useNavigate()
     
     const handleRowClick = id => {
         navigate('/transits/'+id);
-    } 
+    }
+    
+    // const getStyle = elem => 'bt_'+(lightStyle ? 'light' : 'hard')+(elem ? '_' : '')+elem;
+    const getStyle = () => (lightStyle ? 'light' : 'hard')
+    
+    const getRowStyle = isOdd => {
+        let style = 'row '+getStyle();
+        if (clickable) style += ' clickable';
+        if (!lightStyle && isOdd) style += ' odd'
+        return style += ' '+gridTemplate;
+    };
+    
+    const getHeaderStyle = () => 'header ' + gridTemplate + ' ' + getStyle();
+    
+    console.log(children);
     
     return (
-        <div className='blueTable'>
-            <div className={'bt_header ' + gridTemplate}>
+        <div className={'blueTable '+getStyle()}>
+            <div className={getHeaderStyle()}>
                 {header.map((value, index) => {
                     return (
-                        <div className='bt_headerItem' key={index}>
+                        <div className={'header item '+getStyle()} key={index}>
                             {value}
                         </div>
                     )
                 })}
             </div>
-            {children.map((value, index) => {
+            {children ? children.map((value, index) => {
                 return (
-                    <div className={(clickable ? 'bt_clickable ' : '' )+'bt_row ' + gridTemplate + (index % 2 ? ' bt_odd' : '')} key={index} onClick={clickable ? () => handleRowClick(value.id) : null}>
+                    <div className={getRowStyle(index % 2)} key={index} onClick={clickable ? () => handleRowClick(value.id) : null}>
                         {value.element}
                     </div>
                 )
-            })}
+            }) : null}
         </div>
     )
 };
