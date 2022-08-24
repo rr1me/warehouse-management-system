@@ -1,6 +1,9 @@
 ﻿.blueTable
   $border: 1px solid #c1d8ea
-  border: $border
+  &.hard
+    border: $border
+  &.light
+    grid-gap: 5px
   
   display: grid
 
@@ -11,9 +14,15 @@
     
     &.clickable
       cursor: pointer
+      &:hover
+        background-color: #e5e5e5
       
     //&.hard
       //border: $border
+      
+    &.light
+      border: var(--tr-border)
+      //box-shadow: 0 0 4px 0 #b4b4b4
     
     &.odd
       background-color: #f3f3f3
@@ -21,8 +30,10 @@
   .header
     display: grid
     background-color: #cee1f2
+    
     &.item
-      border: $border
+      &.hard
+        border: $border
       
       font-family: "Poppins Medium", serif
       font-size: 14px
@@ -33,3 +44,7 @@
       padding: 8px
       
       align-content: center
+      
+  .header, .row
+    &.light
+      border-radius: 5px

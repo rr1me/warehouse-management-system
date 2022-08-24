@@ -134,44 +134,17 @@ const TransitPage = () => {
                         <div className='trInfoElem elementTitle'>
                             <div className='trElemName'>Cargo</div>
                             <div className='trCargoElem'>
-                                {/*<BlueTable clickable={false} header={cargoHeader} gridTemplate='cargoGridTemplate'>*/}
-                                {/*    {transitPage.curr.assignedCargo.map((value, index) => {*/}
-                                {/*        return {element: <div>*/}
-                                {/*                <div>{value.stickerId}</div>*/}
-                                {/*                <div>{value.description}</div>*/}
-                                {/*                <div>{value.cargoStatus}</div>*/}
-                                {/*                <div>{value.cargoQuality}</div>*/}
-                                {/*                <div>{value.assignedInnerWorks}</div>*/}
-                                {/*            </div>, id: value.id};*/}
-                                {/*    })}*/}
-                                {/*</BlueTable>*/}
                                 <div className='trCargoControls'>
                                     <button className='trCargoBtn'>fuck you</button>
                                     <button className='trCargoBtn'>Add new</button>
                                 </div>
-                                {/*<div className='lightTable'>*/}
-                                {/*    <div className='lt_header'>*/}
-                                {/*        <div className='lt_headerItem'>yo</div>*/}
-                                {/*        <div className='lt_headerItem'>yo</div>*/}
-                                {/*    </div>*/}
-                                {/*    <div className='lt_rows'>*/}
-                                {/*        <div>asdasd</div>*/}
-                                {/*        <div>asdasd</div>*/}
-                                {/*    </div>*/}
-                                {/*    <div className='lt_rows'>*/}
-                                {/*        <div>asdasd</div>*/}
-                                {/*        <div>asdasd</div>*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
-                                <BlueTable header={cargoHeader} gridTemplate='trCargoGridTemplate' clickable={false} lightStyle={false}>
+                                <BlueTable header={cargoHeader} gridTemplate='trCargoGridTemplate' clickable={false} lightStyle={true}>
                                     {transitPage.curr.assignedCargo ?
                                         transitPage.curr.assignedCargo.map((value, index) => {
                                             console.log(value);
-                                            return {element: <div>{value.id}</div>, id: value.id};
+                                            return {element: <div>{value.id}</div>, id: index};
                                         })    
                                     :null}
-                                    {/*{getElem()}*/}
-                                    {/*{getElem()}*/}
                                 </BlueTable>
                             </div>
                         </div>

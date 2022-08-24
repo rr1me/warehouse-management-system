@@ -1,8 +1,4 @@
-﻿import './BlueTable.css';
-import './BTHard.css'
-import './BTLight.css';
-
-import './BlueTable.sass'
+﻿import './BlueTable.sass'
 
 import {useNavigate} from "react-router-dom";
 
@@ -14,14 +10,13 @@ const BlueTable = ({header, children, gridTemplate, clickable, lightStyle}) => {
         navigate('/transits/'+id);
     }
     
-    // const getStyle = elem => 'bt_'+(lightStyle ? 'light' : 'hard')+(elem ? '_' : '')+elem;
     const getStyle = () => (lightStyle ? 'light' : 'hard')
     
     const getRowStyle = isOdd => {
-        let style = 'row '+getStyle();
+        let style = gridTemplate + ' row ' + getStyle();
         if (clickable) style += ' clickable';
         if (!lightStyle && isOdd) style += ' odd'
-        return style += ' '+gridTemplate;
+        return style;
     };
     
     const getHeaderStyle = () => 'header ' + gridTemplate + ' ' + getStyle();

@@ -63,8 +63,6 @@
 
 .trCargoElem{
     grid-column: 1/-1;
-    /*border: var(--tr-border);*/
-    /*border-radius: var(--tr-border-radius);*/
     
     padding: 5px;
 }
@@ -105,37 +103,6 @@
     box-shadow: var(--tr-box-shadow);
 }
 
-/*.lightTable{*/
-/*    display: grid;*/
-/*    grid-gap: 10px;*/
-/*    !*grid-template-columns: 1fr 1fr;*!*/
-/*}*/
-
-/*.lt_header{*/
-/*    background-color: #cee1f2;*/
-/*}*/
-
-/*.lt_rows{*/
-/*    !*box-shadow: 0 0 4px 0 #b4b4b4;*!*/
-/*}*/
-
-/*.lt_header, .lt_rows{*/
-/*    display: grid;*/
-/*    grid-template-columns: 1fr 1fr;*/
-/*    padding: 5px;*/
-/*    font-family: "Poppins Medium", serif;*/
-/*    font-size: 17px;*/
-
-/*    border-radius: 3px;*/
-/*    */
-/*    border: var(--tr-border);*/
-/*}*/
-
-/*.lt_headerItem{*/
-/*    !*font-family: "Poppins Medium", serif;*!*/
-/*    color: #739cad;*/
-/*}*/
-
 .trCargoControls{
     display: flex;
     justify-content: space-between;
@@ -144,7 +111,6 @@
 }
 
 .trCargoBtn{
-    /*outline: none;*/
     border: var(--tr-border);
     box-shadow: 0 0 2px 0 #cbcbcb;
     font-size: 14px;
