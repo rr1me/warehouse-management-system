@@ -27,7 +27,7 @@ const Transits = () => {
         <div className='transitContainer'>
             <div className='elementHeader'>
                 <div className='elementTitle'>Transits</div>
-                <button className="btn apply-btn tableButton" onClick={handleAddNewClick}>Add new</button>
+                <button className="btn apply table" onClick={handleAddNewClick}>Add new</button>
             </div>
             <BlueTable header={trHeader} gridTemplate='transitGridTemplate' clickable={true} lightStyle={false}>
                 {transits.length !== undefined ? transits.map((value, index) => {

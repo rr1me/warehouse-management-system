@@ -19,7 +19,7 @@ const BlueTable = ({header, children, gridTemplate, clickable, lightStyle}) => {
         return style;
     };
     
-    const getHeaderStyle = () => 'header ' + gridTemplate + ' ' + getStyle();
+    const getHeaderStyle = () => gridTemplate + ' header ' + getStyle();
     
     console.log(children);
     

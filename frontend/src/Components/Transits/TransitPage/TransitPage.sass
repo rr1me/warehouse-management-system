@@ -1,0 +1,69 @@
+﻿.transitPage
+  $box-shadow: 0 0 4px 0 #94ff94
+  $border: 1px solid rgba(0,0,0,0.1)
+  $border-radius: 5px
+  $border-green: 1px solid #2cff2c
+  
+  
+  padding: 15px
+  font-size: 25px
+  
+  .header
+    display: flex
+    justify-content: space-between
+  
+  .main
+    padding: 50px
+    
+    display: grid
+    grid-template-columns: 1fr 1fr 1fr
+    grid-gap: 35px
+    grid-row-gap: 20px
+    
+  .element
+    color: #505050
+    display: flex
+    flex-direction: column
+    
+    .name
+      font-size: 20px
+      
+    .selectPicker
+      border: $border
+      transition: 350ms
+      &.active
+        box-shadow: $box-shadow
+  
+  .textarea
+    padding: 10px
+    border: $border
+    border-radius: $border-radius
+    font-size: 16px
+    
+    width: 100%
+    height: 50px
+    resize: none
+    &:focus
+      outline: none
+    
+  .clientAndDesc
+    display: grid
+    grid-template-columns: 1fr 1fr
+    grid-gap: 40px
+    
+  .ctrlButtons
+    display: flex
+    gap: 5px
+    
+    
+  .readonly
+    cursor: default
+    outline: none
+    
+  .editing
+    border: $border-green !important
+    &:focus
+      box-shadow: $box-shadow
+      
+  .fullRow
+    grid-column: 1/-1

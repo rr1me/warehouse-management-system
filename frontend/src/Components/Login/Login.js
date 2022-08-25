@@ -41,7 +41,7 @@ export default function Login(){
 
                 {error}
 
-                <button className="btn edit-btn" type="submit">Sign in</button>
+                <button className="btn edit" type="submit">Sign in</button>
             </form>
         </div>
     )

@@ -1,123 +1,92 @@
-﻿.transitPage{
-    padding: 15px;
-    font-size: 25px;
+﻿/*.transitPage{*/
+/*    padding: 15px;*/
+/*    font-size: 25px;*/
 
-    --tr-box-shadow: 0 0 4px 0 #94ff94;
-    --tr-border: 1px solid rgba(0,0,0,0.1);
-    --tr-border-radius: 5px;
-}
+/*    --tr-box-shadow: 0 0 4px 0 #94ff94;*/
+/*    --tr-border: 1px solid rgba(0,0,0,0.1);*/
+/*    --tr-border-radius: 5px;*/
+/*}*/
 
-.trFullRow{
-    grid-column: 1/-1;
-}
+/*.trFullRow{*/
+/*    grid-column: 1/-1;*/
+/*}*/
 
-.trClAndDesc{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 40px;
-}
+/*.trClAndDesc{*/
+/*    display: grid;*/
+/*    grid-template-columns: 1fr 1fr;*/
+/*    grid-gap: 40px;*/
+/*}*/
 
-.trInfoHeader{
-    display: flex;
-    justify-content: space-between;
-}
+/*.trInfoHeader{*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*}*/
 
-.trHeaderButtons{
-    display: flex;
-    gap: 5px;
-}
+/*.trHeaderButtons{*/
+/*    display: flex;*/
+/*    gap: 5px;*/
+/*}*/
 
-.trInfoMain{
-    padding: 50px;
+/*.trInfoMain{*/
+/*    padding: 50px;*/
 
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 35px;
-    grid-row-gap: 20px;
-}
+/*    display: grid;*/
+/*    grid-template-columns: 1fr 1fr 1fr;*/
+/*    grid-gap: 35px;*/
+/*    grid-row-gap: 20px;*/
+/*}*/
 
-.trInfoElem{
-    color: #505050;
-    display: flex;
-    flex-direction: column;
-}
+/*.trInfoElem{*/
+/*    color: #505050;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*}*/
 
-.trElemName{
-    font-size: 20px;
-}
+/*.trElemName{*/
+/*    font-size: 20px;*/
+/*}*/
 
-.trInput{
-    padding: 10px;
-    border: var(--tr-border);
-    border-radius: var(--tr-border-radius);
-    
-    width: 100%;
-    height: 50px;
-    
-    resize: none;
-}
+/*.trInput{*/
+/*    padding: 10px;*/
+/*    border: var(--tr-border);*/
+/*    border-radius: var(--tr-border-radius);*/
+/*    font-size: 16px;*/
+/*    */
+/*    width: 100%;*/
+/*    height: 50px;*/
+/*    */
+/*    resize: none;*/
+/*}*/
 
 .trInput:focus{
     outline: none;
 }
 
-.trCargoElem{
-    grid-column: 1/-1;
-    
-    padding: 5px;
-}
+/*.trCargoElem{*/
+/*    grid-column: 1/-1;*/
+/*}*/
 
-.trInfoElem > .dpContainer{
-    /*height: 100%;*/
-    /*width: 100%;*/
-    /*align-items: center;*/
-    /*display: unset;*/
-    /*margin-left: -5px;*/
-}
+/*.readOnly{*/
+/*    cursor: default;*/
+/*    outline: none;*/
+/*}*/
 
-.trInfoElem > .dpContainer > .dpInput{
-    /*height: 100%;*/
-    /*width: 100%;*/
-}
+/*.editing{*/
+/*    border: 1px solid #2cff2c !important;*/
+/*}*/
 
-.readOnly{
-    cursor: default;
-    outline: none;
-}
-
-.editing{
-    border: 1px solid #2cff2c !important;
-}
-
-.editing:focus{
-    box-shadow: var(--tr-box-shadow);
-}
+/*.editing:focus{*/
+    /*box-shadow: var(--tr-box-shadow);*/
+/*}*/
 
 .trSelectPicker{
-    border: var(--tr-border);
+    /*border: var(--tr-border);*/
     
     transition: 350ms;
 }
 
 .trSelectPickerActive{
-    box-shadow: var(--tr-box-shadow);
-}
-
-.trCargoControls{
-    display: flex;
-    justify-content: space-between;
-    padding-bottom: 15px;
-    padding-inline: 1px;
-}
-
-.trCargoBtn{
-    border: var(--tr-border);
-    box-shadow: 0 0 2px 0 #cbcbcb;
-    font-size: 14px;
-    font-family: "Poppins", serif;
-    padding: 4px 10px;
-    
-    border-radius: 5px;
+    /*box-shadow: var(--tr-box-shadow);*/
 }
 
 .trCargoGridTemplate{
