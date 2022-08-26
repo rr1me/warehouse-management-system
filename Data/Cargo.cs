@@ -31,6 +31,7 @@ public class Cargo
     public CargoStatus CargoStatus { get; set; }
     public CargoQuality CargoQuality { get; set; }
     
+    [JsonIgnore]
     public List<Transit>? Transits { get; set; }
 
     public List<InnerWork>? AssignedInnerWorks { get; set; }

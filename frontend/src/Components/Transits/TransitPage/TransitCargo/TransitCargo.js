@@ -5,8 +5,8 @@ import TransitCargoRow from "./TransitCargoRow/TransitCargoRow";
 const TransitCargo = ({current, edit}) => {
     return (
         <div className='fullRow'>
-            <div className='trInfoElem elementTitle'>
-                <div className='trElemName'>Cargo</div>
+            <div className='trInfoElem'>
+                <div className='trElemName elementTitle'>Cargo</div>
                 <div className='trCargoElem'>
                     <div className={'trCargoControls' + (edit ? ' block' : ' def')}>
                         {edit ?
@@ -19,7 +19,6 @@ const TransitCargo = ({current, edit}) => {
                     <BlueTable header={cargoHeader} gridTemplate='trCargoGridTemplate' clickable={false} lightStyle={true}>
                         {current.assignedCargo ?
                             current.assignedCargo.map((value, index) => {
-                                console.log(value);
                                 return {element: <TransitCargoRow current={value}/> , id: index};
                             })
                             :null}

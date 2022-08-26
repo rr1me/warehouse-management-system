@@ -1,5 +1,5 @@
 ﻿import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {addTransit, getTransits, updateTransit, updateTransits} from "../../Services/transitService";
+import {addTransit, getTransits, updateTransit} from "../../Services/transitService";
 
 export const thunkTransits = createAsyncThunk(
     'getTransits',
@@ -12,6 +12,7 @@ export const thunkTransits = createAsyncThunk(
         }
         console.log(r);
         return {transits: r.data.map(v => {
+                console.log(v);
                 return v;
             }).sort((a,b) => a.date - b.date), transitPage: index};
     }
@@ -27,7 +28,6 @@ export const updateTransitThunk = createAsyncThunk(
         }else{
             const r = await updateTransit(transit)
             console.log(r);
-            console.log(transit);
             return {transit: r.data, index: Number(index)};
         }
     }
@@ -43,12 +43,10 @@ const transitSlice = createSlice({
     reducers: {
         getTransitForPage(state, action){ //todo check if there is same object in transitPage
             const id = action.payload;
-            console.log(id);
             let transit;
             if (id === 'add')
                 transit = {id: 'new', date: new Date().toJSON()};
             else{
-                console.log(state.transits+' '+Number(id));
                 transit = state.transits.find(v=>v.id === Number(id));
             }
             
@@ -56,6 +54,9 @@ const transitSlice = createSlice({
         },
         setTransitPageClient(state, action){
             state.transitPage.curr.client = action.payload;
+        },
+        setTransitPageCommentary(state, action){
+            state.transitPage.curr.commentary = action.payload;
         },
         cancelTransitEdit(state){
             const {prev, curr} = state.transitPage
@@ -74,14 +75,17 @@ const transitSlice = createSlice({
         }).addCase(updateTransitThunk.fulfilled, (state, action) => {
             const {transit, index} = action.payload;
             
+            console.log(transit);
+            
             if (index === 'add'){
                 state.transits.push(transit)
             }else{
-                state.transits[index] = transit;
+                state.transits[index] = state.transitPage.curr;
+                state.transitPage.prev = state.transitPage.curr;
             }
         })
     }
 });
 
-export const {getTransitForPage, setTransitPageClient, cancelTransitEdit} = transitSlice.actions;
+export const {getTransitForPage, setTransitPageClient, setTransitPageCommentary, cancelTransitEdit} = transitSlice.actions;
 export default transitSlice.reducer;

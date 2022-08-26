@@ -1,5 +1,6 @@
 .transitRowItem{
     padding: 8px;
+    word-break: break-word;
 }
 
 .transitRowItem > .dpContainer {

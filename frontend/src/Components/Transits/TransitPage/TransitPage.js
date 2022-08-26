@@ -1,5 +1,4 @@
-﻿import './TransitPage.css';
-import './TransitPage.sass';
+﻿import './TransitPage.sass';
 import {useLocation, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import SelectPicker from "../../SelectPicker/SelectPicker";
@@ -10,6 +9,7 @@ import {
     cancelTransitEdit,
     getTransitForPage,
     setTransitPageClient,
+    setTransitPageCommentary,
     thunkTransits,
     updateTransitThunk
 } from "../../../redux/Slices/transitSlice";
@@ -28,10 +28,8 @@ const TransitPage = () => {
     const id = /s\/(.*)/.exec(location.pathname)[1];
     useEffect(() => {
         if (transits.length === undefined && id !== 'add'){
-            console.log('dispatched')
             dispatch(thunkTransits(id));
         }else{
-            console.log('gtfp')
             dispatch(getTransitForPage(id));
             if (id === 'add')
                 setEdit(true);
@@ -40,9 +38,8 @@ const TransitPage = () => {
     }, [dispatch, location.pathname]);
     
     const handleEditButton = () => {
-        console.log(transitPage);
         setEdit(value => {
-            if (value)
+            if (value && (JSON.stringify(transitPage.prev) !== JSON.stringify(transitPage.curr)))
                 dispatch(updateTransitThunk(id));
             
             return !value;
@@ -65,6 +62,10 @@ const TransitPage = () => {
         dispatch(setTransitPageClient(e.target.value));
     };
     
+    const handleCommentaryInput = e => {
+        dispatch(setTransitPageCommentary(e.target.value));
+    };
+    
     if (transitPage.curr !== undefined){
         return (
             <div className='transitPage'>
@@ -84,8 +85,8 @@ const TransitPage = () => {
                             <textarea className={makeStyle('textarea')} value={transitPage.curr.client} onChange={handleClientInput} readOnly={!edit}/>
                         </div>
                         <div className='element elementTitle'>
-                            <div className='name'>Description</div>
-                            <textarea  className={makeStyle('textarea')} value={transitPage.curr.description} onChange={handleClientInput} readOnly={!edit}/>
+                            <div className='name'>Commentary</div>
+                            <textarea  className={makeStyle('textarea')} value={transitPage.curr.commentary ? transitPage.curr.commentary : ''} onChange={handleCommentaryInput} readOnly={!edit}/>
                         </div>
                     </div>
                     <div className='element elementTitle'>

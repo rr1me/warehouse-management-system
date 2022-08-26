@@ -19,16 +19,14 @@ const BlueTable = ({header, children, gridTemplate, clickable, lightStyle}) => {
         return style;
     };
     
-    const getHeaderStyle = () => gridTemplate + ' header ' + getStyle();
-    
-    console.log(children);
+    const getHeaderStyle = () => gridTemplate + ' trCargoHeader ' + getStyle();
     
     return (
         <div className={'blueTable '+getStyle()}>
             <div className={getHeaderStyle()}>
                 {header.map((value, index) => {
                     return (
-                        <div className={'header item '+getStyle()} key={index}>
+                        <div className={'trCargoHeader item '+getStyle()} key={index}>
                             {value}
                         </div>
                     )
