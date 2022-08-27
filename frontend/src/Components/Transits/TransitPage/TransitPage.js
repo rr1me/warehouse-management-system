@@ -7,9 +7,9 @@ import {DatePicker} from "../../DatePicker/DatePicker";
 import {setArrivalDate} from "../../../redux/Slices/cargoSlice";
 import {
     cancelTransitEdit,
-    getTransitForPage,
+    getTransitForPage, setTransitPageAdditionalTasks,
     setTransitPageClient,
-    setTransitPageCommentary,
+    setTransitPageCommentary, setTransitPageStatus, setTransitPageType,
     thunkTransits,
     updateTransitThunk
 } from "../../../redux/Slices/transitSlice";
@@ -56,7 +56,7 @@ const TransitPage = () => {
         setEdit(false);
     };
     
-    const makeStyle = style => style+(edit ? ' editing' : ' readonly');
+    const makeStyle = style => (style ? style+' ' : '')+(edit ? 'editing' : 'readonly');
     
     const handleClientInput = e => {
         dispatch(setTransitPageClient(e.target.value));
@@ -70,7 +70,7 @@ const TransitPage = () => {
         return (
             <div className='transitPage'>
                 <div className='header'>
-                    <div className='element elementTitle'>
+                    <div className=''>
                         Transit: {transitPage.curr.id}
                     </div>
                     <div className='ctrlButtons'>
@@ -80,19 +80,20 @@ const TransitPage = () => {
                 </div>
                 <div className='main'>
                     <div className='clientAndDesc fullRow'>
-                        <div className='element elementTitle'>
+                        <div className='element'>
                             <div className='name'>Client</div>
                             <textarea className={makeStyle('textarea')} value={transitPage.curr.client} onChange={handleClientInput} readOnly={!edit}/>
                         </div>
-                        <div className='element elementTitle'>
+                        <div className='element'>
                             <div className='name'>Commentary</div>
-                            <textarea  className={makeStyle('textarea')} value={transitPage.curr.commentary ? transitPage.curr.commentary : ''} onChange={handleCommentaryInput} readOnly={!edit}/>
+                            <textarea className={makeStyle('textarea')} value={transitPage.curr.commentary ? transitPage.curr.commentary : ''} onChange={handleCommentaryInput} readOnly={!edit}/>
                         </div>
                     </div>
-                    <div className='element elementTitle'>
+                    <div className='element'>
                         <div className='name'>Type</div>
-                        <SelectPicker defaultValue={types[transitPage.curr.type]} id={'typeSelector'} 
-                                      customStyle={makeStyle('selectPicker')} activeStyle={makeStyle('active')} readOnly={!edit}>
+                        <SelectPicker defaultValue={transitPage.curr.type} id='typeSelector'
+                                      customStyle={makeStyle('')} activeStyle={makeStyle('active')} readOnly={!edit} 
+                                      reducer={setTransitPageType}>
                             {types.map((value, index)=>{
                                 return (
                                     <div key={index}>
@@ -102,10 +103,11 @@ const TransitPage = () => {
                             })}
                         </SelectPicker>
                     </div>
-                    <div className='element elementTitle'>
+                    <div className='element'>
                         <div className='name'>Status</div>
-                        <SelectPicker defaultValue={statuses[transitPage.curr.status]} id='statusSelector' 
-                                      customStyle={makeStyle('selectPicker')} activeStyle={makeStyle('active')} readOnly={!edit}>
+                        <SelectPicker defaultValue={transitPage.curr.status} id='statusSelector' 
+                                      customStyle={makeStyle('')} activeStyle={makeStyle('active')} readOnly={!edit} 
+                                      reducer={setTransitPageStatus}>
                             {statuses.map((value, index)=>{
                                 return (
                                     <div key={index}>
@@ -113,12 +115,13 @@ const TransitPage = () => {
                                     </div>
                                 )
                             })}
-                        </SelectPicker>
+                        </SelectPicker> 
                     </div>
-                    <div className='element elementTitle'>
+                    <div className='element'>
                         <div className='name'>Additional tasks</div>
-                        <SelectPicker defaultValue={additionalTasks[transitPage.curr.additionalTasks]} id={'taskSelector'} 
-                                      customStyle={makeStyle('selectPicker')} activeStyle={makeStyle('active')} readOnly={!edit}>
+                        <SelectPicker defaultValue={transitPage.curr.additionalTasks} id='taskSelector'
+                                      customStyle={makeStyle('')} activeStyle={makeStyle('active')} readOnly={!edit} 
+                                      reducer={setTransitPageAdditionalTasks}>
                             {additionalTasks.map((value, index)=>{
                                 return (
                                     <div key={index}>
@@ -128,7 +131,7 @@ const TransitPage = () => {
                             })}
                         </SelectPicker>
                     </div>
-                    <div className='element elementTitle'>
+                    <div className='element'>
                         <div className='name'>Date</div>
                         <DatePicker incomeDate={transitPage.curr.date} editState={true} dispatchIndex={transitPage.curr.id} id='trDP' setDateDispatch={setArrivalDate}/>
                     </div>

@@ -26,7 +26,7 @@ const BlueTable = ({header, children, gridTemplate, clickable, lightStyle}) => {
             <div className={getHeaderStyle()}>
                 {header.map((value, index) => {
                     return (
-                        <div className={'trCargoHeader item '+getStyle()} key={index}>
+                        <div className={'item '+getStyle()} key={index}>
                             {value}
                         </div>
                     )

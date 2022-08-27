@@ -1,6 +1,6 @@
-﻿import {useEffect} from "react";
+﻿import './Transits.sass';
+import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import './Transits.css';
 import TransitRow from "./TransitRow/TransitRow";
 import {thunkTransits} from "../../redux/Slices/transitSlice";
 import {useNavigate} from "react-router-dom";
@@ -25,8 +25,8 @@ const Transits = () => {
     
     return (
         <div className='transitContainer'>
-            <div className='elementHeader'>
-                <div className='elementTitle'>Transits</div>
+            <div className='transitHeader'>
+                <div className='title light'>Transits</div>
                 <button className="btn apply table" onClick={handleAddNewClick}>Add new</button>
             </div>
             <BlueTable header={trHeader} gridTemplate='transitGridTemplate' clickable={true} lightStyle={false}>

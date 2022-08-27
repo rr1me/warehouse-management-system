@@ -5,8 +5,8 @@ import TransitCargoRow from "./TransitCargoRow/TransitCargoRow";
 const TransitCargo = ({current, edit}) => {
     return (
         <div className='fullRow'>
-            <div className='trInfoElem'>
-                <div className='trElemName elementTitle'>Cargo</div>
+            <div className='element'>
+                <div className='name'>Cargo</div>
                 <div className='trCargoElem'>
                     <div className={'trCargoControls' + (edit ? ' block' : ' def')}>
                         {edit ?

@@ -1,10 +1,11 @@
-﻿import './SelectPicker.css';
+﻿import './SelectPicker.sass';
 import {MdOutlineHorizontalRule} from "react-icons/md";
 import {IoIosArrowDown} from "react-icons/io";
 import {memo, useEffect, useMemo, useRef, useState} from "react";
 import RelativeModal from "../RelativeModal/RelativeModal";
+import {useDispatch} from "react-redux";
 
-const SelectPicker = memo(({children, defaultValue, id, customStyle, activeStyle, readOnly}) => {
+const SelectPicker = memo(({children, defaultValue, id, customStyle, activeStyle, readOnly, reducer}) => {
     
     const icons = useMemo(() => {
         return (
@@ -47,31 +48,44 @@ const SelectPicker = memo(({children, defaultValue, id, customStyle, activeStyle
             if (!readOnly)
                 return !value;
         })
-    }
+    };
     
     const getStyle = () => {
         if (activeStyle && open)
             return activeStyle;
         if (customStyle)
             return customStyle;
-        return 'selectPickerStyle';
-    }
+        return 'style';
+    };
+    
+    const dispatch = useDispatch();
+    
+    const handleSPContentClick = index => {
+        // console.log(index);
+        dispatch(reducer(index));
+    };
     
     return (
         <div className={'selectPicker '+(getStyle())} onClick={handleSPClick} ref={selectPickerRef}>
-            <div className='selectPickerContent'>
-                {defaultValue}
+            <div className='content'>
+                {children[defaultValue]}
                 <RelativeModal state={open}
-                               modalStyle={{width: (selectPickerRef.current !== undefined ? selectPickerRef.current.offsetWidth-22+'px' : null), right: '10px', top: '15px', padding: '5px 10px'}}
+                               modalStyle={{width: (selectPickerRef.current !== undefined ? selectPickerRef.current.offsetWidth-2+'px' : null), right: '10px', top: '15px'}}
                                doubleWrap={false}>
-                    {children}
+                    {children.map((value, index) => {
+                        return (
+                            <div className='item' onClick={() => handleSPContentClick(index)} key={index}>
+                                {value}
+                            </div>
+                        )
+                    })}
                 </RelativeModal>
             </div>
-            <div className='spControls'>
+            <div className='controls'>
                 <div className='separator'>
                     {icons.separator}
                 </div>
-                <div className={'spArrow'+(open ? ' darkArr' : ' brightArr')}>
+                <div className={'arrow'+(open ? ' dark' : ' bright')}>
                     {icons.arrow}
                 </div>
             </div>

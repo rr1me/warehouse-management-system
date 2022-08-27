@@ -58,6 +58,15 @@ const transitSlice = createSlice({
         setTransitPageCommentary(state, action){
             state.transitPage.curr.commentary = action.payload;
         },
+        setTransitPageType(state, action){
+            state.transitPage.curr.type = action.payload;
+        },
+        setTransitPageStatus(state, action){
+            state.transitPage.curr.status = action.payload;
+        },
+        setTransitPageAdditionalTasks(state, action){
+            state.transitPage.curr.additionalTasks = action.payload;
+        },
         cancelTransitEdit(state){
             const {prev, curr} = state.transitPage
             
@@ -87,5 +96,5 @@ const transitSlice = createSlice({
     }
 });
 
-export const {getTransitForPage, setTransitPageClient, setTransitPageCommentary, cancelTransitEdit} = transitSlice.actions;
+export const {getTransitForPage, setTransitPageClient, setTransitPageCommentary, setTransitPageType, setTransitPageStatus, setTransitPageAdditionalTasks, cancelTransitEdit} = transitSlice.actions;
 export default transitSlice.reducer;
