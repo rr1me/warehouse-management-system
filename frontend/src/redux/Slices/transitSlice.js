@@ -20,15 +20,16 @@ export const thunkTransits = createAsyncThunk(
 
 export const updateTransitThunk = createAsyncThunk(
     'updateTransit',
-    async (index, {getState}) => {
+    async (id, {getState}) => {
         const transit = getState().transitSlice.transitPage.curr;
-        if (index === 'add'){
+        if (id === 'add'){
             const r = await addTransit(transit);
-            return {transit: r.data, index: index};
+            return {transit: r.data, id: Number(id)};
         }else{
             const r = await updateTransit(transit)
             console.log(r);
-            return {transit: r.data, index: Number(index)};
+            console.log(Number(id));
+            return {transit: r.data, id: Number(id)};
         }
     }
 )
@@ -82,12 +83,13 @@ const transitSlice = createSlice({
             if (transitPage !== undefined)
                 transitSlice.caseReducers.getTransitForPage(state, {payload: transitPage});
         }).addCase(updateTransitThunk.fulfilled, (state, action) => {
-            const {transit, index} = action.payload;
+            const {transit, id} = action.payload;
             
             console.log(transit);
+            const index = state.transits.findIndex(v => v.id === id);
             
-            if (index === 'add'){
-                state.transits.push(transit)
+            if (id === 'add'){
+                state.transits.push(state.transitPage.curr)
             }else{
                 state.transits[index] = state.transitPage.curr;
                 state.transitPage.prev = state.transitPage.curr;

@@ -38,6 +38,7 @@ const TransitPage = () => {
     }, [dispatch, location.pathname]);
     
     const handleEditButton = () => {
+        console.log("edit")
         setEdit(value => {
             if (value && (JSON.stringify(transitPage.prev) !== JSON.stringify(transitPage.curr)))
                 dispatch(updateTransitThunk(id));
@@ -82,7 +83,7 @@ const TransitPage = () => {
                     <div className='clientAndDesc fullRow'>
                         <div className='element'>
                             <div className='name'>Client</div>
-                            <textarea className={makeStyle('textarea')} value={transitPage.curr.client} onChange={handleClientInput} readOnly={!edit}/>
+                            <textarea onBlur={() => {console.log("yes")}} className={makeStyle('textarea')} value={transitPage.curr.client} onChange={handleClientInput} readOnly={!edit}/>
                         </div>
                         <div className='element'>
                             <div className='name'>Commentary</div>
