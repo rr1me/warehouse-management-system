@@ -1,7 +1,6 @@
 ﻿import './Label.sass';
 
 const Label = ({list, value}) => {
-    
     const color = list[value].clr;
     
     return (

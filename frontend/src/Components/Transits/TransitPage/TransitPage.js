@@ -14,6 +14,8 @@ import {
     updateTransitThunk
 } from "../../../redux/Slices/transitSlice";
 import TransitCargo from "./TransitCargo/TransitCargo";
+import {additionalTasks, statusLabels, typeLabels} from "../TransitProps";
+import Label from "../../Label/Label";
 
 const TransitPage = () => {
 
@@ -95,11 +97,9 @@ const TransitPage = () => {
                         <SelectPicker defaultValue={transitPage.curr.type} id='typeSelector'
                                       customStyle={makeStyle('')} activeStyle={makeStyle('active')} readOnly={!edit} 
                                       reducer={setTransitPageType}>
-                            {types.map((value, index)=>{
+                            {typeLabels.map((value, index)=>{
                                 return (
-                                    <div key={index}>
-                                        {value}
-                                    </div>
+                                    <Label value={index} list={typeLabels}/>
                                 )
                             })}
                         </SelectPicker>
@@ -109,11 +109,9 @@ const TransitPage = () => {
                         <SelectPicker defaultValue={transitPage.curr.status} id='statusSelector' 
                                       customStyle={makeStyle('')} activeStyle={makeStyle('active')} readOnly={!edit} 
                                       reducer={setTransitPageStatus}>
-                            {statuses.map((value, index)=>{
+                            {statusLabels.map((value, index)=>{
                                 return (
-                                    <div key={index}>
-                                        {value}
-                                    </div>
+                                    <Label value={index} list={statusLabels}/>
                                 )
                             })}
                         </SelectPicker> 
@@ -143,22 +141,22 @@ const TransitPage = () => {
     }
 };
 
-const types = [
-    'Acceptance',
-    'Dispatching'
-];
-
-const statuses = [
-    'Planned',
-    'Completed',
-    'Failed'
-];
-
-const additionalTasks = [
-    'None',
-    'QualityControl',
-    'Repack',
-    'Both'
-]
+// const types = [
+//     'Acceptance',
+//     'Dispatching'
+// ];
+//
+// const statuses = [
+//     'Planned',
+//     'Completed',
+//     'Failed'
+// ];
+//
+// const additionalTasks = [
+//     'None',
+//     'QualityControl',
+//     'Repack',
+//     'Both'
+// ]
 
 export default TransitPage;
