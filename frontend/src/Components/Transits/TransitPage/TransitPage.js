@@ -16,6 +16,8 @@ import {
 import TransitCargo from "./TransitCargo/TransitCargo";
 import {additionalTasks, statusLabels, typeLabels} from "../TransitProps";
 import Label from "../../Label/Label";
+import useTransitValid from "./TransitPageValidation";
+import Valid from "../../Valid/Valid";
 
 const TransitPage = () => {
 
@@ -38,15 +40,18 @@ const TransitPage = () => {
         }
         
     }, [dispatch, location.pathname]);
+
+    const {clientValid, cargoValid, validate, resetValid} = useTransitValid(transitPage.curr);
     
     const handleEditButton = () => {
         console.log("edit")
-        setEdit(value => {
-            if (value && (JSON.stringify(transitPage.prev) !== JSON.stringify(transitPage.curr)))
-                dispatch(updateTransitThunk(id));
-            
-            return !value;
-        })
+        if (validate())
+            setEdit(value => {
+                if (value && (JSON.stringify(transitPage.prev) !== JSON.stringify(transitPage.curr)))
+                    dispatch(updateTransitThunk(id));
+
+                return !value;
+            });
     };
     const handleCancelButton = () => {
         if (transitPage.id === 'new'){
@@ -57,9 +62,10 @@ const TransitPage = () => {
         dispatch(cancelTransitEdit());
         
         setEdit(false);
+        resetValid();
     };
     
-    const makeStyle = style => (style ? style+' ' : '')+(edit ? 'editing' : 'readonly');
+    const makeStyle = (style, invalid) => (style ? style+' ' : '')+(edit ? (invalid ? 'invalid' : 'editing') : 'readonly');
     
     const handleClientInput = e => {
         dispatch(setTransitPageClient(e.target.value));
@@ -70,6 +76,7 @@ const TransitPage = () => {
     };
     
     if (transitPage.curr !== undefined){
+        
         return (
             <div className='transitPage'>
                 <div className='header'>
@@ -85,7 +92,9 @@ const TransitPage = () => {
                     <div className='clientAndDesc fullRow'>
                         <div className='element'>
                             <div className='name'>Client</div>
-                            <textarea onBlur={() => {console.log("yes")}} className={makeStyle('textarea')} value={transitPage.curr.client} onChange={handleClientInput} readOnly={!edit}/>
+                            <Valid valid={clientValid} errorMessage='Client cant be null'>
+                                <textarea className={makeStyle('textarea', !clientValid)} value={transitPage.curr.client} onChange={handleClientInput} readOnly={!edit}/>
+                            </Valid>
                         </div>
                         <div className='element'>
                             <div className='name'>Commentary</div>
@@ -99,7 +108,7 @@ const TransitPage = () => {
                                       reducer={setTransitPageType}>
                             {typeLabels.map((value, index)=>{
                                 return (
-                                    <Label value={index} list={typeLabels}/>
+                                    <Label value={index} list={typeLabels} key={index}/>
                                 )
                             })}
                         </SelectPicker>
@@ -107,11 +116,11 @@ const TransitPage = () => {
                     <div className='element'>
                         <div className='name'>Status</div>
                         <SelectPicker defaultValue={transitPage.curr.status} id='statusSelector' 
-                                      customStyle={makeStyle('')} activeStyle={makeStyle('active')} readOnly={!edit} 
+                                      customStyle={'readonly'} readOnly={true} 
                                       reducer={setTransitPageStatus}>
                             {statusLabels.map((value, index)=>{
                                 return (
-                                    <Label value={index} list={statusLabels}/>
+                                    <Label value={index} list={statusLabels} key={index}/>
                                 )
                             })}
                         </SelectPicker> 
@@ -140,23 +149,5 @@ const TransitPage = () => {
         )
     }
 };
-
-// const types = [
-//     'Acceptance',
-//     'Dispatching'
-// ];
-//
-// const statuses = [
-//     'Planned',
-//     'Completed',
-//     'Failed'
-// ];
-//
-// const additionalTasks = [
-//     'None',
-//     'QualityControl',
-//     'Repack',
-//     'Both'
-// ]
 
 export default TransitPage;

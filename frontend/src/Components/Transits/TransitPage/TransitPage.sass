@@ -1,8 +1,10 @@
 ﻿.transitPage
   $box-shadow: 0 0 4px 0 #94ff94
+  $box-shadow-red: 0 0 4px 0 #dc3545
   $border: 1px solid rgba(0,0,0,0.1)
   $border-radius: 5px
   $border-green: 1px solid #2cff2c
+  $border-red: 1px solid #dc3545
 
   font: 25px "Poppins Medium", serif
   
@@ -61,12 +63,16 @@
     outline: none
     
   .editing
+    transition: 250ms
     border: $border-green !important
     &:focus
-      box-shadow: $box-shadow
+      box-shadow: $box-shadow  
+      
+  .invalid
+    transition: 250ms
+    border: $border-red !important
+    &:focus
+      box-shadow: $box-shadow-red
       
   .fullRow
     grid-column: 1/-1
-    
-  .trCargoGridTemplate
-    grid-template-columns: repeat(4, 1fr)

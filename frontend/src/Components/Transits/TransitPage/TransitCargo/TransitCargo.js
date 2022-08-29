@@ -34,6 +34,7 @@ export default TransitCargo;
 const cargoHeader = [
     'Id',
     'Sticker id',
-    'Inner works',
-    'Description'
+    // 'Inner works',
+    'Description',
+    'Actions'
 ];
