@@ -36,13 +36,18 @@ public class CargoController : ControllerBase
         return Ok("👍");
     }
 
-    [HttpDelete("delete/{id}")]
-    public IActionResult DeleteOneCargo(int id)
+    [HttpPost("delete/")]
+    public IActionResult DeleteCargo(List<int> toDelete)
     {
-        context.Cargoes.Remove(new Cargo(id));
+        // context.Cargoes.Remove(new Cargo(id));
+        var cargoToDelete = toDelete.Select(x =>
+        {
+            return new Cargo(x);
+        }).ToList();
+        context.Cargoes.RemoveRange(cargoToDelete);
         context.SaveChanges();
 
-        Console.WriteLine("to delete: "+id);
+        Console.WriteLine("to delete: "+toDelete);
         
         return Ok("deleted");
     }

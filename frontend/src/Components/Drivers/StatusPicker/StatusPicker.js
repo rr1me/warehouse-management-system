@@ -4,6 +4,7 @@ import {memo, useEffect, useState} from "react";
 import {IoIosArrowDown} from "react-icons/io";
 import {useDispatch} from "react-redux";
 import {setDriverStatus} from "../../../redux/Slices/driversSlice";
+import {makeCloseEvent} from "../../Properties/makeCloseEvent";
 
 const StatusPicker = memo(({status, editing, index}) => {
     
@@ -12,15 +13,7 @@ const StatusPicker = memo(({status, editing, index}) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const closeDP = (e) => {
-            if (e.composedPath()[0].id !== 'relativeModal'){
-                setStatusModalOpened(false);
-            }
-        };
-
-        document.body.addEventListener('click', closeDP);
-
-        return () => document.body.removeEventListener('click', closeDP);
+        makeCloseEvent('relativeModal', setStatusModalOpened);
     });
 
     const Status = ({status, editing, modalOpened}) => {

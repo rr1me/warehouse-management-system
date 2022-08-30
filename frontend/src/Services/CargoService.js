@@ -8,8 +8,8 @@ export const updateCargo = cargo => {
     return axios.patch('/api/cargo/update', cargo).catch(v=>{throw v});
 };
 
-export const deleteCargo = id => {
-    return axios.delete('/api/cargo/delete/'+id).catch(v=>{throw v});
+export const deleteCargo = cargoToDelete => {
+    return axios.post('/api/cargo/delete/', cargoToDelete).catch(v=>{throw v});
 };
 
 export const addCargo = cargo => {

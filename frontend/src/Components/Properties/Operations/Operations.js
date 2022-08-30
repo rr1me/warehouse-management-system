@@ -4,19 +4,12 @@ import {useDispatch} from "react-redux";
 import {AiFillDelete, AiFillEdit, AiOutlineCheck} from "react-icons/ai";
 import {FcCancel} from "react-icons/fc";
 import RelativeModal from "../../RelativeModal/RelativeModal";
+import {makeCloseEvent} from "../makeCloseEvent";
 
 const Operations = ({index, editing, id, editDispatch, deleteDispatch, cancelEditDispatch}) => {
 
     useEffect(() => {
-        const closeDp = e => {
-            if (e.composedPath()[0].id !== 'deleteModal'){
-                setDeleting(false);
-            }
-        }
-
-        document.body.addEventListener('click', closeDp);
-
-        return () => document.body.removeEventListener('click', closeDp);
+        makeCloseEvent('deleteModal', setDeleting);
     })
 
     const [deleting, setDeleting] = useState(false);

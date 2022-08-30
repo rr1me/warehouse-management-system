@@ -4,6 +4,7 @@ import {IoIosArrowDown} from "react-icons/io";
 import {memo, useEffect, useMemo, useRef, useState} from "react";
 import RelativeModal from "../RelativeModal/RelativeModal";
 import {useDispatch} from "react-redux";
+import {makeCloseEvent} from "../Properties/makeCloseEvent";
 
 const SelectPicker = memo(({children, defaultValue, id, customStyle, activeStyle, readOnly, reducer}) => {
     
@@ -26,17 +27,8 @@ const SelectPicker = memo(({children, defaultValue, id, customStyle, activeStyle
     }, [readOnly]);
 
     useEffect(() => {
-        if (!readOnly){
-            const closeDP = (e) => {
-                if (e.composedPath()[0].id !== id){
-                    setOpen(false);
-                }
-            };
-
-            document.body.addEventListener('click', closeDP);
-
-            return () => document.body.removeEventListener('click', closeDP);
-        }
+        if (!readOnly)
+            makeCloseEvent(id, setOpen);
         spRef.current = true;
     });
     

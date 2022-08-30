@@ -2,19 +2,12 @@
 import {Link} from "react-router-dom";
 import {useEffect} from "react";
 import SidebarList from "./SidebarItems";
+import {makeCloseEvent} from "../../Properties/makeCloseEvent";
 
 const Sidebar = ({setSidebarState, handleSidebarButtonClick}) => {
 
     useEffect(() => {
-        const closeDP = (e) => {
-            if (e.composedPath()[0].id !== 'sidebar'){
-                setSidebarState(false);
-            }
-        };
-
-        document.body.addEventListener('click', closeDP);
-
-        return () => document.body.removeEventListener('click', closeDP);
+        makeCloseEvent('sidebar', setSidebarState);
     })
     
     return (

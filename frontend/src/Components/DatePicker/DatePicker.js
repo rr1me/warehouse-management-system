@@ -3,21 +3,14 @@
 import './DatePicker.css';
 import DatePickerBuilder from "./dpModules/DatePickerBuilder";
 import {MdEditCalendar} from "react-icons/md";
+import {makeCloseEvent} from "../Properties/makeCloseEvent";
 
 export const DatePicker = memo(({incomeDate, setDateDispatch, dispatchIndex, id, editState}) => {
     
     const dateObject = new Date(incomeDate);
 
     useEffect(() => {
-        const closeDP = (e) => {
-            if (e.composedPath()[0].id !== id){
-                setDPState(false);
-            }
-        };
-
-        document.body.addEventListener('click', closeDP);
-
-        return () => document.body.removeEventListener('click', closeDP);
+        makeCloseEvent(id, setDPState);
     });
     
     const inputElement = useRef();

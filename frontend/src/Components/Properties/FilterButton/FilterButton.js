@@ -1,16 +1,11 @@
 ﻿import BulletList from "../BulletList/BulletList";
 import {useEffect, useState} from "react";
+import {makeCloseEvent} from "../makeCloseEvent";
 
 const FilterButton = ({sortType, sortList, sortDispatch, id}) => {
 
     useEffect(() => {
-        const closeDp = e => {
-            if (e.composedPath()[0].id !== id){
-                setFilterOpen(false);
-            }
-        }
-        document.body.addEventListener('click', closeDp);
-        return () => document.body.removeEventListener('click', closeDp);
+        makeCloseEvent(id, setFilterOpen);
     });
 
     const [filterOpen, setFilterOpen] = useState(false);

@@ -5,7 +5,7 @@ const HookedTextarea = ({className, value, onChange}) => {
     const textareaRef = useRef();
     
     useLayoutEffect(() => {
-        textareaRef.current.style.height = '15px';
+        textareaRef.current.style.height = "15px";
         textareaRef.current.style.height = textareaRef.current.scrollHeight-4+'px';
     }, [value]);
     

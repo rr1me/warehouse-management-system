@@ -59,7 +59,7 @@ const TransitPage = () => {
             return;
         }
         
-        dispatch(cancelTransitEdit());
+        dispatch(cancelTransitEdit(id));
         
         setEdit(false);
         resetValid();

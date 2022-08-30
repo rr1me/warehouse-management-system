@@ -7,6 +7,7 @@
   color: #fff
   
   &:hover
+    cursor: pointer
     box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25)
     
   &.apply
@@ -16,11 +17,23 @@
     
   &.edit
     background: #007bff
+    &.readonly
+      background: #b9dbff
+      &:hover
+        background: #b9dbff
+        box-shadow: unset
+        cursor: unset
     &:hover
       background: #0069d9
       
   &.delete
     background: #d74646
+    &.readonly
+      background: #D7464672
+      &:hover
+        background: #D7464672
+        box-shadow: unset
+        cursor: unset
     &:hover
       background: #c54141
       

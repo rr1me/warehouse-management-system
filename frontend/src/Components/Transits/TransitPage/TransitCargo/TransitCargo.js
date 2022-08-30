@@ -1,8 +1,17 @@
 ﻿import './TransitCargo.sass'
 import BlueTable from "../../../BlueTable/BlueTable";
 import TransitCargoRow from "./TransitCargoRow/TransitCargoRow";
+import {useDispatch} from "react-redux";
+import {addEmptyCargoToTransit} from "../../../../redux/Slices/transitSlice";
 
 const TransitCargo = ({current, edit}) => {
+    
+    const dispatch = useDispatch();
+    
+    const handleAddNewCargoButton = () => {
+        dispatch(addEmptyCargoToTransit());
+    }
+    
     return (
         <div className='fullRow'>
             <div className='element'>
@@ -12,14 +21,14 @@ const TransitCargo = ({current, edit}) => {
                         {edit ?
                             <>
                                 <button className='btn apply table'>Filter</button>
-                                <button className='btn apply table'>Add new</button>
+                                <button className='btn apply table' onClick={handleAddNewCargoButton}>Add new</button>
                             </>
                             : null}
                     </div>
                     <BlueTable header={cargoHeader} gridTemplate='trCargoGridTemplate' clickable={false} lightStyle={true}>
                         {current.assignedCargo ?
                             current.assignedCargo.map((value, index) => {
-                                return {element: <TransitCargoRow current={value}/> , id: index};
+                                return {element: <TransitCargoRow current={value} index={index} globalEdit={edit}/> , id: index};
                             })
                             :null}
                     </BlueTable>
@@ -34,7 +43,6 @@ export default TransitCargo;
 const cargoHeader = [
     'Id',
     'Sticker id',
-    // 'Inner works',
     'Description',
     'Actions'
 ];
