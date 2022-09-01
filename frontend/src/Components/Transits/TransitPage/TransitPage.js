@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {DatePicker} from "../../DatePicker/DatePicker";
 import {setArrivalDate} from "../../../redux/Slices/cargoSlice";
 import {
-    cancelTransitEdit,
+    cancelTransitEdit, deleteTransitThunk,
     getTransitForPage, setTransitPageAdditionalTasks,
     setTransitPageClient,
     setTransitPageCommentary, setTransitPageStatus, setTransitPageType,
@@ -14,10 +14,11 @@ import {
     updateTransitThunk
 } from "../../../redux/Slices/transitSlice";
 import TransitCargo from "./TransitCargo/TransitCargo";
-import {additionalTasks, statusLabels, typeLabels} from "../TransitProps";
+import {additionalTasks, ModalDeleteWarning, statusLabels, typeLabels} from "../TransitProps";
 import Label from "../../Label/Label";
 import useTransitValid from "./TransitPageValidation";
 import Valid from "../../Valid/Valid";
+import RelativeModal from "../../RelativeModal/RelativeModal";
 
 const TransitPage = () => {
 
@@ -25,6 +26,7 @@ const TransitPage = () => {
     const location = useLocation();
     
     const [edit, setEdit] = useState(false);
+    const [deleting, setDeleting] = useState(false);
     
     const {transits, transitPage} = useSelector(state=>state.transitSlice);
     const dispatch = useDispatch();
@@ -75,17 +77,40 @@ const TransitPage = () => {
         dispatch(setTransitPageCommentary(e.target.value));
     };
     
+    const handleDeleteButton = e => {
+        e.stopPropagation();
+        setDeleting(true);
+    };
+    
+    const handleConfirmedDeleteButton = async () => {
+        const r = await dispatch(deleteTransitThunk(transitPage.curr.id));
+        if (r.meta.requestStatus === "fulfilled")
+            navigate('/transits');
+    };
+    
+    const handleCancelDeleting = () => {
+        setDeleting(false);
+    };
+    
     if (transitPage.curr !== undefined){
         
         return (
             <div className='transitPage'>
                 <div className='header'>
                     <div className=''>
-                        Transit: {transitPage.curr.id}
+                        Transit: {transitPage.curr.id !== 0 ? transitPage.curr.id : 'new'}
                     </div>
                     <div className='ctrlButtons'>
-                        {edit ? <button className='btn delete table' onClick={handleCancelButton}>Cancel</button> : null}
+                        <button className='btn delete table' onClick={handleDeleteButton}>Delete</button>
+                        {edit ? <button className='btn edit table' onClick={handleCancelButton}>Cancel</button> : null}
                         <button className='btn apply table' onClick={handleEditButton}>{edit ? 'Apply' : 'Edit'}</button>
+                        {deleting ? 
+                            // <RelativeModal setOpen={setDeleting} id='transitDeleteModal' state={deleting} doubleWrap={false} onClick={e=>e.stopPropagation()}>
+                            //     <div>Are you sure?</div>
+                            //     <button>dasd</button>
+                            // </RelativeModal>
+                            <ModalDeleteWarning modalId='transitDeleteModal' confirmHandle={handleConfirmedDeleteButton} cancelHandler={handleCancelDeleting} modalState={deleting} modalSetState={setDeleting}/>
+                            : null}
                     </div>
                 </div>
                 <div className='main'>

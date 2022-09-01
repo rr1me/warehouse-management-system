@@ -12,6 +12,7 @@ import {
 } from "../../../../../redux/Slices/transitSlice";
 import {TiCancel} from "react-icons/ti";
 import RelativeModal from "../../../../RelativeModal/RelativeModal";
+import {ModalDeleteWarning} from "../../../TransitProps";
 
 const TransitCargoRow = ({current, index, globalEdit}) => {
     
@@ -77,15 +78,16 @@ const TransitCargoRow = ({current, index, globalEdit}) => {
                 <button className={'btn delete'+ (globalEdit ? '' : ' readonly')} onClick={handleDeleteButton}>
                     {edit ? <TiCancel className='cancelIcon'/> : <AiFillDelete className='icon'/>}
                 </button>
-                <RelativeModal state={deleting} id='trCargoDeleteModal' doubleWrap={false} setOpen={setDeleting} onClick={e=>e.stopPropagation()}>
-                    <div className='deleteWarning'>
-                        <div className='warningText'>Are you sure?</div>
-                        <div className='warningCtrl'>
-                            <button className='btn edit' onClick={handleConfirmedDeleteButton}><AiOutlineCheck className='icon'/></button>
-                            <button className='btn delete' onClick={handleCancelDeleting}><TiCancel className='cancelIcon'/></button>
-                        </div>
-                    </div>
-                </RelativeModal>
+                {/*<RelativeModal state={deleting} id='trCargoDeleteModal' doubleWrap={false} setOpen={setDeleting} onClick={e=>e.stopPropagation()}>*/}
+                {/*    <div className='deleteWarning'>*/}
+                {/*        <div className='warningText'>Are you sure?</div>*/}
+                {/*        <div className='warningCtrl'>*/}
+                {/*            <button className='btn edit' onClick={handleConfirmedDeleteButton}><AiOutlineCheck className='icon'/></button>*/}
+                {/*            <button className='btn delete' onClick={handleCancelDeleting}><TiCancel className='cancelIcon'/></button>*/}
+                {/*        </div>*/}
+                {/*    </div>*/}
+                {/*</RelativeModal>*/}
+                <ModalDeleteWarning modalId='trCargoDeleteModal' confirmHandle={handleConfirmedDeleteButton} cancelHandler={handleCancelDeleting} modalState={deleting} modalSetState={setDeleting}/>
             </div>
         </>
     )

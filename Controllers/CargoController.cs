@@ -36,10 +36,9 @@ public class CargoController : ControllerBase
         return Ok("👍");
     }
 
-    [HttpPost("delete/")]
+    [HttpPost("delete")]
     public IActionResult DeleteCargo(List<int> toDelete)
     {
-        // context.Cargoes.Remove(new Cargo(id));
         var cargoToDelete = toDelete.Select(x =>
         {
             return new Cargo(x);

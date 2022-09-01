@@ -65,6 +65,7 @@ public class TransitController : ControllerBase
     public IActionResult AddOneTransit(Transit transit)
     {
         context.Transits.Add(transit);
+        context.SaveChanges();
 
         return Ok(transit.Id);
     }
@@ -73,5 +74,14 @@ public class TransitController : ControllerBase
     public List<Cargo> GetAssignedCargo(int id)
     {
         return context.Cargoes.Where(x => x.Transits.Exists(y => y.Id == id)).ToList();
+    }
+
+    [HttpDelete("delete/{id}")]
+    public IActionResult DeleteOneTransit(int id)
+    {
+        context.Transits.Remove(new Transit(id));
+        context.SaveChanges();
+
+        return Ok("deleted");
     }
 }

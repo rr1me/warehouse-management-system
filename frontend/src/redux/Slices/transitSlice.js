@@ -1,6 +1,7 @@
 ﻿import {createAsyncThunk, createSlice, current} from "@reduxjs/toolkit";
-import {addTransit, getTransits, updateTransit} from "../../Services/transitService";
+import {addTransit, deleteTransit, getTransits, updateTransit} from "../../Services/transitService";
 import {deleteCargo} from "../../Services/CargoService";
+import {useNavigate} from "react-router-dom";
 
 export const thunkTransits = createAsyncThunk(
     'getTransits',
@@ -26,9 +27,12 @@ export const updateTransitThunk = createAsyncThunk(
         const transit = state.transitPage.curr;
         const cargoToDelete = state.cargoToDelete;
         
+        // console.log(id);
         if (id === 'add'){
+            console.log("yes");
             const r = await addTransit(transit);
-            return {transit: r.data, id: Number(id)};
+            console.log(r);
+            return {transit: r.data, id: r.data, isNew: true};
         }else{
             const r = await updateTransit(transit)
             console.log(r);
@@ -37,8 +41,20 @@ export const updateTransitThunk = createAsyncThunk(
                 console.log(rc);
             }
             console.log(Number(id));
-            return {transit: r.data, id: Number(id)};
+            return {transit: r.data, id: Number(id), isNew: false};
         }
+    }
+);
+
+export const deleteTransitThunk = createAsyncThunk(
+    'deleteTransit',
+    async (id: number) => {
+        // const navigate = useNavigate();
+        
+        console.log(id);
+        const r = await deleteTransit(id);
+        console.log(r);
+        return id;
     }
 )
 
@@ -55,7 +71,7 @@ const transitSlice = createSlice({
             const id = action.payload;
             let transit;
             if (id === 'add')
-                transit = {id: 'new', date: new Date().toJSON()};
+                transit = {id: 0, date: new Date().toJSON(), type: 0, status: 0, additionalTasks: 0, assignedCargo: [], client: '', commentary: ''};
             else{
                 transit = state.transits.find(v=>v.id === Number(id));
             }
@@ -132,18 +148,22 @@ const transitSlice = createSlice({
             if (transitPage !== undefined)
                 transitSlice.caseReducers.getTransitForPage(state, {payload: transitPage});
         }).addCase(updateTransitThunk.fulfilled, (state, action) => {
-            const {transit, id} = action.payload;
+            const {transit, id, isNew} = action.payload;
             
             console.log(transit);
-            const index = state.transits.findIndex(v => v.id === id);
-            
-            if (id === 'add'){
+            // const index = state.transits.findIndex(v => v.id === id);
+            console.log(id);
+            if (isNew){
                 state.transits.push(state.transitPage.curr)
+                console.log('0');
             }else{
+                const index = state.transits.findIndex(v => v.id === id);
                 state.transits[index] = state.transitPage.curr;
                 state.transitPage.prev = state.transitPage.curr;
                 state.cargoToDelete = [];
             }
+        }).addCase(deleteTransitThunk.fulfilled, (state, action) => {
+            state.transits = state.transits.filter((v, i) => {return v.id !== action.payload});
         })
     }
 });

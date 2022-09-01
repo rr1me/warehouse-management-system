@@ -9,6 +9,11 @@ public class Transit
     {
     }
 
+    public Transit(int id)
+    {
+        Id = id;
+    }
+
     public Transit(string client, DateTime date, TransitType type, TransitStatus status, List<Cargo>? assignedCargo, TaskStatus additionalTasks, string? commentary)
     {
         Client = client;
