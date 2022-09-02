@@ -104,11 +104,7 @@ const TransitPage = () => {
                         <button className='btn delete table' onClick={handleDeleteButton}>Delete</button>
                         {edit ? <button className='btn edit table' onClick={handleCancelButton}>Cancel</button> : null}
                         <button className='btn apply table' onClick={handleEditButton}>{edit ? 'Apply' : 'Edit'}</button>
-                        {deleting ? 
-                            // <RelativeModal setOpen={setDeleting} id='transitDeleteModal' state={deleting} doubleWrap={false} onClick={e=>e.stopPropagation()}>
-                            //     <div>Are you sure?</div>
-                            //     <button>dasd</button>
-                            // </RelativeModal>
+                        {deleting ?
                             <ModalDeleteWarning modalId='transitDeleteModal' confirmHandle={handleConfirmedDeleteButton} cancelHandler={handleCancelDeleting} modalState={deleting} modalSetState={setDeleting}/>
                             : null}
                     </div>
@@ -168,7 +164,7 @@ const TransitPage = () => {
                         <div className='name'>Date</div>
                         <DatePicker incomeDate={transitPage.curr.date} editState={true} dispatchIndex={transitPage.curr.id} id='trDP' setDateDispatch={setArrivalDate}/>
                     </div>
-                    <TransitCargo current={transitPage.curr} edit={edit}/>
+                    <TransitCargo current={transitPage.curr} edit={edit} cargoValid={cargoValid}/>
                 </div>
             </div>
         )

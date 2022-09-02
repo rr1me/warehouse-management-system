@@ -1,7 +1,6 @@
 ﻿import {createAsyncThunk, createSlice, current} from "@reduxjs/toolkit";
 import {addTransit, deleteTransit, getTransits, updateTransit} from "../../Services/transitService";
 import {deleteCargo} from "../../Services/CargoService";
-import {useNavigate} from "react-router-dom";
 
 export const thunkTransits = createAsyncThunk(
     'getTransits',
@@ -27,7 +26,6 @@ export const updateTransitThunk = createAsyncThunk(
         const transit = state.transitPage.curr;
         const cargoToDelete = state.cargoToDelete;
         
-        // console.log(id);
         if (id === 'add'){
             console.log("yes");
             const r = await addTransit(transit);
@@ -49,9 +47,7 @@ export const updateTransitThunk = createAsyncThunk(
 export const deleteTransitThunk = createAsyncThunk(
     'deleteTransit',
     async (id: number) => {
-        // const navigate = useNavigate();
         
-        console.log(id);
         const r = await deleteTransit(id);
         console.log(r);
         return id;
@@ -76,7 +72,10 @@ const transitSlice = createSlice({
                 transit = state.transits.find(v=>v.id === Number(id));
             }
             
-            state.transitPage = {prev: transit, curr: transit};
+            state.transitPage = {prev: transit, curr: transit, cargoStates: transit.assignedCargo.map((v,i) => {
+                return {id: v.id, edit: false};
+                })};
+            console.log(state.transitPage);
         },
         setTransitPageClient(state, action){
             state.transitPage.curr.client = action.payload;
@@ -130,7 +129,6 @@ const transitSlice = createSlice({
         },
         sendCargoToDelete(state, action){
             const index = action.payload;
-            // const index = state.transits.findIndex(v => v.id === Number(id));
 
             state.cargoToDelete.push(state.transitPage.curr.assignedCargo[index].id);
             state.transitPage.curr.assignedCargo = state.transitPage.curr.assignedCargo.filter((v, i) => {return i !== index});
@@ -138,6 +136,11 @@ const transitSlice = createSlice({
         addEmptyCargoToTransit(state){
             state.transitPage.curr.assignedCargo.push({id: 0, stickerId: '', description: ''});
             state.transitPage.curr.assignedCargo.sort((a,b) => a.id - b.id);
+        },
+        setTransitPageCargoEdit(state, action){
+            const {index, bool} = action.payload;
+            
+            state.transitPage.cargoStates[index].edit = bool;
         }
     },
     extraReducers: (builder) => {
@@ -151,8 +154,6 @@ const transitSlice = createSlice({
             const {transit, id, isNew} = action.payload;
             
             console.log(transit);
-            // const index = state.transits.findIndex(v => v.id === id);
-            console.log(id);
             if (isNew){
                 state.transits.push(state.transitPage.curr)
                 console.log('0');
@@ -169,5 +170,5 @@ const transitSlice = createSlice({
 });
 
 export const {getTransitForPage, setTransitPageClient, setTransitPageCommentary, setTransitPageType, setTransitPageStatus, setTransitPageAdditionalTasks, cancelTransitEdit, 
-    setTransitPageCargoStickerId, setTransitPageCargoDescription, cancelTransitCargoEdit, applyTransitPageCargoEdit, sendCargoToDelete, addEmptyCargoToTransit} = transitSlice.actions;
+    setTransitPageCargoStickerId, setTransitPageCargoDescription, cancelTransitCargoEdit, applyTransitPageCargoEdit, sendCargoToDelete, addEmptyCargoToTransit, setTransitPageCargoEdit} = transitSlice.actions;
 export default transitSlice.reducer;

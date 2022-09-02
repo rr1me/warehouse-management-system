@@ -3,28 +3,42 @@ import {AiFillDelete, AiFillEdit, AiOutlineCheck} from "react-icons/ai";
 import {useState} from "react";
 import Editable from "../../../../Properties/Editable";
 import HookedTextarea from "../../../../Properties/HookedTextarea";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {
     applyTransitPageCargoEdit,
-    cancelTransitCargoEdit, sendCargoToDelete,
-    setTransitPageCargoDescription,
+    cancelTransitCargoEdit,
+    sendCargoToDelete,
+    setTransitPageCargoDescription, setTransitPageCargoEdit,
     setTransitPageCargoStickerId
 } from "../../../../../redux/Slices/transitSlice";
 import {TiCancel} from "react-icons/ti";
-import RelativeModal from "../../../../RelativeModal/RelativeModal";
 import {ModalDeleteWarning} from "../../../TransitProps";
+import Valid from "../../../../Valid/Valid";
 
 const TransitCargoRow = ({current, index, globalEdit}) => {
     
     const dispatch = useDispatch();
-    const [edit, setEdit] = useState(current.id === 0); //todo fixbug .unshift makes transitCargoRow update last element neither the new one
+    // const [edit, setEdit] = useState(current.id === 0); //todo fixbug .unshift makes transitCargoRow update last element neither the new one
     const [deleting, setDeleting] = useState(false);
+    const {transitPage} = useSelector(state => state.transitSlice);
+    const edit = current.id !== 0 ? transitPage.cargoStates[index].edit : true;
+    
+    const [stickerValid, setStickerValid] = useState(current.stickerId !== '');
     
     const handleEditButton = () => {
         if (globalEdit){
-            setEdit(value => !value);
-            if (edit)
-                dispatch(applyTransitPageCargoEdit(index));
+            // dispatch(setTransitPageCargoEdit({index: index, bool: !edit}));
+            if (edit) {
+                console.log(transitPage.curr);
+                if (current.stickerId !== '') {
+                    dispatch(setTransitPageCargoEdit({index: index, bool: !edit}));
+                    dispatch(applyTransitPageCargoEdit(index));
+                    setStickerValid(true);
+                }
+                else
+                    setStickerValid(false);
+            }else
+                dispatch(setTransitPageCargoEdit({index: index, bool: !edit}));
         }
     };
     
@@ -34,7 +48,7 @@ const TransitCargoRow = ({current, index, globalEdit}) => {
         
         if (edit){
             dispatch(cancelTransitCargoEdit(index));
-            setEdit(false);
+            dispatch(setTransitPageCargoEdit({index: index, bool: false}));
         }else{
             e.stopPropagation();
             setDeleting(value => !value);
@@ -54,7 +68,7 @@ const TransitCargoRow = ({current, index, globalEdit}) => {
         setDeleting(false);
     };
     
-    const handleConfirmedDeleteButton = e => {
+    const handleConfirmedDeleteButton = () => {
         dispatch(sendCargoToDelete(index));
     };
     
@@ -62,9 +76,14 @@ const TransitCargoRow = ({current, index, globalEdit}) => {
         <>
             <div className='transitCargoRow'>{current.id}</div>
             <div className='transitCargoRow'>
-                <Editable state={edit}>
-                    <HookedTextarea value={current.stickerId} onChange={stickerIdInputHandle} className='trCargoTextarea editing'/>
-                </Editable>
+                <Valid valid={stickerValid} errorMessage='Client cant be null'>
+                    <Editable state={edit}>
+                        <HookedTextarea value={current.stickerId} onChange={stickerIdInputHandle} className='trCargoTextarea editing'/>
+                    </Editable>
+                </Valid>
+                {/*<Editable state={edit}>*/}
+                {/*    <HookedTextarea value={current.stickerId} onChange={stickerIdInputHandle} className='trCargoTextarea editing'/>*/}
+                {/*</Editable>*/}
             </div>
             <div className='transitCargoRow'>
                 <Editable state={edit}>
@@ -78,15 +97,6 @@ const TransitCargoRow = ({current, index, globalEdit}) => {
                 <button className={'btn delete'+ (globalEdit ? '' : ' readonly')} onClick={handleDeleteButton}>
                     {edit ? <TiCancel className='cancelIcon'/> : <AiFillDelete className='icon'/>}
                 </button>
-                {/*<RelativeModal state={deleting} id='trCargoDeleteModal' doubleWrap={false} setOpen={setDeleting} onClick={e=>e.stopPropagation()}>*/}
-                {/*    <div className='deleteWarning'>*/}
-                {/*        <div className='warningText'>Are you sure?</div>*/}
-                {/*        <div className='warningCtrl'>*/}
-                {/*            <button className='btn edit' onClick={handleConfirmedDeleteButton}><AiOutlineCheck className='icon'/></button>*/}
-                {/*            <button className='btn delete' onClick={handleCancelDeleting}><TiCancel className='cancelIcon'/></button>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*</RelativeModal>*/}
                 <ModalDeleteWarning modalId='trCargoDeleteModal' confirmHandle={handleConfirmedDeleteButton} cancelHandler={handleCancelDeleting} modalState={deleting} modalSetState={setDeleting}/>
             </div>
         </>

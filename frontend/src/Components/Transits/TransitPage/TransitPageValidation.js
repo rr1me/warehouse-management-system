@@ -1,31 +1,23 @@
-﻿import {useDispatch} from "react-redux";
-import {setTransitPageClient} from "../../../redux/Slices/transitSlice";
+﻿import {useSelector} from "react-redux";
 import {useState} from "react";
 
 const useTransitValid = (current) => {
     
-    // const [validated, setValidated] = useState(true);
+    const {transitPage:{cargoStates}} = useSelector(state => state.transitSlice);
     
     const [clientValid, setClientValid] = useState(true);
-    // const [commValid, setCommValid] = useState(true);
-    // const [typeValid, setTypeValid] = useState(true);
-    // const [statusValid, setStatusValid] = useState(true);
-    // const [tasksValid, setTasksValid] = useState(true);
     const [cargoValid, setCargoValid] = useState(true);
     
     const validate = () => {
         const clientBool = current.client !== '';
-        checkValid(clientBool, setClientValid)
-        // checkValid(current.client !== '', setTypeValid)
-        // checkValid(current.client !== '', setStatusValid)
-        // checkValid(current.client !== '', setTasksValid)
-        // checkValid(current.client !== '', setCargoValid)
-        return clientBool
+        const cargoBool = !cargoStates.some(x => x.edit === true);
+        checkValid(clientBool, setClientValid);
+        checkValid(cargoBool, setCargoValid);
+        return clientBool && cargoBool;
     };
     
     const checkValid = (bool, setState) => {
         setState(bool);
-        // setValidated(bool);
     };
     
     const resetValid = () => {
