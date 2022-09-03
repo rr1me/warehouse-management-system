@@ -12,7 +12,6 @@ const Valid = ({children, valid, errorMessage, upperError}) => {
     
     return (
         <>
-            {/*{isError ? errorMessage : null}*/}
             {upperError ? 
                 <>
                     {!valid ? <Error/> : null}

@@ -54,7 +54,7 @@ export const deleteTransitThunk = createAsyncThunk(
     }
 )
 
-const transitSlice = createSlice({
+const transitSlice = createSlice({ // todo remake cargoState system
     name: 'transits',
     initialState: {
         transits: {},
@@ -63,7 +63,7 @@ const transitSlice = createSlice({
         cargoToDelete: []
     },
     reducers: {
-        getTransitForPage(state, action){ //todo check if there is same object in transitPage
+        getTransitForPage(state, action){
             const id = action.payload;
             let transit;
             if (id === 'add')
@@ -135,10 +135,12 @@ const transitSlice = createSlice({
         },
         addEmptyCargoToTransit(state){
             state.transitPage.curr.assignedCargo.push({id: 0, stickerId: '', description: ''});
+            state.transitPage.cargoStates.push({id: 0, edit: true});
             state.transitPage.curr.assignedCargo.sort((a,b) => a.id - b.id);
         },
         setTransitPageCargoEdit(state, action){
             const {index, bool} = action.payload;
+            console.log(bool);
             
             state.transitPage.cargoStates[index].edit = bool;
         }

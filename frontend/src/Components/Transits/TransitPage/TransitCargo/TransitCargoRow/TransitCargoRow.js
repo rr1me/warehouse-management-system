@@ -17,21 +17,19 @@ import Valid from "../../../../Valid/Valid";
 
 const TransitCargoRow = ({current, index, globalEdit}) => {
     
-    const dispatch = useDispatch();
-    // const [edit, setEdit] = useState(current.id === 0); //todo fixbug .unshift makes transitCargoRow update last element neither the new one
+    const dispatch = useDispatch();  //todo fixbug .unshift makes transitCargoRow update last element neither the new one
     const [deleting, setDeleting] = useState(false);
     const {transitPage} = useSelector(state => state.transitSlice);
-    const edit = current.id !== 0 ? transitPage.cargoStates[index].edit : true;
+    const edit = transitPage.cargoStates[index].edit;
     
     const [stickerValid, setStickerValid] = useState(current.stickerId !== '');
     
     const handleEditButton = () => {
         if (globalEdit){
-            // dispatch(setTransitPageCargoEdit({index: index, bool: !edit}));
             if (edit) {
                 console.log(transitPage.curr);
                 if (current.stickerId !== '') {
-                    dispatch(setTransitPageCargoEdit({index: index, bool: !edit}));
+                    dispatch(setTransitPageCargoEdit({index: index, bool: !edit})); //todo remake it to one dispatch
                     dispatch(applyTransitPageCargoEdit(index));
                     setStickerValid(true);
                 }
@@ -81,9 +79,6 @@ const TransitCargoRow = ({current, index, globalEdit}) => {
                         <HookedTextarea value={current.stickerId} onChange={stickerIdInputHandle} className='trCargoTextarea editing'/>
                     </Editable>
                 </Valid>
-                {/*<Editable state={edit}>*/}
-                {/*    <HookedTextarea value={current.stickerId} onChange={stickerIdInputHandle} className='trCargoTextarea editing'/>*/}
-                {/*</Editable>*/}
             </div>
             <div className='transitCargoRow'>
                 <Editable state={edit}>
