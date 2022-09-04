@@ -134,9 +134,12 @@ const transitSlice = createSlice({ // todo remake cargoState system
             state.transitPage.curr.assignedCargo = state.transitPage.curr.assignedCargo.filter((v, i) => {return i !== index});
         },
         addEmptyCargoToTransit(state){
+            const sort = (a,b) => a.id - b.id;
+            
             state.transitPage.curr.assignedCargo.push({id: 0, stickerId: '', description: ''});
             state.transitPage.cargoStates.push({id: 0, edit: true});
-            state.transitPage.curr.assignedCargo.sort((a,b) => a.id - b.id);
+            state.transitPage.cargoStates.sort(sort);
+            state.transitPage.curr.assignedCargo.sort(sort);
         },
         setTransitPageCargoEdit(state, action){
             const {index, bool} = action.payload;

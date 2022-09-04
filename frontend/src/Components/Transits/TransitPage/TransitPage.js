@@ -6,10 +6,14 @@ import {useDispatch, useSelector} from "react-redux";
 import {DatePicker} from "../../DatePicker/DatePicker";
 import {setArrivalDate} from "../../../redux/Slices/cargoSlice";
 import {
-    cancelTransitEdit, deleteTransitThunk,
-    getTransitForPage, setTransitPageAdditionalTasks,
+    cancelTransitEdit,
+    deleteTransitThunk,
+    getTransitForPage,
+    setTransitPageAdditionalTasks,
     setTransitPageClient,
-    setTransitPageCommentary, setTransitPageStatus, setTransitPageType,
+    setTransitPageCommentary,
+    setTransitPageStatus,
+    setTransitPageType,
     thunkTransits,
     updateTransitThunk
 } from "../../../redux/Slices/transitSlice";
@@ -18,7 +22,6 @@ import {additionalTasks, ModalDeleteWarning, statusLabels, typeLabels} from "../
 import Label from "../../Label/Label";
 import useTransitValid from "./TransitPageValidation";
 import Valid from "../../Valid/Valid";
-import RelativeModal from "../../RelativeModal/RelativeModal";
 
 const TransitPage = () => {
 
