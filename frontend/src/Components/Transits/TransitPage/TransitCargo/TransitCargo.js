@@ -5,7 +5,7 @@ import {useDispatch} from "react-redux";
 import {addEmptyCargoToTransit} from "../../../../redux/Slices/transitSlice";
 import Valid from "../../../Valid/Valid";
 
-const TransitCargo = ({current, edit, cargoValid}) => {
+const TransitCargo = ({cargo, edit, cargoValid}) => {
     
     const dispatch = useDispatch();
     
@@ -28,11 +28,9 @@ const TransitCargo = ({current, edit, cargoValid}) => {
                             : null}
                     </div>
                     <BlueTable header={cargoHeader} gridTemplate='trCargoGridTemplate' clickable={false} lightStyle={true}>
-                        {current.assignedCargo ?
-                            current.assignedCargo.map((value, index) => {
-                                return {element: <TransitCargoRow current={value} index={index} globalEdit={edit}/> , id: index};
-                            })
-                            :null}
+                        {cargo.map((value, index) => {
+                            return {element: <TransitCargoRow cargo={value.object} states={value.states} index={index} globalEdit={edit}/> , id: index};
+                        })}
                     </BlueTable>
                 </div>
             </div>

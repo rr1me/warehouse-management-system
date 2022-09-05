@@ -3,32 +3,30 @@ import {AiFillDelete, AiFillEdit, AiOutlineCheck} from "react-icons/ai";
 import {useState} from "react";
 import Editable from "../../../../Properties/Editable";
 import HookedTextarea from "../../../../Properties/HookedTextarea";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {
     applyTransitPageCargoEdit,
     cancelTransitCargoEdit,
     sendCargoToDelete,
-    setTransitPageCargoDescription, setTransitPageCargoEdit,
+    setTransitPageCargoDescription,
+    setTransitPageCargoEdit,
     setTransitPageCargoStickerId
 } from "../../../../../redux/Slices/transitSlice";
 import {TiCancel} from "react-icons/ti";
 import {ModalDeleteWarning} from "../../../TransitProps";
 import Valid from "../../../../Valid/Valid";
 
-const TransitCargoRow = ({current, index, globalEdit}) => {
+const TransitCargoRow = ({cargo, states:{edit}, index, globalEdit}) => {
     
     const dispatch = useDispatch();  //todo fixbug .unshift makes transitCargoRow update last element neither the new one
     const [deleting, setDeleting] = useState(false);
-    const {transitPage} = useSelector(state => state.transitSlice);
-    const edit = transitPage.cargoStates[index].edit;
     
-    const [stickerValid, setStickerValid] = useState(current.stickerId !== '');
+    const [stickerValid, setStickerValid] = useState(cargo.stickerId !== '');
     
     const handleEditButton = () => {
         if (globalEdit){
             if (edit) {
-                console.log(transitPage.curr);
-                if (current.stickerId !== '') {
+                if (cargo.stickerId !== '') {
                     dispatch(setTransitPageCargoEdit({index: index, bool: !edit})); //todo remake it to one dispatch
                     dispatch(applyTransitPageCargoEdit(index));
                     setStickerValid(true);
@@ -72,17 +70,17 @@ const TransitCargoRow = ({current, index, globalEdit}) => {
     
     return (
         <>
-            <div className='transitCargoRow'>{current.id}</div>
+            <div className='transitCargoRow'>{cargo.id}</div>
             <div className='transitCargoRow'>
                 <Valid valid={stickerValid} errorMessage='Client cant be null'>
                     <Editable state={edit}>
-                        <HookedTextarea value={current.stickerId} onChange={stickerIdInputHandle} className='trCargoTextarea editing'/>
+                        <HookedTextarea value={cargo.stickerId} onChange={stickerIdInputHandle} className='trCargoTextarea editing'/>
                     </Editable>
                 </Valid>
             </div>
             <div className='transitCargoRow'>
                 <Editable state={edit}>
-                    <HookedTextarea value={(!edit && !current.description) ? 'No description' : current.description} onChange={descriptionInputHandle} className='trCargoTextarea editing'/>
+                    <HookedTextarea value={(!edit && !cargo.description) ? 'No description' : cargo.description} onChange={descriptionInputHandle} className='trCargoTextarea editing'/>
                 </Editable>
             </div>
             <div className='transitCargoRow actions'>
