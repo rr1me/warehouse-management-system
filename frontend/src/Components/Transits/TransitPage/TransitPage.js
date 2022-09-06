@@ -78,7 +78,7 @@ const TransitPage = () => {
             console.log(dispatch(addTransitThunk()));
         }
         else 
-            dispatch(updateTransitThunk());
+            dispatch(addTransitThunk());
         
     };
     const handleCancelButton = () => {

@@ -22,13 +22,27 @@ export const thunkTransits = createAsyncThunk(
 export const addTransitThunk = createAsyncThunk(
     'addTransit',
     async (_, {getState}) => {
-        // console.log(getState().transitSlice);
+        const {transitPage} = getState().transitSlice;
+        const transitToAdd = {...transitPage.transit.object.current, assignedCargo: transitPage.cargo.map(v=>v.object)};
+        
+        const r = addTransit(transitToAdd);
+        console.log(r);
+        
+        return transitToAdd;
     }
-) 
+);
 
 export const updateTransitThunk = createAsyncThunk(
     'editOrUpdateOrAddTransit',
-    async (_, {getState, rejectWithValue}) => {
+    async (_, {getState}) => {
+        const {transitPage} = getState().transitSlice;
+        const transitToUpdate = {...transitPage.transit.object.current, assignedCargo: transitPage.cargo.map(v=>v.object)};
+        
+        const r = updateTransit(transitToUpdate);
+        console.log(r);
+        
+        return transitToUpdate;
+        
         // const state = getState().transitSlice;
         
     //     const transit = state.transitPage.curr;
@@ -171,18 +185,18 @@ const transitSlice = createSlice({ // todo remake cargoState system
             if (transitPage !== undefined)
                 transitSlice.caseReducers.getTransitForPage(state, {payload: transitPage});
         }).addCase(updateTransitThunk.fulfilled, (state, action) => {
-            const {transit, id, isNew} = action.payload;
+            const transit = action.payload;
             
             console.log(transit);
-            if (isNew){
-                state.transits.push(state.transitPage.curr)
-                console.log('0');
-            }else{
-                const index = state.transits.findIndex(v => v.id === id);
-                state.transits[index] = state.transitPage.curr;
-                state.transitPage.prev = state.transitPage.curr;
-                state.cargoToDelete = [];
-            }
+            // if (isNew){
+            //     state.transits.push(state.transitPage.curr)
+            //     console.log('0');
+            // }else{
+            //     const index = state.transits.findIndex(v => v.id === id);
+            //     state.transits[index] = state.transitPage.curr;
+            //     state.transitPage.prev = state.transitPage.curr;
+            //     state.cargoToDelete = [];
+            // }
         }).addCase(deleteTransitThunk.fulfilled, (state, action) => {
             state.transits = state.transits.filter((v, i) => {return v.id !== action.payload});
         })
