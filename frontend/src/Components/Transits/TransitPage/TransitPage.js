@@ -33,7 +33,7 @@ const TransitPage = () => {
     
     const {transits, transitPage} = useSelector(state=>state.transitSlice);
 
-    const {clientValid, cargoValid, validate, resetValid} = useTransitValid(transitPage);
+    const {clientValid, cargoValid, validate, resetValid} = useTransitValid(transitPage); // todo make cargo stickerId validation. let only numbers;
 
     const dispatch = useDispatch();
 
@@ -73,12 +73,18 @@ const TransitPage = () => {
             return;
         }
         
+        if (JSON.stringify(previous) === JSON.stringify(current) && JSON.stringify(previous.assignedCargo) === JSON.stringify(cargo.map(v=>v.object))) {
+            console.log("?")
+            return;
+        }
+        console.log("qweqwe")
+        
         if (current.id === 0) {
             console.log("//")
             console.log(dispatch(addTransitThunk()));
         }
         else 
-            dispatch(addTransitThunk());
+            dispatch(updateTransitThunk());
         
     };
     const handleCancelButton = () => {

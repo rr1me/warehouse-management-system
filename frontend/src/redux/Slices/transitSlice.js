@@ -1,6 +1,5 @@
 ﻿import {createAsyncThunk, createSlice, current} from "@reduxjs/toolkit";
 import {addTransit, deleteTransit, getTransits, updateTransit} from "../../Services/transitService";
-import {deleteCargo} from "../../Services/CargoService";
 
 export const thunkTransits = createAsyncThunk(
     'getTransits',
@@ -25,7 +24,7 @@ export const addTransitThunk = createAsyncThunk(
         const {transitPage} = getState().transitSlice;
         const transitToAdd = {...transitPage.transit.object.current, assignedCargo: transitPage.cargo.map(v=>v.object)};
         
-        const r = addTransit(transitToAdd);
+        const r = await addTransit(transitToAdd);
         console.log(r);
         
         return transitToAdd;
@@ -33,14 +32,17 @@ export const addTransitThunk = createAsyncThunk(
 );
 
 export const updateTransitThunk = createAsyncThunk(
-    'editOrUpdateOrAddTransit',
+    'updateTransit',
     async (_, {getState}) => {
+        console.log("?");
         const {transitPage} = getState().transitSlice;
+        console.log("?AKSDJALKSd");
         const transitToUpdate = {...transitPage.transit.object.current, assignedCargo: transitPage.cargo.map(v=>v.object)};
-        
-        const r = updateTransit(transitToUpdate);
+        console.log("?AKSDJALKSd");
+        const r = await updateTransit(transitToUpdate);
+        console.log("?AKSDJALKSd");
         console.log(r);
-        
+        console.log("?AKSDJALKSd");
         return transitToUpdate;
         
         // const state = getState().transitSlice;
@@ -153,8 +155,8 @@ const transitSlice = createSlice({ // todo remake cargoState system
             const index = action.payload;
             const {prev, curr} = state.transitPage;
 
-            if (JSON.stringify(prev.assignedCargo) !== JSON.stringify(curr.assignedCargo))
-                state.transitPage.prev.assignedCargo[index] = state.transitPage.curr.assignedCargo[index];
+            // if (JSON.stringify(prev.assignedCargo) !== JSON.stringify(curr.assignedCargo))
+            //     state.transitPage.prev.assignedCargo[index] = state.transitPage.curr.assignedCargo[index];
         },
         sendCargoToDelete(state, action){
             const index = action.payload;
@@ -163,18 +165,19 @@ const transitSlice = createSlice({ // todo remake cargoState system
             state.transitPage.curr.assignedCargo = state.transitPage.curr.assignedCargo.filter((v, i) => {return i !== index});
         },
         addEmptyCargoToTransit(state){
-            const sort = (a,b) => a.id - b.id;
+            // const sort = (a,b) => a.id - b.id;
             
-            state.transitPage.curr.assignedCargo.push({id: 0, stickerId: '', description: ''});
-            state.transitPage.cargoStates.push({id: 0, edit: true});
-            state.transitPage.cargoStates.sort(sort);
-            state.transitPage.curr.assignedCargo.sort(sort);
+            state.transitPage.cargo.unshift({object: {id: 0, stickerId: '', description: ''}, states: {edit: true}});
+            // state.transitPage.curr.assignedCargo.push({id: 0, stickerId: '', description: ''});
+            // state.transitPage.cargoStates.push({id: 0, edit: true});
+            // state.transitPage.cargoStates.sort(sort);
+            // state.transitPage.curr.assignedCargo.sort(sort);
         },
         setTransitPageCargoEdit(state, action){
             const {index, bool} = action.payload;
             console.log(bool);
             
-            state.transitPage.cargoStates[index].edit = bool;
+            state.transitPage.cargo[index].states.edit = bool;
         }
     },
     extraReducers: (builder) => {
@@ -188,6 +191,13 @@ const transitSlice = createSlice({ // todo remake cargoState system
             const transit = action.payload;
             
             console.log(transit);
+            const index = state.transits.findIndex(v => v.id === transit.id);
+            
+            state.transits[index] = transit;
+            state.transitPage = {transit: {object: {previous: transit, current: transit}, states: {edit: false}}, cargo: transit.assignedCargo.map(v => {
+                    return {object: v, states: {edit: false}}
+                })};
+            
             // if (isNew){
             //     state.transits.push(state.transitPage.curr)
             //     console.log('0');
