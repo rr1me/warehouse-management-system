@@ -43,8 +43,6 @@ const TransitPage = () => {
             dispatch(thunkTransits(id));
         }else{
             dispatch(getTransitForPage(id));
-            // if (id === 'add')
-            //     setEdit(true);
         }
 
     }, [dispatch, location.pathname]);
@@ -53,20 +51,8 @@ const TransitPage = () => {
     if (Object.keys(transitPage).length === 0) return;
     
     const {transit:{object: {previous, current}, states:{edit}}, cargo} = transitPage;
-
-    // const {clientValid, cargoValid, validate, resetValid} = useTransitValid(transitPage);
     
     const handleEditButton = () => {
-        // console.log("edit")
-        // if (validate())
-            // setEdit(value => {
-            //     if (value && (JSON.stringify(transitPage.prev) !== JSON.stringify(current)))
-            //         dispatch(updateTransitThunk(id));
-            //
-            //     return !value;
-            // });
-            // dispatch(updateTransitThunk(id));
-        // dispatch(editOrUpdateOrAddTransitThunk(id));
         console.log(current.id);
         if (!edit){
             dispatch(editTransit());
@@ -94,8 +80,6 @@ const TransitPage = () => {
         }
         
         dispatch(cancelTransitEdit(id));
-        
-        // setEdit(false);
         resetValid();
     };
     

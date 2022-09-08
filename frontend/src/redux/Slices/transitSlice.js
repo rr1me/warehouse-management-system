@@ -44,27 +44,6 @@ export const updateTransitThunk = createAsyncThunk(
         console.log(r);
         console.log("?AKSDJALKSd");
         return transitToUpdate;
-        
-        // const state = getState().transitSlice;
-        
-    //     const transit = state.transitPage.curr;
-    //     const cargoToDelete = state.cargoToDelete;
-    //    
-    //     if (id === 'add'){
-    //         console.log("yes");
-    //         const r = await addTransit(transit);
-    //         console.log(r);
-    //         return {transit: r.data, id: r.data, isNew: true};
-    //     }else{
-    //         const r = await updateTransit(transit)
-    //         console.log(r);
-    //         if (cargoToDelete.length > 0){
-    //             const rc = await deleteCargo(cargoToDelete);
-    //             console.log(rc);
-    //         }
-    //         console.log(Number(id));
-    //         return {transit: r.data, id: Number(id), isNew: false};
-    //     }
     }
 );
 
@@ -99,11 +78,6 @@ const transitSlice = createSlice({ // todo remake cargoState system
             state.transitPage = {transit: {object: {previous: transit, current: transit}, states: {edit: id === 'add'}}, cargo: transit.assignedCargo.map(v => {
                 return {object: v, states: {edit: false}}
                 })}
-            
-            // state.transitPage = {prev: transit, curr: transit, cargoStates: transit.assignedCargo.map((v,i) => {
-            //     return {id: v.id, edit: false};
-            //     })};
-            // console.log(state.transitPage);
         },
         setTransitPageClient(state, action){
             state.transitPage.transit.object.current.client = action.payload;
@@ -165,13 +139,7 @@ const transitSlice = createSlice({ // todo remake cargoState system
             state.transitPage.curr.assignedCargo = state.transitPage.curr.assignedCargo.filter((v, i) => {return i !== index});
         },
         addEmptyCargoToTransit(state){
-            // const sort = (a,b) => a.id - b.id;
-            
             state.transitPage.cargo.unshift({object: {id: 0, stickerId: '', description: ''}, states: {edit: true}});
-            // state.transitPage.curr.assignedCargo.push({id: 0, stickerId: '', description: ''});
-            // state.transitPage.cargoStates.push({id: 0, edit: true});
-            // state.transitPage.cargoStates.sort(sort);
-            // state.transitPage.curr.assignedCargo.sort(sort);
         },
         setTransitPageCargoEdit(state, action){
             const {index, bool} = action.payload;
@@ -197,16 +165,6 @@ const transitSlice = createSlice({ // todo remake cargoState system
             state.transitPage = {transit: {object: {previous: transit, current: transit}, states: {edit: false}}, cargo: transit.assignedCargo.map(v => {
                     return {object: v, states: {edit: false}}
                 })};
-            
-            // if (isNew){
-            //     state.transits.push(state.transitPage.curr)
-            //     console.log('0');
-            // }else{
-            //     const index = state.transits.findIndex(v => v.id === id);
-            //     state.transits[index] = state.transitPage.curr;
-            //     state.transitPage.prev = state.transitPage.curr;
-            //     state.cargoToDelete = [];
-            // }
         }).addCase(deleteTransitThunk.fulfilled, (state, action) => {
             state.transits = state.transits.filter((v, i) => {return v.id !== action.payload});
         })
