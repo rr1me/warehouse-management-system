@@ -120,10 +120,14 @@ const transitSlice = createSlice({ // todo remake cargoState system
         cancelTransitCargoEdit(state, action){
             console.log(current(state.cargoToDelete));
             const index = action.payload;
-            const {prev, curr} = state.transitPage;
+            const {transit:{object:{current}}, cargo} = state.transitPage;
 
-            if (JSON.stringify(prev.assignedCargo) !== JSON.stringify(curr.assignedCargo))
-                state.transitPage.curr.assignedCargo[index] = state.transitPage.prev.assignedCargo[index];
+            // if (JSON.stringify(prev.assignedCargo) !== JSON.stringify(curr.assignedCargo))
+            //     state.transitPage.curr.assignedCargo[index] = state.transitPage.prev.assignedCargo[index];
+            
+            if (JSON.stringify(current.assignedCargo) !== JSON.stringify(cargo.map(v=>v.object))){
+                
+            }
         },
         applyTransitPageCargoEdit(state, action){
             const index = action.payload;
@@ -135,8 +139,8 @@ const transitSlice = createSlice({ // todo remake cargoState system
         sendCargoToDelete(state, action){
             const index = action.payload;
 
-            state.cargoToDelete.push(state.transitPage.curr.assignedCargo[index].id);
-            state.transitPage.curr.assignedCargo = state.transitPage.curr.assignedCargo.filter((v, i) => {return i !== index});
+            state.cargoToDelete.push(state.transitPage.cargo[index].object.id);
+            state.transitPage.cargo = state.transitPage.cargo.filter((v, i) => {return i.object.id !== index});
         },
         addEmptyCargoToTransit(state){
             state.transitPage.cargo.unshift({object: {id: 0, stickerId: '', description: ''}, states: {edit: true}});
