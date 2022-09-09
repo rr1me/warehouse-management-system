@@ -5,12 +5,12 @@ import Editable from "../../../../Properties/Editable";
 import HookedTextarea from "../../../../Properties/HookedTextarea";
 import {useDispatch} from "react-redux";
 import {
-    applyTransitPageCargoEdit,
+    applyTransitCargoEdit,
     cancelTransitCargoEdit,
     sendCargoToDelete,
     setTransitPageCargoDescription,
-    setTransitPageCargoEdit,
-    setTransitPageCargoStickerId
+    setTransitPageCargoStickerId,
+    startTransitCargoEdit
 } from "../../../../../redux/Slices/transitSlice";
 import {TiCancel} from "react-icons/ti";
 import {ModalDeleteWarning} from "../../../TransitProps";
@@ -24,17 +24,25 @@ const TransitCargoRow = ({cargo, states:{edit}, index, globalEdit}) => {
     const [stickerValid, setStickerValid] = useState(cargo.stickerId !== '');
     
     const handleEditButton = () => {
+        // if (globalEdit){
+        //     if (edit) {
+        //         if (cargo.stickerId !== '') {
+        //             // dispatch(setTransitPageCargoEdit({index: index, bool: !edit})); //todo remake it to one dispatch
+        //             dispatch(applyTransitPageCargoEdit(index));
+        //             setStickerValid(true);
+        //         }
+        //         else
+        //             setStickerValid(false);
+        //     }else{}
+        //         // dispatch(setTransitPageCargoEdit({index: index, bool: !edit}));
+        // }
         if (globalEdit){
-            if (edit) {
-                if (cargo.stickerId !== '') {
-                    dispatch(setTransitPageCargoEdit({index: index, bool: !edit})); //todo remake it to one dispatch
-                    dispatch(applyTransitPageCargoEdit(index));
-                    setStickerValid(true);
-                }
-                else
-                    setStickerValid(false);
-            }else
-                dispatch(setTransitPageCargoEdit({index: index, bool: !edit}));
+            dispatch(edit ? applyTransitCargoEdit(index) : startTransitCargoEdit(index));
+            // edit ? dispatch(applyTransitPageCargoEdit(index)) : dispatch(startTransitPageCargoEdit(index));
+            // if (edit)
+            //     dispatch(applyTransitCargoEdit(index));
+            // else
+            //     dispatch(startTransitCargoEdit(index));
         }
     };
     
@@ -43,8 +51,8 @@ const TransitCargoRow = ({cargo, states:{edit}, index, globalEdit}) => {
             return;
         
         if (edit){
-            dispatch(cancelTransitCargoEdit(index));
-            dispatch(setTransitPageCargoEdit({index: index, bool: false}));
+            dispatch(cancelTransitCargoEdit(index)); //todo remake this
+            // dispatch(setTransitPageCargoEdit({index: index, bool: false}));
         }else{
             e.stopPropagation();
             setDeleting(value => !value);

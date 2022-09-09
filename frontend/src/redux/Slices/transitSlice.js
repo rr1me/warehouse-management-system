@@ -1,4 +1,4 @@
-﻿import {createAsyncThunk, createSlice, current} from "@reduxjs/toolkit";
+﻿import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {addTransit, deleteTransit, getTransits, updateTransit} from "../../Services/transitService";
 
 export const thunkTransits = createAsyncThunk(
@@ -34,15 +34,12 @@ export const addTransitThunk = createAsyncThunk(
 export const updateTransitThunk = createAsyncThunk(
     'updateTransit',
     async (_, {getState}) => {
-        console.log("?");
         const {transitPage} = getState().transitSlice;
-        console.log("?AKSDJALKSd");
         const transitToUpdate = {...transitPage.transit.object.current, assignedCargo: transitPage.cargo.map(v=>v.object)};
-        console.log("?AKSDJALKSd");
+        
         const r = await updateTransit(transitToUpdate);
-        console.log("?AKSDJALKSd");
         console.log(r);
-        console.log("?AKSDJALKSd");
+        
         return transitToUpdate;
     }
 );
@@ -96,7 +93,7 @@ const transitSlice = createSlice({ // todo remake cargoState system
         },
         setTransitPageCargoStickerId(state, action){
             const {index, stickerId} = action.payload;
-            state.transitPage.cargo[index].object.stickerId = stickerId;
+            state.transitPage.cargo[index].object.stickerId = Number(stickerId);
         },
         setTransitPageCargoDescription(state, action){
             const {index, desc} = action.payload;
@@ -117,40 +114,38 @@ const transitSlice = createSlice({ // todo remake cargoState system
                 state.cargoToDelete = [];
             }
         },
-        cancelTransitCargoEdit(state, action){
-            console.log(current(state.cargoToDelete));
+        startTransitCargoEdit(state, action){
             const index = action.payload;
-            const {transit:{object:{current}}, cargo} = state.transitPage;
-
-            // if (JSON.stringify(prev.assignedCargo) !== JSON.stringify(curr.assignedCargo))
-            //     state.transitPage.curr.assignedCargo[index] = state.transitPage.prev.assignedCargo[index];
             
-            if (JSON.stringify(current.assignedCargo) !== JSON.stringify(cargo.map(v=>v.object))){
-                
-            }
+            state.transitPage.cargo[index].states.edit = true;
         },
-        applyTransitPageCargoEdit(state, action){
+        cancelTransitCargoEdit(state, action){
             const index = action.payload;
-            const {prev, curr} = state.transitPage;
+            const {transit:{object: {current}}, cargo} = state.transitPage;
+            
+            if (JSON.stringify(current.assignedCargo) !== JSON.stringify(cargo.map(v=>v.object)))
+                state.transitPage.cargo[index].object = current.assignedCargo[index]
+            
+            state.transitPage.cargo[index].states.edit = false;
+        },
+        applyTransitCargoEdit(state, action){
+            const index = action.payload;
+            const {transit:{object: {current}}, cargo} = state.transitPage;
+            console.log(index);
 
-            // if (JSON.stringify(prev.assignedCargo) !== JSON.stringify(curr.assignedCargo))
-            //     state.transitPage.prev.assignedCargo[index] = state.transitPage.curr.assignedCargo[index];
+            if (JSON.stringify(current.assignedCargo) !== JSON.stringify(cargo.map(v=>v.object)))
+                state.transitPage.transit.object.current.assignedCargo[index] = state.transitPage.cargo[index].object
+            state.transitPage.cargo[index].states.edit = false;
         },
         sendCargoToDelete(state, action){
             const index = action.payload;
 
             state.cargoToDelete.push(state.transitPage.cargo[index].object.id);
-            state.transitPage.cargo = state.transitPage.cargo.filter((v, i) => {return i.object.id !== index});
+            state.transitPage.cargo = state.transitPage.cargo.filter(v => v.object.id !== index);
         },
         addEmptyCargoToTransit(state){
             state.transitPage.cargo.unshift({object: {id: 0, stickerId: '', description: ''}, states: {edit: true}});
         },
-        setTransitPageCargoEdit(state, action){
-            const {index, bool} = action.payload;
-            console.log(bool);
-            
-            state.transitPage.cargo[index].states.edit = bool;
-        }
     },
     extraReducers: (builder) => {
         builder.addCase(thunkTransits.fulfilled, (state, action) => {
@@ -176,6 +171,6 @@ const transitSlice = createSlice({ // todo remake cargoState system
 });
 
 export const {getTransitForPage, setTransitPageClient, setTransitPageCommentary, setTransitPageType, setTransitPageStatus, setTransitPageAdditionalTasks, cancelTransitEdit, 
-    setTransitPageCargoStickerId, setTransitPageCargoDescription, cancelTransitCargoEdit, applyTransitPageCargoEdit, sendCargoToDelete, addEmptyCargoToTransit, setTransitPageCargoEdit,
-    editTransit} = transitSlice.actions;
+    setTransitPageCargoStickerId, setTransitPageCargoDescription, cancelTransitCargoEdit, applyTransitCargoEdit, sendCargoToDelete, addEmptyCargoToTransit,
+    editTransit, startTransitCargoEdit} = transitSlice.actions;
 export default transitSlice.reducer;

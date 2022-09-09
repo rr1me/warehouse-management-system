@@ -59,11 +59,7 @@ const TransitPage = () => {
             return;
         }
         
-        if (JSON.stringify(previous) === JSON.stringify(current) && JSON.stringify(previous.assignedCargo) === JSON.stringify(cargo.map(v=>v.object))) {
-            console.log("?")
-            return;
-        }
-        console.log("qweqwe")
+        if (JSON.stringify(previous) === JSON.stringify(current) && JSON.stringify(previous.assignedCargo) === JSON.stringify(cargo.map(v=>v.object))) return;
         
         if (current.id === 0) {
             console.log("//")
