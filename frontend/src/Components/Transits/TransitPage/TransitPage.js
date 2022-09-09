@@ -62,8 +62,7 @@ const TransitPage = () => {
         if (JSON.stringify(previous) === JSON.stringify(current) && JSON.stringify(previous.assignedCargo) === JSON.stringify(cargo.map(v=>v.object))) return;
         
         if (current.id === 0) {
-            console.log("//")
-            console.log(dispatch(addTransitThunk()));
+            dispatch(addTransitThunk())
         }
         else 
             dispatch(updateTransitThunk());

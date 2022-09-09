@@ -12,7 +12,6 @@ export const thunkTransits = createAsyncThunk(
         }
         console.log(r);
         return {transits: r.data.map(v => {
-                console.log(v);
                 return v;
             }).sort((a,b) => a.date - b.date), transitPage: index};
     }
@@ -34,10 +33,11 @@ export const addTransitThunk = createAsyncThunk(
 export const updateTransitThunk = createAsyncThunk(
     'updateTransit',
     async (_, {getState}) => {
-        const {transitPage} = getState().transitSlice;
+        const {transitPage, cargoToDelete} = getState().transitSlice;
         const transitToUpdate = {...transitPage.transit.object.current, assignedCargo: transitPage.cargo.map(v=>v.object)};
         
-        const r = await updateTransit(transitToUpdate);
+        const transitDTO = {transit: transitToUpdate, cargoToDelete: cargoToDelete};
+        const r = await updateTransit(transitDTO);
         console.log(r);
         
         return transitToUpdate;
@@ -140,8 +140,9 @@ const transitSlice = createSlice({ // todo remake cargoState system
         sendCargoToDelete(state, action){
             const index = action.payload;
 
-            state.cargoToDelete.push(state.transitPage.cargo[index].object.id);
-            state.transitPage.cargo = state.transitPage.cargo.filter(v => v.object.id !== index);
+            const id = state.transitPage.cargo[index].object.id;
+            state.cargoToDelete.push(id);
+            state.transitPage.cargo = state.transitPage.cargo.filter(v => v.object.id !== id);
         },
         addEmptyCargoToTransit(state){
             state.transitPage.cargo.unshift({object: {id: 0, stickerId: '', description: ''}, states: {edit: true}});
@@ -164,6 +165,7 @@ const transitSlice = createSlice({ // todo remake cargoState system
             state.transitPage = {transit: {object: {previous: transit, current: transit}, states: {edit: false}}, cargo: transit.assignedCargo.map(v => {
                     return {object: v, states: {edit: false}}
                 })};
+            state.cargoToDelete = [];
         }).addCase(deleteTransitThunk.fulfilled, (state, action) => {
             state.transits = state.transits.filter((v, i) => {return v.id !== action.payload});
         })

@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using WebApplication1.Data;
 
 namespace WebApplication1.Controllers;
@@ -33,31 +34,38 @@ public class TransitController : ControllerBase
     }
 
     [HttpPost("update")]
-    public IActionResult UpdateOneTransit(Transit transit)
+    public IActionResult UpdateOneTransit(TransitDTO transitDto)
     {
-        Console.WriteLine(JsonSerializer.Serialize(transit, new JsonSerializerOptions()
-        {
-            ReferenceHandler = ReferenceHandler.IgnoreCycles
-        }));
+        Transit transit = transitDto.Transit;
+        var cargoToDelete = transitDto.CargoToDelete;
+        
+        // Console.WriteLine(JsonSerializer.Serialize(transit, new JsonSerializerOptions()
+        // {
+        //     ReferenceHandler = ReferenceHandler.IgnoreCycles
+        // }));
 
-        using (DatabaseContext db = new DatabaseContext())
+        context.Attach(transit);
+        if (transit.AssignedCargo != null)
         {
-            db.Attach(transit);
-            if (transit.AssignedCargo != null)
+            transit.AssignedCargo.ForEach(x =>
             {
-                transit.AssignedCargo.ForEach(x =>
-                {
-                    if (x.Id == 0)
-                        db.Cargoes.Add(x);
-                    else
-                        db.Cargoes.Update(x);
-                });
-            }
-            db.Transits.Update(transit);
-            db.SaveChanges();
+                if (x.Id == 0)
+                    context.Cargoes.Add(x);
+                else
+                    context.Cargoes.Update(x);
+            });
+        }
+        context.Transits.Update(transit);
+
+        Console.WriteLine("update: "+transit.Id);
+        if (!cargoToDelete.IsNullOrEmpty())
+        {
+            var rangeToDelete = cargoToDelete.Select(x => new Cargo(x)).ToList();
+            context.Cargoes.RemoveRange(rangeToDelete);
+            Console.WriteLine("deleted");
         }
         
-        Console.WriteLine("update: "+transit.Id);
+        context.SaveChanges();
         return Ok("!");
     }
 
@@ -84,4 +92,10 @@ public class TransitController : ControllerBase
 
         return Ok("deleted");
     }
+}
+
+public class TransitDTO
+{
+    public Transit Transit { get; set; }
+    public List<int> CargoToDelete { get; set; }
 }
