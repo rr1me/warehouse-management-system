@@ -24,14 +24,7 @@ const Transits = () => {
     
     const handleAddNewModalClick = e => {
         e.stopPropagation();
-        // console.log(addNewBtnRef.current.getBoundingClientRect().right);
         setNewModal(value => !value);
-        // navigate('/transits/add');
-        // console.log(transits);
-    };
-    
-    const handleAddNew = type => {
-        navigate("/transits/add?type="+type);
     };
     
     const handleAddNewAcceptanceClick = () => navigate('/transits/add?type=0');

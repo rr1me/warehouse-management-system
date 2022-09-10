@@ -3,7 +3,8 @@ import {addTransit, deleteTransit, getTransits, updateTransit} from "../../Servi
 
 export const thunkTransits = createAsyncThunk(
     'getTransits',
-    async (index : number) => {
+    async (id: number) => {
+        // console.log(type);
         let r;
         try{
             r = await getTransits();
@@ -11,9 +12,12 @@ export const thunkTransits = createAsyncThunk(
             console.log(e);
         }
         console.log(r);
+        
+        // console.log({id, type})
+        
         return {transits: r.data.map(v => {
                 return v;
-            }).sort((a,b) => a.date - b.date), transitPage: index};
+            }).sort((a,b) => a.date - b.date), id: id};
     }
 );
 
@@ -64,10 +68,10 @@ const transitSlice = createSlice({ // todo remake cargoState system
     },
     reducers: {
         getTransitForPage(state, action){
-            const id = action.payload;
+            const {id, type} = action.payload;
             let transit;
             if (id === 'add')
-                transit = {id: 0, date: new Date().toJSON(), type: 0, status: 0, additionalTasks: 0, assignedCargo: [], client: '', commentary: ''};
+                transit = {id: 0, date: new Date().toJSON(), type: type, status: 0, additionalTasks: 0, assignedCargo: [], client: '', commentary: ''};
             else{
                 transit = state.transits.find(v=>v.id === Number(id));
             }
@@ -106,13 +110,14 @@ const transitSlice = createSlice({ // todo remake cargoState system
             const id = action.payload;
             const index = state.transits.findIndex(v => v.id === Number(id));
 
-            const prev = state.transits[index];
-            const {curr} = state.transitPage;
+            const previous = state.transits[index];
+            const current = state.transitPage.transit.object.current;
             
-            if (JSON.stringify(prev) !== JSON.stringify(curr)){
-                state.transitPage.curr = prev;
+            if (JSON.stringify(previous) !== JSON.stringify(current)){
+                state.transitPage.transit.object.current = previous;
                 state.cargoToDelete = [];
             }
+            state.transitPage.transit.states.edit = false;
         },
         startTransitCargoEdit(state, action){
             const index = action.payload;
@@ -150,11 +155,11 @@ const transitSlice = createSlice({ // todo remake cargoState system
     },
     extraReducers: (builder) => {
         builder.addCase(thunkTransits.fulfilled, (state, action) => {
-            const {transits, transitPage} = action.payload;
+            const {transits, id} = action.payload;
             state.transits = transits;
-            
-            if (transitPage !== undefined)
-                transitSlice.caseReducers.getTransitForPage(state, {payload: transitPage});
+            // console.log(payload);
+            if (id !== undefined)
+                transitSlice.caseReducers.getTransitForPage(state, {payload: {id}});
         }).addCase(updateTransitThunk.fulfilled, (state, action) => {
             const transit = action.payload;
             

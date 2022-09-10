@@ -37,14 +37,13 @@ const TransitPage = () => {
 
     const dispatch = useDispatch();
     const [searchParams, setSearchParams] = useSearchParams();
-    console.log(searchParams.get("type"));
 
     const id = /s\/(.*)/.exec(location.pathname)[1];
     useEffect(() => {
         if (transits.length === undefined && id !== 'add'){
             dispatch(thunkTransits(id));
         }else{
-            dispatch(getTransitForPage(id));
+            dispatch(getTransitForPage({id: id, type: searchParams.get("type")}));
         }
 
     }, [dispatch, location.pathname]);
@@ -108,8 +107,27 @@ const TransitPage = () => {
     return (
         <div className='transitPage'>
             <div className='header'>
-                <div className=''>
-                    Transit: {current.id !== 0 ? current.id : 'new'}
+                <div className='transitTitle'>
+                    {/*Transit: {current.id !== 0 ? current.id : 'new'}*/}
+                    {/*Transit*/}
+                    <div className='transitTitleGroup'>
+                        <div className='titleGroupItem'>
+                            <div className='tgiName open'>ID</div>
+                            <div className='tgiParam'>{current.id !== 0 ? current.id : 'new'}</div>
+                        </div>
+                        <div className='titleGroupItem'>
+                            <div className='tgiName'>Type</div>
+                            <div className='tgiParam'>
+                                <Label value={current.type} list={typeLabels}/>
+                            </div>
+                        </div>
+                        <div className='titleGroupItem'>
+                            <div className='tgiName'>Status</div>
+                            <div className='tgiParam close'>
+                                <Label value={current.status} list={statusLabels}/>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div className='ctrlButtons'>
                     <button className='btn delete table' onClick={handleDeleteButton}>Delete</button>
@@ -120,7 +138,7 @@ const TransitPage = () => {
                         : null}
                 </div>
             </div>
-            <div className='main'>
+            <div className='transitMain'>
                 <div className='clientAndDesc fullRow'>
                     <div className='element'>
                         <div className='name'>Client</div>
@@ -133,30 +151,30 @@ const TransitPage = () => {
                         <textarea className={makeStyle('textarea')} value={current.commentary ? current.commentary : ''} onChange={handleCommentaryInput} readOnly={!edit}/>
                     </div>
                 </div>
-                <div className='element'>
-                    <div className='name'>Type</div>
-                    <SelectPicker defaultValue={current.type} id='typeSelector'
-                                  customStyle={makeStyle('')} activeStyle={makeStyle('active')} readOnly={!edit} 
-                                  reducer={setTransitPageType}>
-                        {typeLabels.map((value, index)=>{
-                            return (
-                                <Label value={index} list={typeLabels} key={index}/>
-                            )
-                        })}
-                    </SelectPicker>
-                </div>
-                <div className='element'>
-                    <div className='name'>Status</div>
-                    <SelectPicker defaultValue={current.status} id='statusSelector' 
-                                  customStyle={'readonly'} readOnly={true} 
-                                  reducer={setTransitPageStatus}>
-                        {statusLabels.map((value, index)=>{
-                            return (
-                                <Label value={index} list={statusLabels} key={index}/>
-                            )
-                        })}
-                    </SelectPicker> 
-                </div>
+                {/*<div className='element'>*/}
+                {/*    <div className='name'>Type</div>*/}
+                {/*    <SelectPicker defaultValue={current.type} id='typeSelector'*/}
+                {/*                  customStyle={makeStyle('')} activeStyle={makeStyle('active')} readOnly={!edit} */}
+                {/*                  reducer={setTransitPageType}>*/}
+                {/*        {typeLabels.map((value, index)=>{*/}
+                {/*            return (*/}
+                {/*                <Label value={index} list={typeLabels} key={index}/>*/}
+                {/*            )*/}
+                {/*        })}*/}
+                {/*    </SelectPicker>*/}
+                {/*</div>*/}
+                {/*<div className='element'>*/}
+                {/*    <div className='name'>Status</div>*/}
+                {/*    <SelectPicker defaultValue={current.status} id='statusSelector' */}
+                {/*                  customStyle={'readonly'} readOnly={true} */}
+                {/*                  reducer={setTransitPageStatus}>*/}
+                {/*        {statusLabels.map((value, index)=>{*/}
+                {/*            return (*/}
+                {/*                <Label value={index} list={statusLabels} key={index}/>*/}
+                {/*            )*/}
+                {/*        })}*/}
+                {/*    </SelectPicker> */}
+                {/*</div>*/}
                 <div className='element'>
                     <div className='name'>Additional tasks</div>
                     <SelectPicker defaultValue={current.additionalTasks} id='taskSelector'
