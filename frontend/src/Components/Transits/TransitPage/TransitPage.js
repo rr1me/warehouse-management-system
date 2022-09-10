@@ -1,5 +1,5 @@
 ﻿import './TransitPage.sass';
-import {useLocation, useNavigate} from "react-router-dom";
+import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import SelectPicker from "../../SelectPicker/SelectPicker";
 import {useDispatch, useSelector} from "react-redux";
@@ -36,6 +36,8 @@ const TransitPage = () => {
     const {clientValid, cargoValid, validate, resetValid} = useTransitValid(transitPage); // todo make cargo stickerId validation. let only numbers;
 
     const dispatch = useDispatch();
+    const [searchParams, setSearchParams] = useSearchParams();
+    console.log(searchParams.get("type"));
 
     const id = /s\/(.*)/.exec(location.pathname)[1];
     useEffect(() => {
@@ -62,14 +64,14 @@ const TransitPage = () => {
         if (JSON.stringify(previous) === JSON.stringify(current) && JSON.stringify(previous.assignedCargo) === JSON.stringify(cargo.map(v=>v.object))) return;
         
         if (current.id === 0) {
-            dispatch(addTransitThunk())
+            dispatch(addTransitThunk()).then(r => navigate('../transits/'+r.payload.id));
         }
         else 
             dispatch(updateTransitThunk());
         
     };
     const handleCancelButton = () => {
-        if (current.id === 'new'){
+        if (current.id === 0){
             navigate('/transits');
             return;
         }

@@ -21,12 +21,12 @@ export const addTransitThunk = createAsyncThunk(
     'addTransit',
     async (_, {getState}) => {
         const {transitPage} = getState().transitSlice;
-        const transitToAdd = {...transitPage.transit.object.current, assignedCargo: transitPage.cargo.map(v=>v.object)};
+        let transitToAdd = {...transitPage.transit.object.current, assignedCargo: transitPage.cargo.map(v=>v.object)};
         
         const r = await addTransit(transitToAdd);
         console.log(r);
         
-        return transitToAdd;
+        return r.data;
     }
 );
 
@@ -167,7 +167,11 @@ const transitSlice = createSlice({ // todo remake cargoState system
                 })};
             state.cargoToDelete = [];
         }).addCase(deleteTransitThunk.fulfilled, (state, action) => {
-            state.transits = state.transits.filter((v, i) => {return v.id !== action.payload});
+            state.transits = state.transits.filter(v => {return v.id !== action.payload});
+        }).addCase(addTransitThunk.fulfilled, (state, action) => {
+            const transit = action.payload;
+            
+            state.transits.push(transit);
         })
     }
 });

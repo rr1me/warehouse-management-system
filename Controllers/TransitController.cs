@@ -75,7 +75,7 @@ public class TransitController : ControllerBase
         context.Transits.Add(transit);
         context.SaveChanges();
 
-        return Ok(transit.Id);
+        return Ok(transit);
     }
 
     [HttpGet("getCargo/{id}")]
