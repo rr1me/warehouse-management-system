@@ -4,7 +4,6 @@ import {addTransit, deleteTransit, getTransits, updateTransit} from "../../Servi
 export const thunkTransits = createAsyncThunk(
     'getTransits',
     async (id: number) => {
-        // console.log(type);
         let r;
         try{
             r = await getTransits();
@@ -12,8 +11,6 @@ export const thunkTransits = createAsyncThunk(
             console.log(e);
         }
         console.log(r);
-        
-        // console.log({id, type})
         
         return {transits: r.data.map(v => {
                 return v;
@@ -157,7 +154,6 @@ const transitSlice = createSlice({ // todo remake cargoState system
         builder.addCase(thunkTransits.fulfilled, (state, action) => {
             const {transits, id} = action.payload;
             state.transits = transits;
-            // console.log(payload);
             if (id !== undefined)
                 transitSlice.caseReducers.getTransitForPage(state, {payload: {id}});
         }).addCase(updateTransitThunk.fulfilled, (state, action) => {

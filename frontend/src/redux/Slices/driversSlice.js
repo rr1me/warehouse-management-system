@@ -14,8 +14,7 @@ export const getDriversThunk = createAsyncThunk(
 
 export const deleteDriverThunk = createAsyncThunk(
     'drivers/deleteDriver',
-    async ({index, id}) => {
-        //todo check foreignKeys, mb make deleteDeny event if driver has some cargo assigned
+    async ({index, id}) => { //todo check foreignKeys, mb make deleteDeny event if driver has some cargo assigned
         
         const r = await deleteDriver(id);
         console.log(r);
