@@ -4,13 +4,19 @@ import TransitCargoRow from "./TransitCargoRow/TransitCargoRow";
 import {useDispatch} from "react-redux";
 import {addEmptyCargoToTransit} from "../../../../redux/Slices/transitSlice";
 import Valid from "../../../Valid/Valid";
+import {useState} from "react";
+import RelativeModal from "../../../RelativeModal/RelativeModal";
 
-const TransitCargo = ({cargo, edit, cargoValid}) => {
+const TransitCargo = ({cargo, edit, cargoValid, transitType}) => {
     
+    const [cargoToAttachModal, setCargoToAttachModal] = useState(false);
     const dispatch = useDispatch();
     
     const handleAddNewCargoButton = () => {
-        dispatch(addEmptyCargoToTransit());
+        if (!transitType)
+            dispatch(addEmptyCargoToTransit());
+        else 
+            setCargoToAttachModal(value => !value);
     }
     
     return (
@@ -24,6 +30,11 @@ const TransitCargo = ({cargo, edit, cargoValid}) => {
                             <>
                                 <button className='btn apply table'>Filter</button>
                                 <button className='btn apply table' onClick={handleAddNewCargoButton}>Add new</button>
+                                <RelativeModal doubleWrap={false} id={'cargoToAttach'} state={cargoToAttachModal} setOpen={setCargoToAttachModal}>
+                                    <div>
+                                        ad;lfadf
+                                    </div>
+                                </RelativeModal>
                             </>
                             : null}
                     </div>
