@@ -6,6 +6,7 @@ import {addEmptyCargoToTransit} from "../../../../redux/Slices/transitSlice";
 import Valid from "../../../Valid/Valid";
 import {useState} from "react";
 import RelativeModal from "../../../RelativeModal/RelativeModal";
+import SelectPicker from "../../../SelectPicker/SelectPicker";
 
 const TransitCargo = ({cargo, edit, cargoValid, transitType}) => {
     
@@ -29,12 +30,16 @@ const TransitCargo = ({cargo, edit, cargoValid, transitType}) => {
                         {edit ?
                             <>
                                 <button className='btn apply table'>Filter</button>
-                                <button className='btn apply table' onClick={handleAddNewCargoButton}>Add new</button>
-                                <RelativeModal doubleWrap={false} id={'cargoToAttach'} state={cargoToAttachModal} setOpen={setCargoToAttachModal}>
-                                    <div>
-                                        ad;lfadf
-                                    </div>
-                                </RelativeModal>
+                                <div>
+                                    <button className='btn apply table' onClick={handleAddNewCargoButton}>Add new</button>
+                                    <RelativeModal doubleWrap={false} id={'cargoToAttach'} state={cargoToAttachModal} setOpen={setCargoToAttachModal}>
+                                        <SelectPicker id={'cargoToAttachSP'} defaultValue={1}>
+                                            <div>dd</div>
+                                            <div>dd</div>
+                                            <div>dd</div>
+                                        </SelectPicker>
+                                    </RelativeModal>
+                                </div>
                             </>
                             : null}
                     </div>

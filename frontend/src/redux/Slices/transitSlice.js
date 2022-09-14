@@ -11,10 +11,11 @@ export const thunkTransits = createAsyncThunk(
             console.log(e);
         }
         console.log(r);
+        const {transits, cargoToAttach} = r.data;
         
-        return {transits: r.data.map(v => {
+        return {transits: transits.map(v => {
                 return v;
-            }).sort((a,b) => a.date - b.date), id: id};
+            }).sort((a,b) => a.date - b.date), id: id, cargoToAttach: cargoToAttach};
     }
 );
 
@@ -61,7 +62,8 @@ const transitSlice = createSlice({ // todo remake cargoState system
         transits: {},
         sort: 0,
         transitPage: {},
-        cargoToDelete: []
+        cargoToDelete: [],
+        cargoToAttach: []
     },
     reducers: {
         getTransitForPage(state, action){
@@ -152,8 +154,9 @@ const transitSlice = createSlice({ // todo remake cargoState system
     },
     extraReducers: (builder) => {
         builder.addCase(thunkTransits.fulfilled, (state, action) => {
-            const {transits, id} = action.payload;
+            const {transits, id, cargoToAttach} = action.payload;
             state.transits = transits;
+            state.cargoToAttach = cargoToAttach;
             if (id !== undefined)
                 transitSlice.caseReducers.getTransitForPage(state, {payload: {id}});
         }).addCase(updateTransitThunk.fulfilled, (state, action) => {

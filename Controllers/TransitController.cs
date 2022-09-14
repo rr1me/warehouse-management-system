@@ -21,9 +21,15 @@ public class TransitController : ControllerBase
     }
 
     [HttpGet]
-    public List<Transit> GetAllTransits()
+    public GetTransitsDTO GetAllTransits()
     {
-        return context.Transits.Include(x=>x.AssignedCargo).ToList();
+        GetTransitsDTO responseObject = new GetTransitsDTO();
+
+        responseObject.Transits = context.Transits.Include(x => x.AssignedCargo).ToList();
+        responseObject.CargoToAttach = context.Cargoes.Include(x => x.Transits).Where(x => x.Transits.Count == 1).ToList();
+        
+        // return context.Transits.Include(x=>x.AssignedCargo).ToList();
+        return responseObject;
     }
 
     [HttpGet("{id}")]
@@ -98,4 +104,10 @@ public class TransitDTO
 {
     public Transit Transit { get; set; }
     public List<int> CargoToDelete { get; set; }
+}
+
+public class GetTransitsDTO
+{
+    public List<Transit> Transits { get; set; }
+    public List<Cargo> CargoToAttach { get; set; }
 }
