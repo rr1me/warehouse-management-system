@@ -70,7 +70,7 @@ const transitSlice = createSlice({ // todo remake cargoState system
             const {id, type} = action.payload;
             let transit;
             if (id === 'add')
-                transit = {id: 0, date: new Date().toJSON(), type: type, status: 0, additionalTasks: 0, assignedCargo: [], client: '', commentary: ''};
+                transit = {id: 0, date: new Date().toJSON(), type: Number(type), status: 0, additionalTasks: 0, assignedCargo: [], client: '', commentary: ''};
             else{
                 transit = state.transits.find(v=>v.id === Number(id));
             }

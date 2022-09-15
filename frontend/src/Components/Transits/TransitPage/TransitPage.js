@@ -30,7 +30,7 @@ const TransitPage = () => {
     
     const [deleting, setDeleting] = useState(false);
     
-    const {transits, transitPage} = useSelector(state=>state.transitSlice);
+    const {transits, transitPage, cargoToAttach} = useSelector(state=>state.transitSlice);
 
     const {clientValid, cargoValid, validate, resetValid} = useTransitValid(transitPage); // todo make cargo stickerId validation. let only numbers;
 
@@ -166,7 +166,7 @@ const TransitPage = () => {
                     <div className='name'>Date</div>
                     <DatePicker incomeDate={current.date} editState={true} dispatchIndex={current.id} id='trDP' setDateDispatch={setArrivalDate}/>
                 </div>
-                <TransitCargo cargo={cargo} edit={edit} cargoValid={cargoValid} transitType={current.type}/>
+                <TransitCargo cargo={cargo} edit={edit} cargoValid={cargoValid} transitType={current.type} cargoToAttach={cargoToAttach}/>
             </div>
         </div>
     )

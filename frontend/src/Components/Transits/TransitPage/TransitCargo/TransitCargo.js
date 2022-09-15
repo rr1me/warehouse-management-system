@@ -6,14 +6,14 @@ import {addEmptyCargoToTransit} from "../../../../redux/Slices/transitSlice";
 import Valid from "../../../Valid/Valid";
 import {useState} from "react";
 import RelativeModal from "../../../RelativeModal/RelativeModal";
-import SelectPicker from "../../../SelectPicker/SelectPicker";
 
-const TransitCargo = ({cargo, edit, cargoValid, transitType}) => {
+const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach}) => {
     
     const [cargoToAttachModal, setCargoToAttachModal] = useState(false);
     const dispatch = useDispatch();
     
-    const handleAddNewCargoButton = () => {
+    const handleAddNewCargoButton = e => {
+        e.stopPropagation();
         if (!transitType)
             dispatch(addEmptyCargoToTransit());
         else 
@@ -32,12 +32,14 @@ const TransitCargo = ({cargo, edit, cargoValid, transitType}) => {
                                 <button className='btn apply table'>Filter</button>
                                 <div>
                                     <button className='btn apply table' onClick={handleAddNewCargoButton}>Add new</button>
-                                    <RelativeModal doubleWrap={false} id={'cargoToAttach'} state={cargoToAttachModal} setOpen={setCargoToAttachModal}>
-                                        <SelectPicker id={'cargoToAttachSP'} defaultValue={1}>
-                                            <div>dd</div>
-                                            <div>dd</div>
-                                            <div>dd</div>
-                                        </SelectPicker>
+                                    <RelativeModal doubleWrap={false} id={'cargoToAttach'} state={cargoToAttachModal} setOpen={setCargoToAttachModal} modalStyle={{top: '5px', right: '70px'}}>
+                                        <div className='cargoToAttachList'>
+                                            {cargoToAttach.map((v, i)=>{ //todo make it like transitPage title
+                                                return (
+                                                    <div className='cargoToAttachItem' key={i}>{v.id} | {v.description}</div>
+                                                )
+                                            })}
+                                        </div>
                                     </RelativeModal>
                                 </div>
                             </>
