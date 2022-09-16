@@ -93,6 +93,26 @@ public class TransitController : ControllerBase
     [HttpDelete("delete/{id}")]
     public IActionResult DeleteOneTransit(int id)
     {
+        var transit = context.Transits.Include(x => x.AssignedCargo).First(x => x.Id == id);
+
+        if (transit.Type == 0)
+        {
+            var includableQueryable = context.Cargoes.Include(x => x.Transits);
+            Console.WriteLine(includableQueryable.ToList()[0].Transits[0]);
+            var cargo = includableQueryable.Where(x => x.Transits[0].Id == id).ToList();
+            var isAnyCargoAttachedToDispatching = cargo.Any(x=>x.Transits.Count == 2);
+            if (isAnyCargoAttachedToDispatching)
+                return Problem("some cargo is attached to dispatching");
+            
+            context.Cargoes.RemoveRange(cargo);
+        }
+        else
+        {
+            transit.AssignedCargo = null;
+        }
+        
+        context.Cargoes.Include(x => x.Transits).Where(x => x.Transits.Count >= 0);
+        
         context.Transits.Remove(new Transit(id));
         context.SaveChanges();
 
