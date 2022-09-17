@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using WebApplication1.Data;
+using WebApplication1.Data.Properties;
 
 namespace WebApplication1.Controllers;
 
@@ -72,7 +73,7 @@ public class TransitController : ControllerBase
         }
         
         context.SaveChanges();
-        return Ok("!");
+        return Ok(context.Cargoes.Include(x => x.Transits).Where(x => x.Transits.Count == 1).ToList());
     }
 
     [HttpPut("add")]
@@ -81,7 +82,11 @@ public class TransitController : ControllerBase
         context.Transits.Add(transit);
         context.SaveChanges();
 
-        return Ok(transit);
+        AddTransitDTO responseObject = new AddTransitDTO();
+        responseObject.Transit = transit;
+        responseObject.CargoToAttach = context.Cargoes.Include(x => x.Transits).Where(x => x.Transits.Count == 1).ToList();
+        
+        return Ok(responseObject);
     }
 
     [HttpGet("getCargo/{id}")]
@@ -94,29 +99,26 @@ public class TransitController : ControllerBase
     public IActionResult DeleteOneTransit(int id)
     {
         var transit = context.Transits.Include(x => x.AssignedCargo).First(x => x.Id == id);
+        Console.WriteLine(transit);
 
         if (transit.Type == 0)
         {
-            var includableQueryable = context.Cargoes.Include(x => x.Transits);
-            Console.WriteLine(includableQueryable.ToList()[0].Transits[0]);
-            var cargo = includableQueryable.Where(x => x.Transits[0].Id == id).ToList();
-            var isAnyCargoAttachedToDispatching = cargo.Any(x=>x.Transits.Count == 2);
+            var transitAssignedCargo = transit.AssignedCargo;
+            var isAnyCargoAttachedToDispatching = transitAssignedCargo.Any(x => x.Transits.Count == 2);
             if (isAnyCargoAttachedToDispatching)
                 return Problem("some cargo is attached to dispatching");
             
-            context.Cargoes.RemoveRange(cargo);
+            context.Cargoes.RemoveRange(transitAssignedCargo);
         }
         else
         {
             transit.AssignedCargo = null;
         }
-        
-        context.Cargoes.Include(x => x.Transits).Where(x => x.Transits.Count >= 0);
-        
-        context.Transits.Remove(new Transit(id));
+
+        context.Transits.Remove(transit);
         context.SaveChanges();
 
-        return Ok("deleted");
+        return Ok(context.Cargoes.Include(x => x.Transits).Where(x => x.Transits.Count == 1).ToList());
     }
 }
 
@@ -129,5 +131,11 @@ public class TransitDTO
 public class GetTransitsDTO
 {
     public List<Transit> Transits { get; set; }
+    public List<Cargo> CargoToAttach { get; set; }
+}
+
+public class AddTransitDTO
+{
+    public Transit Transit { get; set; }
     public List<Cargo> CargoToAttach { get; set; }
 }

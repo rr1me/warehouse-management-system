@@ -62,7 +62,7 @@ const TransitPage = () => {
         if (JSON.stringify(previous) === JSON.stringify(current) && JSON.stringify(previous.assignedCargo) === JSON.stringify(cargo.map(v=>v.object))) return;
         
         if (current.id === 0) {
-            dispatch(addTransitThunk()).then(r => navigate('../transits/'+r.payload.id));
+            dispatch(addTransitThunk()).then(r => navigate('../transits/'+r.payload.transit.id));
         }
         else 
             dispatch(updateTransitThunk());

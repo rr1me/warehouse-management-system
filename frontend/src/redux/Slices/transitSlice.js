@@ -19,7 +19,7 @@ export const thunkTransits = createAsyncThunk(
     }
 );
 
-export const addTransitThunk = createAsyncThunk(
+export const addTransitThunk = createAsyncThunk( //todo decide what to do with cargoToAttach
     'addTransit',
     async (_, {getState}) => {
         const {transitPage} = getState().transitSlice;
@@ -42,7 +42,7 @@ export const updateTransitThunk = createAsyncThunk(
         const r = await updateTransit(transitDTO);
         console.log(r);
         
-        return transitToUpdate;
+        return {transit: transitToUpdate, cargoToAttach: r.data};
     }
 );
 
@@ -52,7 +52,7 @@ export const deleteTransitThunk = createAsyncThunk(
         
         const r = await deleteTransit(id);
         console.log(r);
-        return id;
+        return {id: id, cargoToAttach: r.data};
     }
 )
 
@@ -160,7 +160,7 @@ const transitSlice = createSlice({ // todo remake cargoState system
             if (id !== undefined)
                 transitSlice.caseReducers.getTransitForPage(state, {payload: {id}});
         }).addCase(updateTransitThunk.fulfilled, (state, action) => {
-            const transit = action.payload;
+            const {transit, cargoToAttach} = action.payload;
             
             console.log(transit);
             const index = state.transits.findIndex(v => v.id === transit.id);
@@ -170,12 +170,18 @@ const transitSlice = createSlice({ // todo remake cargoState system
                     return {object: v, states: {edit: false}}
                 })};
             state.cargoToDelete = [];
+            
+            state.cargoToAttach = cargoToAttach;
         }).addCase(deleteTransitThunk.fulfilled, (state, action) => {
-            state.transits = state.transits.filter(v => {return v.id !== action.payload});
+            const {id, cargoToAttach} = action.payload;
+            
+            state.transits = state.transits.filter(v => {return v.id !== id});
+            state.cargoToAttach = cargoToAttach;
         }).addCase(addTransitThunk.fulfilled, (state, action) => {
-            const transit = action.payload;
+            const {transit, cargoToAttach} = action.payload;
             
             state.transits.push(transit);
+            state.cargoToAttach = cargoToAttach;
         })
     }
 });
