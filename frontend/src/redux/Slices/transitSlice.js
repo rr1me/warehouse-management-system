@@ -1,4 +1,4 @@
-﻿import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+﻿import {createAsyncThunk, createSlice, current} from "@reduxjs/toolkit";
 import {addTransit, deleteTransit, getTransits, updateTransit} from "../../Services/transitService";
 
 export const thunkTransits = createAsyncThunk(
@@ -54,7 +54,7 @@ export const deleteTransitThunk = createAsyncThunk(
         console.log(r);
         return {id: id, cargoToAttach: r.data};
     }
-)
+);
 
 const transitSlice = createSlice({ // todo remake cargoState system
     name: 'transits',
@@ -151,6 +151,13 @@ const transitSlice = createSlice({ // todo remake cargoState system
         addEmptyCargoToTransit(state){
             state.transitPage.cargo.unshift({object: {id: 0, stickerId: '', description: ''}, states: {edit: true}});
         },
+        attachCargoToTransit(state, action){
+            const id = action.payload;
+
+            const cargoToAttach = state.cargoToAttach.find(x=>x.id === id);
+            console.log(current(cargoToAttach));
+            state.transitPage.cargo.unshift({object: cargoToAttach, states: {edit: false}});
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(thunkTransits.fulfilled, (state, action) => {
@@ -169,8 +176,8 @@ const transitSlice = createSlice({ // todo remake cargoState system
             state.transitPage = {transit: {object: {previous: transit, current: transit}, states: {edit: false}}, cargo: transit.assignedCargo.map(v => {
                     return {object: v, states: {edit: false}}
                 })};
-            state.cargoToDelete = [];
             
+            state.cargoToDelete = [];
             state.cargoToAttach = cargoToAttach;
         }).addCase(deleteTransitThunk.fulfilled, (state, action) => {
             const {id, cargoToAttach} = action.payload;
@@ -188,5 +195,5 @@ const transitSlice = createSlice({ // todo remake cargoState system
 
 export const {getTransitForPage, setTransitPageClient, setTransitPageCommentary, setTransitPageType, setTransitPageStatus, setTransitPageAdditionalTasks, cancelTransitEdit, 
     setTransitPageCargoStickerId, setTransitPageCargoDescription, cancelTransitCargoEdit, applyTransitCargoEdit, sendCargoToDelete, addEmptyCargoToTransit,
-    editTransit, startTransitCargoEdit} = transitSlice.actions;
+    editTransit, startTransitCargoEdit, attachCargoToTransit} = transitSlice.actions;
 export default transitSlice.reducer;

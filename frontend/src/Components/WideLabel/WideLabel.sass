@@ -1,0 +1,32 @@
+﻿.wideLabel
+  &.clickable
+    cursor: pointer
+    transition: 50ms
+    &:hover
+      box-shadow: 0 0 4px rgb(0 0 0 / 30%)
+  display: flex
+  width: max-content
+  $border: 1px solid rgba(0,0,0,0.1)
+  @mixin wli
+    border: $border
+    padding: 1px 8px
+    display: flex
+    align-items: center
+  
+  .wliItem
+    display: flex
+    &:first-child
+      .wliName
+        border-radius: 5px 0 0 5px
+    &:last-child
+      .wliParam
+        border-radius: 0 5px 5px 0
+
+  .wliName
+    @include wli
+    background-color: #e9ecef
+    &.open
+      border-radius: 5px 0 0 5px
+
+  .wliParam
+    @include wli

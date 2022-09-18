@@ -45,6 +45,7 @@ public class TransitController : ControllerBase
     {
         Transit transit = transitDto.Transit;
         var cargoToDelete = transitDto.CargoToDelete;
+        // Console.WriteLine(transit.AssignedCargo[0].Id);
         
         // Console.WriteLine(JsonSerializer.Serialize(transit, new JsonSerializerOptions()
         // {
@@ -52,16 +53,27 @@ public class TransitController : ControllerBase
         // }));
 
         context.Attach(transit);
-        if (transit.AssignedCargo != null)
-        {
-            transit.AssignedCargo.ForEach(x =>
-            {
-                if (x.Id == 0)
-                    context.Cargoes.Add(x);
-                else
-                    context.Cargoes.Update(x);
-            });
-        }
+        // if (transit.AssignedCargo != null)
+        // {
+        //     // context.AttachRange(transit.AssignedCargo);
+        //     transit.AssignedCargo.ForEach(x =>
+        //     {
+        //         if (x.Id == 0)
+        //             context.Cargoes.Add(x);
+        //         else
+        //         {
+        //             context.Attach(x);
+        //             // x.Transits.Add(transit);
+        //             context.Cargoes.Update(x);
+        //         }
+        //     });
+        // }
+        var newCargo = transit.AssignedCargo.Where(x => x.Id == 0);
+        var oldCargo = transit.AssignedCargo.Where(x => x.Id != 0);
+        context.Cargoes.AddRange(newCargo);
+        context.AttachRange(oldCargo);
+        context.Cargoes.UpdateRange(oldCargo);
+        
         context.Transits.Update(transit);
 
         Console.WriteLine("update: "+transit.Id);
@@ -79,6 +91,7 @@ public class TransitController : ControllerBase
     [HttpPut("add")]
     public IActionResult AddOneTransit(Transit transit)
     {
+        context.Transits.Attach(transit);
         context.Transits.Add(transit);
         context.SaveChanges();
 

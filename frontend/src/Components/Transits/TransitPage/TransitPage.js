@@ -22,6 +22,7 @@ import {additionalTasks, ModalDeleteWarning, statusLabels, typeLabels} from "../
 import Label from "../../Label/Label";
 import useTransitValid from "./TransitPageValidation";
 import Valid from "../../Valid/Valid";
+import WideLabel, {WideLabelItem} from "../../WideLabel/WideLabel";
 
 const TransitPage = () => {
 
@@ -108,22 +109,27 @@ const TransitPage = () => {
             <div className='header'>
                 <div className='transitTitle'>
                     <div className='transitTitleGroup'>
-                        <div className='titleGroupItem'>
-                            <div className='tgiName open'>ID</div>
-                            <div className='tgiParam'>{current.id !== 0 ? current.id : 'new'}</div>
-                        </div>
-                        <div className='titleGroupItem'>
-                            <div className='tgiName'>Type</div>
-                            <div className='tgiParam'>
-                                <Label value={current.type} list={typeLabels}/>
-                            </div>
-                        </div>
-                        <div className='titleGroupItem'>
-                            <div className='tgiName'>Status</div>
-                            <div className='tgiParam close'>
-                                <Label value={current.status} list={statusLabels}/>
-                            </div>
-                        </div>
+                        {/*<div className='titleGroupItem'>*/}
+                        {/*    <div className='tgiName open'>ID</div>*/}
+                        {/*    <div className='tgiParam'>{current.id !== 0 ? current.id : 'new'}</div>*/}
+                        {/*</div>*/}
+                        {/*<div className='titleGroupItem'>*/}
+                        {/*    <div className='tgiName'>Type</div>*/}
+                        {/*    <div className='tgiParam'>*/}
+                        {/*        <Label value={current.type} list={typeLabels}/>*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
+                        {/*<div className='titleGroupItem'>*/}
+                        {/*    <div className='tgiName'>Status</div>*/}
+                        {/*    <div className='tgiParam close'>*/}
+                        {/*        <Label value={current.status} list={statusLabels}/>*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
+                        <WideLabel>
+                            <WideLabelItem name='id'>{current.id !== 0 ? current.id : 'new'}</WideLabelItem>
+                            <WideLabelItem name='Type'><Label value={current.type} list={typeLabels}/></WideLabelItem>
+                            <WideLabelItem name='Status'><Label value={current.status} list={statusLabels}/></WideLabelItem>
+                        </WideLabel>
                     </div>
                 </div>
                 <div className='ctrlButtons'>
