@@ -40,50 +40,30 @@ public class TransitController : ControllerBase
         return context.Transits.Include(x => x.AssignedCargo).Single(x => x.Id == id);
     }
 
-    [HttpPost("update")]
-    public IActionResult UpdateOneTransit(TransitDTO transitDto)
+    [HttpGet("special")]
+    public IActionResult SpecialGet()
     {
-        Transit transit = transitDto.Transit;
-        var cargoToDelete = transitDto.CargoToDelete;
-        // Console.WriteLine(transit.AssignedCargo[0].Id);
-        
+        var transit = context.Transits.Include(x => x.AssignedCargo).First(x => x.Id == 1);
+        var cargo = context.Cargoes.First(x => x.Id == 44);
+        transit.AssignedCargo.Add(cargo);
+        return Ok(transit);
+    }
+
+    [HttpPost("update")]
+    public IActionResult UpdateOneTransit(Transit transit)
+    {
+
         // Console.WriteLine(JsonSerializer.Serialize(transit, new JsonSerializerOptions()
         // {
         //     ReferenceHandler = ReferenceHandler.IgnoreCycles
         // }));
-
         context.Attach(transit);
-        // if (transit.AssignedCargo != null)
-        // {
-        //     // context.AttachRange(transit.AssignedCargo);
-        //     transit.AssignedCargo.ForEach(x =>
-        //     {
-        //         if (x.Id == 0)
-        //             context.Cargoes.Add(x);
-        //         else
-        //         {
-        //             context.Attach(x);
-        //             // x.Transits.Add(transit);
-        //             context.Cargoes.Update(x);
-        //         }
-        //     });
-        // }
-        var newCargo = transit.AssignedCargo.Where(x => x.Id == 0);
-        var oldCargo = transit.AssignedCargo.Where(x => x.Id != 0);
-        context.Cargoes.AddRange(newCargo);
-        context.AttachRange(oldCargo);
-        context.Cargoes.UpdateRange(oldCargo);
-        
-        context.Transits.Update(transit);
+        var wtf = context.Cargoes.Find(44);
+        transit.AssignedCargo[4] = wtf; //todo im done, lets try to use 3rd table
 
-        Console.WriteLine("update: "+transit.Id);
-        if (!cargoToDelete.IsNullOrEmpty())
-        {
-            var rangeToDelete = cargoToDelete.Select(x => new Cargo(x)).ToList();
-            context.Cargoes.RemoveRange(rangeToDelete);
-            Console.WriteLine("deleted");
-        }
-        
+        context.Transits.Update(transit);
+        context.ChangeTracker.DetectChanges();
+        Console.WriteLine(context.ChangeTracker.DebugView.LongView);
         context.SaveChanges();
         return Ok(context.Cargoes.Include(x => x.Transits).Where(x => x.Transits.Count == 1).ToList());
     }
