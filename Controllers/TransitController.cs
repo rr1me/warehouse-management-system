@@ -1,11 +1,7 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using WebApplication1.Data;
-using WebApplication1.Data.Properties;
 
 namespace WebApplication1.Controllers;
 
@@ -29,7 +25,6 @@ public class TransitController : ControllerBase
         responseObject.Transits = context.Transits.Include(x => x.AssignedCargo).ToList();
         responseObject.CargoToAttach = context.Cargoes.Include(x => x.Transits).Where(x => x.Transits.Count == 1).ToList();
         
-        // return context.Transits.Include(x=>x.AssignedCargo).ToList();
         return responseObject;
     }
 
