@@ -47,16 +47,19 @@ public class TransitController : ControllerBase
     [HttpPost("update")]
     public IActionResult UpdateOneTransit(Transit transit)
     {
+        var oldCargo = transit.AssignedCargo.Where(x => x.Id != 0);
+        var newCargo = transit.AssignedCargo.Where(x => x.Id == 0);
 
-        // Console.WriteLine(JsonSerializer.Serialize(transit, new JsonSerializerOptions()
-        // {
-        //     ReferenceHandler = ReferenceHandler.IgnoreCycles
-        // }));
-        context.Attach(transit);
-        var wtf = context.Cargoes.Find(44);
-        transit.AssignedCargo[4] = wtf; //todo im done, lets try to use 3rd table
+        context.Cargoes.AddRange(newCargo);
+        context.Cargoes.UpdateRange(oldCargo);
 
         context.Transits.Update(transit);
+        
+        transit.CargoTransits.ForEach(x =>
+        {
+            if (context.CargoTransits.Any(y => y == x)) context.Entry(x).State = EntityState.Unchanged; //todo adding same relation bug is won?
+        });
+
         context.ChangeTracker.DetectChanges();
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
         context.SaveChanges();

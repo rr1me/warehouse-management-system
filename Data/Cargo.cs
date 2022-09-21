@@ -1,4 +1,8 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using WebApplication1.Data.Properties;
 
 namespace WebApplication1.Data;
@@ -31,8 +35,10 @@ public class Cargo
     public CargoStatus CargoStatus { get; set; }
     public CargoQuality CargoQuality { get; set; }
     
-    [JsonIgnore]
+    [JsonIgnore] 
     public List<Transit>? Transits { get; set; }
+    [JsonIgnore] 
+    public List<CargoTransit>? CargoTransits { get; set; }
 
     public List<InnerWork>? AssignedInnerWorks { get; set; }
 }

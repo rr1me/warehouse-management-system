@@ -35,6 +35,8 @@ public class Transit
     public TransitStatus Status { get; set; }
     
     public List<Cargo>? AssignedCargo { get; set; }
+    [JsonIgnore]
+    public List<CargoTransit>? CargoTransits { get; set; }
 
     public TaskStatus AdditionalTasks { get; set; }
     
