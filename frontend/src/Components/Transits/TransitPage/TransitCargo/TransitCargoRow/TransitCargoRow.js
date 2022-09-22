@@ -16,12 +16,10 @@ import {TiCancel} from "react-icons/ti";
 import {ModalDeleteWarning} from "../../../TransitProps";
 import Valid from "../../../../Valid/Valid";
 
-const TransitCargoRow = ({cargo, states:{edit}, index, globalEdit}) => {
+const TransitCargoRow = ({cargo, states:{edit}, errors:{lettersInSticker, nullSticker}, index, globalEdit}) => {
     
     const dispatch = useDispatch();  //todo fixbug .unshift makes transitCargoRow update last element neither the new one
     const [deleting, setDeleting] = useState(false);
-    
-    const [stickerValid, setStickerValid] = useState(cargo.stickerId !== '');
     
     const handleEditButton = () => {
         if (globalEdit)
@@ -61,7 +59,7 @@ const TransitCargoRow = ({cargo, states:{edit}, index, globalEdit}) => {
         <>
             <div className='transitCargoRow'>{cargo.id}</div>
             <div className='transitCargoRow'>
-                <Valid valid={stickerValid} errorMessage='Client cant be null'>
+                <Valid valid={!nullSticker} errorMessage='Sticker ID cant be null'>
                     <Editable state={edit}>
                         <HookedTextarea value={cargo.stickerId} onChange={stickerIdInputHandle} className='trCargoTextarea editing'/>
                     </Editable>

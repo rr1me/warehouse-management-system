@@ -70,15 +70,15 @@ public class Startup
 
         using (DatabaseContext db = new DatabaseContext())
         {
-        User user = new User
-        {
-            Username = "user",
-            Password = BCrypt.Net.BCrypt.HashPassword("123"),
-            Role = Roles.Admin
-        };
-                
-        db.Users.Add(user);
-        db.SaveChanges();
+        // User user = new User
+        // {
+        //     Username = "user",
+        //     Password = BCrypt.Net.BCrypt.HashPassword("123"),
+        //     Role = Roles.Admin
+        // };
+        //         
+        // db.Users.Add(user);
+        // db.SaveChanges();
             //
             // Driver driver = new Driver("allen", 857357158738, DriverStatus.Active, null, null);
             //

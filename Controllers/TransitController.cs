@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using WebApplication1.Data;
 
 namespace WebApplication1.Controllers;
@@ -45,13 +46,12 @@ public class TransitController : ControllerBase
     }
 
     [HttpPost("update")]
-    public IActionResult UpdateOneTransit(Transit transit)
+    public IActionResult UpdateOneTransit(TransitDTO transitDTO)
     {
-        var oldCargo = transit.AssignedCargo.Where(x => x.Id != 0);
-        var newCargo = transit.AssignedCargo.Where(x => x.Id == 0);
-
-        context.Cargoes.AddRange(newCargo);
-        context.Cargoes.UpdateRange(oldCargo);
+        var transit = transitDTO.Transit;
+        var cargoToDelete = transitDTO.CargoToDelete;
+        
+        context.Cargoes.UpdateRange(transit.AssignedCargo); // todo ahdfjadhfkjahsdkfjahsdkjfah fuck this shit. its working even with temporary PK(id = 0)
 
         context.Transits.Update(transit);
         
@@ -59,6 +59,13 @@ public class TransitController : ControllerBase
         {
             if (context.CargoTransits.Any(y => y == x)) context.Entry(x).State = EntityState.Unchanged; //todo adding same relation bug is won?
         });
+        
+        if (!cargoToDelete.IsNullOrEmpty())
+        {
+            var rangeToDelete = cargoToDelete.Select(x => new Cargo(x)).ToList();
+            context.Cargoes.RemoveRange(rangeToDelete);
+            Console.WriteLine("deleted");
+        }
 
         context.ChangeTracker.DetectChanges();
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);

@@ -20,7 +20,6 @@ import {
 import TransitCargo from "./TransitCargo/TransitCargo";
 import {additionalTasks, ModalDeleteWarning, statusLabels, typeLabels} from "../TransitProps";
 import Label from "../../Label/Label";
-import useTransitValid from "./TransitPageValidation";
 import Valid from "../../Valid/Valid";
 import WideLabel, {WideLabelItem} from "../../WideLabel/WideLabel";
 
@@ -32,8 +31,6 @@ const TransitPage = () => {
     const [deleting, setDeleting] = useState(false);
     
     const {transits, transitPage, cargoToAttach} = useSelector(state=>state.transitSlice);
-
-    const {clientValid, cargoValid, validate, resetValid} = useTransitValid(transitPage); // todo make cargo stickerId validation. let only numbers;
 
     const dispatch = useDispatch();
     const [searchParams, setSearchParams] = useSearchParams();
@@ -51,16 +48,15 @@ const TransitPage = () => {
     
     if (Object.keys(transitPage).length === 0) return;
     
-    const {transit:{object: {previous, current}, states:{edit}}, cargo} = transitPage;
+    const {transit:{object: {previous, current}, states:{edit}, errors:{nullClient, editingCargo}}, cargo} = transitPage;
     
     const handleEditButton = () => {
-        console.log(current.id);
         if (!edit){
             dispatch(editTransit());
             return;
         }
         
-        if (JSON.stringify(previous) === JSON.stringify(current) && JSON.stringify(previous.assignedCargo) === JSON.stringify(cargo.map(v=>v.object))) return;
+        // if (JSON.stringify(previous) === JSON.stringify(current) && JSON.stringify(previous.assignedCargo) === JSON.stringify(cargo.map(v=>v.object))) return;
         
         if (current.id === 0) {
             dispatch(addTransitThunk()).then(r => navigate('../transits/'+r.payload.transit.id));
@@ -76,7 +72,6 @@ const TransitPage = () => {
         }
         
         dispatch(cancelTransitEdit(id));
-        resetValid();
     };
     
     const makeStyle = (style, invalid) => (style ? style+' ' : '')+(edit ? (invalid ? 'invalid' : 'editing') : 'readonly');
@@ -109,22 +104,6 @@ const TransitPage = () => {
             <div className='header'>
                 <div className='transitTitle'>
                     <div className='transitTitleGroup'>
-                        {/*<div className='titleGroupItem'>*/}
-                        {/*    <div className='tgiName open'>ID</div>*/}
-                        {/*    <div className='tgiParam'>{current.id !== 0 ? current.id : 'new'}</div>*/}
-                        {/*</div>*/}
-                        {/*<div className='titleGroupItem'>*/}
-                        {/*    <div className='tgiName'>Type</div>*/}
-                        {/*    <div className='tgiParam'>*/}
-                        {/*        <Label value={current.type} list={typeLabels}/>*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
-                        {/*<div className='titleGroupItem'>*/}
-                        {/*    <div className='tgiName'>Status</div>*/}
-                        {/*    <div className='tgiParam close'>*/}
-                        {/*        <Label value={current.status} list={statusLabels}/>*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
                         <WideLabel>
                             <WideLabelItem name='id'>{current.id !== 0 ? current.id : 'new'}</WideLabelItem>
                             <WideLabelItem name='Type'><Label value={current.type} list={typeLabels}/></WideLabelItem>
@@ -145,8 +124,8 @@ const TransitPage = () => {
                 <div className='clientAndDesc fullRow'>
                     <div className='element'>
                         <div className='name'>Client</div>
-                        <Valid valid={clientValid} errorMessage='Client cant be null'>
-                            <textarea className={makeStyle('textarea', !clientValid)} value={current.client} onChange={handleClientInput} readOnly={!edit}/>
+                        <Valid valid={!nullClient} errorMessage='Client cant be null'>
+                            <textarea className={makeStyle('textarea', nullClient)} value={current.client} onChange={handleClientInput} readOnly={!edit}/>
                         </Valid>
                     </div>
                     <div className='element'>
@@ -172,7 +151,7 @@ const TransitPage = () => {
                     <div className='name'>Date</div>
                     <DatePicker incomeDate={current.date} editState={true} dispatchIndex={current.id} id='trDP' setDateDispatch={setArrivalDate}/>
                 </div>
-                <TransitCargo cargo={cargo} edit={edit} cargoValid={cargoValid} transitType={current.type} cargoToAttach={cargoToAttach}/>
+                <TransitCargo cargo={cargo} edit={edit} cargoValid={editingCargo} transitType={current.type} cargoToAttach={cargoToAttach}/>
             </div>
         </div>
     )
