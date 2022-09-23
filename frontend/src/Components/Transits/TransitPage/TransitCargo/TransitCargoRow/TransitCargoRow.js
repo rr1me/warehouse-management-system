@@ -14,7 +14,7 @@ import {
 } from "../../../../../redux/Slices/transitSlice";
 import {TiCancel} from "react-icons/ti";
 import {ModalDeleteWarning} from "../../../TransitProps";
-import Valid from "../../../../Valid/Valid";
+import Error from "../../../../Error/Error";
 
 const TransitCargoRow = ({cargo, states:{edit}, errors:{lettersInSticker, nullSticker}, index, globalEdit}) => {
     
@@ -59,11 +59,11 @@ const TransitCargoRow = ({cargo, states:{edit}, errors:{lettersInSticker, nullSt
         <>
             <div className='transitCargoRow'>{cargo.id}</div>
             <div className='transitCargoRow'>
-                <Valid valid={!nullSticker} errorMessage='Sticker ID cant be null'>
-                    <Editable state={edit}>
-                        <HookedTextarea value={cargo.stickerId} onChange={stickerIdInputHandle} className='trCargoTextarea editing'/>
-                    </Editable>
-                </Valid>
+                <Editable state={edit}>
+                    <HookedTextarea value={cargo.stickerId} onChange={stickerIdInputHandle} className='trCargoTextarea editing'/>
+                </Editable>
+                <Error state={nullSticker} errorMessage='Sticker ID cant be null'/>
+                <Error state={lettersInSticker} errorMessage='Sticker ID cant have letters'/>
             </div>
             <div className='transitCargoRow'>
                 <Editable state={edit}>

@@ -44,9 +44,7 @@ export const updateTransitThunk = createAsyncThunk( //todo added cargo didnt rec
         const errors = validateTransit(transitPage);
         console.log(errors.length);
         if (errors.length !== 0) return rejectWithValue(errors);
-        // return;
         
-        // console.log(validateTransit(transitPage));
         const transitToUpdate = {...transitPage.transit.object.current, assignedCargo: transitPage.cargo.map(v=>v.object)};
         
         const transitDTO = {transit: transitToUpdate, cargoToDelete: cargoToDelete};
@@ -65,10 +63,6 @@ const validateTransit = transitPage => {
     });
     
     const errors = [];
-    
-    // if (transit.client === '') return ['nullClient', false];
-    // if (isAnyCargoEditing) return ['editingCargo', false];
-    // return ['', true];
     
     if (transit.client === '') errors.push('nullClient');
     if (isAnyCargoEditing) errors.push('editingCargo');
@@ -240,19 +234,12 @@ const transitSlice = createSlice({
             state.transits.push(transit);
             state.cargoToAttach = cargoToAttach;
         }).addCase(addTransitThunk.rejected, (state, action) => {
-            // console.log(action.payload);
-            // state.transitPage.transit.errors[action.payload] = true;
-
             const errors = action.payload;
 
             errors.map(v => {
                 state.transitPage.transit.errors[v] = true;
             })
         }).addCase(updateTransitThunk.rejected, (state, action) => {
-            // console.log(action.payload);
-            // console.log(current(state.transitPage.transit));
-            // state.transitPage.transit.errors[action.payload] = true;
-            
             const errors = action.payload;
             
             errors.map(v => {

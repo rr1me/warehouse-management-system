@@ -3,10 +3,10 @@ import BlueTable from "../../../BlueTable/BlueTable";
 import TransitCargoRow from "./TransitCargoRow/TransitCargoRow";
 import {useDispatch} from "react-redux";
 import {addEmptyCargoToTransit, attachCargoToTransit} from "../../../../redux/Slices/transitSlice";
-import Valid from "../../../Valid/Valid";
 import {useState} from "react";
 import RelativeModal from "../../../RelativeModal/RelativeModal";
 import WideLabel, {WideLabelItem} from "../../../WideLabel/WideLabel";
+import Error from "../../../Error/Error";
 
 const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach}) => {
     const [cargoToAttachModal, setCargoToAttachModal] = useState(false);
@@ -28,7 +28,7 @@ const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach}) => 
         <div className='fullRow'>
             <div className='element'>
                 <div className='name'>Cargo</div>
-                <Valid valid={!cargoValid} errorMessage='Some cargo is editing right now'/>
+                <Error state={cargoValid} errorMessage='Some cargo is editing right now'/>
                 <div className='trCargoElem'>
                     <div className={'trCargoControls' + (edit ? ' block' : ' def')}>
                         {edit ?

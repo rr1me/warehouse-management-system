@@ -20,8 +20,8 @@ import {
 import TransitCargo from "./TransitCargo/TransitCargo";
 import {additionalTasks, ModalDeleteWarning, statusLabels, typeLabels} from "../TransitProps";
 import Label from "../../Label/Label";
-import Valid from "../../Valid/Valid";
 import WideLabel, {WideLabelItem} from "../../WideLabel/WideLabel";
+import Error from "../../Error/Error";
 
 const TransitPage = () => {
 
@@ -55,8 +55,6 @@ const TransitPage = () => {
             dispatch(editTransit());
             return;
         }
-        
-        // if (JSON.stringify(previous) === JSON.stringify(current) && JSON.stringify(previous.assignedCargo) === JSON.stringify(cargo.map(v=>v.object))) return;
         
         if (current.id === 0) {
             dispatch(addTransitThunk()).then(r => navigate('../transits/'+r.payload.transit.id));
@@ -124,9 +122,8 @@ const TransitPage = () => {
                 <div className='clientAndDesc fullRow'>
                     <div className='element'>
                         <div className='name'>Client</div>
-                        <Valid valid={!nullClient} errorMessage='Client cant be null'>
-                            <textarea className={makeStyle('textarea', nullClient)} value={current.client} onChange={handleClientInput} readOnly={!edit}/>
-                        </Valid>
+                        <textarea className={makeStyle('textarea', nullClient)} value={current.client} onChange={handleClientInput} readOnly={!edit}/>
+                        <Error state={nullClient} errorMessage='Client cant be null'/>
                     </div>
                     <div className='element'>
                         <div className='name'>Commentary</div>
