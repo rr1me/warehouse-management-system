@@ -13,7 +13,7 @@ import {
     getTransitForPage,
     setTransitPageAdditionalTasks,
     setTransitPageClient,
-    setTransitPageCommentary,
+    setTransitPageCommentary, setTransitPageDate,
     thunkTransits,
     updateTransitThunk
 } from "../../../redux/Slices/transitSlice";
@@ -37,8 +37,8 @@ const TransitPage = () => {
 
     const id = /s\/(.*)/.exec(location.pathname)[1];
     useEffect(() => {
-        if (transits.length === undefined && id !== 'add'){
-            dispatch(thunkTransits(id));
+        if (transits.length === undefined){
+            dispatch(thunkTransits({id: id, type: searchParams.get("type")}));
         }else{
             dispatch(getTransitForPage({id: id, type: searchParams.get("type")}));
         }
@@ -146,7 +146,7 @@ const TransitPage = () => {
                 </div>
                 <div className='element'>
                     <div className='name'>Date</div>
-                    <DatePicker incomeDate={current.date} editState={true} dispatchIndex={current.id} id='trDP' setDateDispatch={setArrivalDate}/>
+                    <DatePicker incomeDate={current.date} editState={true} dispatchIndex={current.id} id='trDP' setDateDispatch={setTransitPageDate}/>
                 </div>
                 <TransitCargo cargo={cargo} edit={edit} cargoValid={editingCargo} transitType={current.type} cargoToAttach={cargoToAttach}/>
             </div>

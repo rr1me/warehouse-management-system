@@ -3,7 +3,8 @@ import {addTransit, deleteTransit, getTransits, updateTransit} from "../../Servi
 
 export const thunkTransits = createAsyncThunk(
     'getTransits',
-    async (id: number) => {
+    async (payload) => {
+        const {id, type} = payload;
         let r;
         try{
             r = await getTransits();
@@ -15,7 +16,7 @@ export const thunkTransits = createAsyncThunk(
         
         return {transits: transits.map(v => {
                 return v;
-            }).sort((a,b) => a.date - b.date), id: id, cargoToAttach: cargoToAttach};
+            }).sort((a,b) => a.date - b.date), id: id, cargoToAttach: cargoToAttach, type: type};
     }
 );
 
@@ -24,8 +25,9 @@ export const addTransitThunk = createAsyncThunk( //todo decide what to do with c
     async (_, {getState, rejectWithValue}) => {
         const {transitPage} = getState().transitSlice;
 
-        const [error, validness] = validateTransit(transitPage);
-        if (!validness) return rejectWithValue(error);
+        const errors = validateTransit(transitPage);
+        console.log(errors.length);
+        if (errors.length !== 0) return rejectWithValue(errors);
         
         let transitToAdd = {...transitPage.transit.object.current, assignedCargo: transitPage.cargo.map(v=>v.object)};
         
@@ -117,6 +119,10 @@ const transitSlice = createSlice({
         setTransitPageAdditionalTasks(state, action){
             state.transitPage.transit.object.current.additionalTasks = action.payload;
         },
+        setTransitPageDate(state, action){
+            console.log(current(state.transitPage.transit.object.current));
+            console.log(action.payload);
+        },
         setTransitPageCargoStickerId(state, action){
             const {index, stickerId} = action.payload;
             if (isNaN(+stickerId)){
@@ -205,11 +211,11 @@ const transitSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(thunkTransits.fulfilled, (state, action) => {
-            const {transits, id, cargoToAttach} = action.payload;
+            const {transits, id, cargoToAttach, type} = action.payload;
             state.transits = transits;
             state.cargoToAttach = cargoToAttach;
             if (id !== undefined)
-                transitSlice.caseReducers.getTransitForPage(state, {payload: {id}});
+                transitSlice.caseReducers.getTransitForPage(state, {payload: {id: id, type: type}});
         }).addCase(updateTransitThunk.fulfilled, (state, action) => {
             const {transit, cargoToAttach} = action.payload;
             
@@ -230,7 +236,7 @@ const transitSlice = createSlice({
             state.cargoToAttach = cargoToAttach;
         }).addCase(addTransitThunk.fulfilled, (state, action) => {
             const {transit, cargoToAttach} = action.payload;
-            
+            console.log([current(state.transits), transit]);
             state.transits.push(transit);
             state.cargoToAttach = cargoToAttach;
         }).addCase(addTransitThunk.rejected, (state, action) => {
@@ -251,5 +257,5 @@ const transitSlice = createSlice({
 
 export const {getTransitForPage, setTransitPageClient, setTransitPageCommentary, setTransitPageType, setTransitPageStatus, setTransitPageAdditionalTasks, cancelTransitEdit, 
     setTransitPageCargoStickerId, setTransitPageCargoDescription, cancelTransitCargoEdit, applyTransitCargoEdit, sendCargoToDelete, addEmptyCargoToTransit,
-    editTransit, startTransitCargoEdit, attachCargoToTransit} = transitSlice.actions;
+    editTransit, startTransitCargoEdit, attachCargoToTransit, setTransitPageDate} = transitSlice.actions;
 export default transitSlice.reducer;

@@ -17,7 +17,7 @@ const Transits = () => {
     
     useEffect(() => {
         if (transits.length === undefined)
-            dispatch(thunkTransits());
+            dispatch(thunkTransits({}));
     }, [dispatch, transits.length]);
     
     const navigate = useNavigate();

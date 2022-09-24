@@ -18,15 +18,6 @@ const DatePickerBuilder = ({dateObject, setDateDispatch, dispatchIndex, mainElem
 
     if (state){
         return (
-            // <div className="datepicker" style={{left: coords.left, top: coords.top+coords.height+5}} onClick={e=>e.stopPropagation()}>
-            //     <SelectorsModule overallDate={overallDate} setOverallDate={setOverallDate} selectProps={selectProps}/>
-            //     <DaysModule dispatch={dispatch} setDateDispatch={setDateDispatch} dispatchIndex={dispatchIndex} 
-            //                 selectProps={selectProps} overallDate={overallDate} CURRENT_DATE={CURRENT_DATE} 
-            //                 selectedDate={dateObject} time={{hours: dateObject.getHours(), minutes: dateObject.getMinutes()}}/>
-            //     <hr className='dpSeparator'/>
-            //     <BottomModule dispatch={dispatch} setDateDispatch={setDateDispatch} dispatchIndex={dispatchIndex}
-            //                   dateObject={dateObject}/>
-            // </div>
             <RelativeModal doubleWrap={false} state={true} modalStyle={{zIndex: '1', top: 10+coords.height+'px', left: '5px'}} onClick={e=>e.stopPropagation()}>
                 <div className='datepicker'>
                     <SelectorsModule overallDate={overallDate} setOverallDate={setOverallDate} selectProps={selectProps}/>
