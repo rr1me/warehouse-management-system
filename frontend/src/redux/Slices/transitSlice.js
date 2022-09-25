@@ -102,7 +102,7 @@ const transitSlice = createSlice({
             
             state.transitPage = {transit: {object: {previous: transit, current: transit}, states: {edit: id === 'add'}, errors: {nullClient: false, editingCargo: false}}, cargo: transit.assignedCargo.map(v => {
                 return {object: v, states: {edit: false}, errors: {nullSticker: false, lettersInSticker: false}}
-                })}
+                }), cargoToAttach: state.cargoToAttach}
         },
         setTransitPageClient(state, action){
             state.transitPage.transit.object.current.client = action.payload;
@@ -193,9 +193,17 @@ const transitSlice = createSlice({
         },
         sendCargoToDelete(state, action){
             const index = action.payload;
-
+            const type = state.transitPage.transit.object.current.type;
+            console.log(type);
+            
             const id = state.transitPage.cargo[index].object.id;
-            state.cargoToDelete.push(id);
+            if (type === 0){
+                state.cargoToDelete.push(id);
+            }else{
+                const cargo = state.transitPage.cargo[index].object;
+                state.transitPage.cargoToAttach.push(cargo);
+                state.transitPage.cargoToAttach.sort((a,b) => a.id - b.id);
+            }
             state.transitPage.cargo = state.transitPage.cargo.filter(v => v.object.id !== id);
         },
         addEmptyCargoToTransit(state){
@@ -204,9 +212,13 @@ const transitSlice = createSlice({
         attachCargoToTransit(state, action){
             const id = action.payload;
 
-            const cargoToAttach = state.cargoToAttach.find(x=>x.id === id);
+            const cargoToAttach = state.transitPage.cargoToAttach.find(x=>x.id === id);
             console.log(current(cargoToAttach));
-            state.transitPage.cargo.unshift({object: cargoToAttach, states: {edit: false}});
+            state.transitPage.cargo.unshift({object: cargoToAttach, states: {edit: false}, errors: {nullSticker: false, lettersInSticker: false}});
+            
+            state.transitPage.cargo.sort((a,b) => a.object.id - b.object.id); //todo remake when filter system will be done
+            
+            state.transitPage.cargoToAttach = state.transitPage.cargoToAttach.filter(v => v.id !== id);
         }
     },
     extraReducers: (builder) => {
@@ -225,7 +237,7 @@ const transitSlice = createSlice({
             state.transits[index] = transit;
             state.transitPage = {transit: {object: {previous: transit, current: transit}, states: {edit: false}, errors: {nullClient: false, editingCargo: false}}, cargo: transit.assignedCargo.map(v => {
                     return {object: v, states: {edit: false}, errors: {nullSticker: false, lettersInSticker: false}}
-                })};
+                }), cargoToAttach: state.cargoToAttach};
             
             state.cargoToDelete = [];
             state.cargoToAttach = cargoToAttach;

@@ -53,6 +53,7 @@ const TransitCargoRow = ({cargo, states:{edit}, errors:{lettersInSticker, nullSt
     
     const handleConfirmedDeleteButton = () => {
         dispatch(sendCargoToDelete(index));
+        setDeleting(false);
     };
     
     return (

@@ -30,7 +30,7 @@ const TransitPage = () => {
     
     const [deleting, setDeleting] = useState(false);
     
-    const {transits, transitPage, cargoToAttach} = useSelector(state=>state.transitSlice);
+    const {transits, transitPage} = useSelector(state=>state.transitSlice);
 
     const dispatch = useDispatch();
     const [searchParams, setSearchParams] = useSearchParams();
@@ -148,7 +148,7 @@ const TransitPage = () => {
                     <div className='name'>Date</div>
                     <DatePicker incomeDate={current.date} editState={true} dispatchIndex={current.id} id='trDP' setDateDispatch={setTransitPageDate}/>
                 </div>
-                <TransitCargo cargo={cargo} edit={edit} cargoValid={editingCargo} transitType={current.type} cargoToAttach={cargoToAttach}/>
+                <TransitCargo cargo={cargo} edit={edit} cargoValid={editingCargo} transitType={current.type} cargoToAttach={transitPage.cargoToAttach}/>
             </div>
         </div>
     )
