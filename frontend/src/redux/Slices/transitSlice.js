@@ -85,7 +85,7 @@ const transitSlice = createSlice({
     name: 'transits',
     initialState: {
         transits: {},
-        sort: 0,
+        sort: {transit: 0, cargo: 0},
         transitPage: {},
         cargoToDelete: [],
         cargoToAttach: []
@@ -144,20 +144,23 @@ const transitSlice = createSlice({
 
             const previous = state.transits[index];
             const current = state.transitPage.transit.object.current;
-            
+
             const cargo = state.transitPage.cargo.map(v => {
                 return v.object;
             });
+
+            const isAnyCargoEditing = state.transitPage.cargo.some(v => {
+                return v.states.edit;
+            });
             
             if (JSON.stringify(previous) !== JSON.stringify(current) || JSON.stringify(cargo) !== JSON.stringify(previous.assignedCargo)){
-                console.log("?");
                 state.transitPage.transit.object.current = previous;
                 state.transitPage.cargo = previous.assignedCargo.map(v => {
                     return {object: v, states: {edit: false}, errors: {nullSticker: false, lettersInSticker: false}}
                 });
                 state.cargoToDelete = [];
-            }else if (state.transitPage.cargo[index].states.edit){
-                state.transitPage.cargo[index].states.edit = false;
+            }else if (isAnyCargoEditing){
+                state.transitPage.cargo.map(v => v.states.edit = false);
             }
             state.transitPage.transit.states.edit = false;
             state.transitPage.transit.errors = {nullClient: false, editingCargo: false};
@@ -219,6 +222,16 @@ const transitSlice = createSlice({
             state.transitPage.cargo.sort((a,b) => a.object.id - b.object.id); //todo remake when filter system will be done
             
             state.transitPage.cargoToAttach = state.transitPage.cargoToAttach.filter(v => v.id !== id);
+        },
+        setTransitPageCargoSort(state, action){
+            const sortType = action.payload;
+            
+            state.sort.cargo = sortType;
+            if (sortType === 0){
+                state.transitPage.cargo.sort((a,b) => a.object.id - b.object.id);
+            }else{
+                state.transitPage.cargo.sort((a,b) => a.object.stickerId - b.object.stickerId);
+            }
         }
     },
     extraReducers: (builder) => {
@@ -269,5 +282,5 @@ const transitSlice = createSlice({
 
 export const {getTransitForPage, setTransitPageClient, setTransitPageCommentary, setTransitPageType, setTransitPageStatus, setTransitPageAdditionalTasks, cancelTransitEdit, 
     setTransitPageCargoStickerId, setTransitPageCargoDescription, cancelTransitCargoEdit, applyTransitCargoEdit, sendCargoToDelete, addEmptyCargoToTransit,
-    editTransit, startTransitCargoEdit, attachCargoToTransit, setTransitPageDate} = transitSlice.actions;
+    editTransit, startTransitCargoEdit, attachCargoToTransit, setTransitPageDate, setTransitPageCargoSort} = transitSlice.actions;
 export default transitSlice.reducer;

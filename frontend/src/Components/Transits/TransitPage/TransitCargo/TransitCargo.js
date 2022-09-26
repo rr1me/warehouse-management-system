@@ -2,14 +2,22 @@
 import BlueTable from "../../../BlueTable/BlueTable";
 import TransitCargoRow from "./TransitCargoRow/TransitCargoRow";
 import {useDispatch} from "react-redux";
-import {addEmptyCargoToTransit, attachCargoToTransit} from "../../../../redux/Slices/transitSlice";
+import {
+    addEmptyCargoToTransit,
+    attachCargoToTransit,
+    setTransitPageCargoSort
+} from "../../../../redux/Slices/transitSlice";
 import {useState} from "react";
 import RelativeModal from "../../../RelativeModal/RelativeModal";
 import WideLabel, {WideLabelItem} from "../../../WideLabel/WideLabel";
 import Error from "../../../Error/Error";
+import BulletList from "../../../Properties/BulletList/BulletList";
 
-const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach}) => {
+const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach, sort}) => {
     const [cargoToAttachModal, setCargoToAttachModal] = useState(false);
+    
+    const [filterModal, setFilterModal] = useState(false);
+    
     const dispatch = useDispatch();
     
     const handleAddNewCargoButton = e => {
@@ -24,6 +32,13 @@ const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach}) => 
         dispatch(attachCargoToTransit(id));
     };
     
+    const handleFilterButton = e => {
+        setFilterModal(value => !value);
+        e.stopPropagation();
+    };
+    
+    const filterList = ['by id', 'by stickerId']; //todo rethink about that decision
+    
     return (
         <div className='fullRow'>
             <div className='element'>
@@ -33,7 +48,12 @@ const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach}) => 
                     <div className={'trCargoControls' + (edit ? ' block' : ' def')}>
                         {edit ?
                             <>
-                                <button className='btn apply table'>Filter</button>
+                                <div>
+                                    <button className='btn apply table' onClick={handleFilterButton}>Filter</button>
+                                    <RelativeModal doubleWrap={false} id={'transitCargoFilterModal'} state={filterModal} setOpen={setFilterModal}>
+                                        <BulletList bulletList={filterList} bulletState={sort} bulletStateDispatch={setTransitPageCargoSort}/>
+                                    </RelativeModal>
+                                </div>
                                 <div>
                                     <button className='btn apply table' onClick={handleAddNewCargoButton}>Add new</button>
                                     <RelativeModal doubleWrap={false} id={'cargoToAttach'} state={cargoToAttachModal} setOpen={setCargoToAttachModal} modalStyle={{top: '5px', right: '315px'}}>

@@ -21,14 +21,15 @@ const BulletList = ({openState, bulletState, bulletList, bulletStateDispatch, id
         )
     });
 
-    return (
-        <RelativeModal state={openState}
-                       doubleWrap={true} itemClassname='bulletMenu'
-                       id={id}
-                       modalStyle={{right: '115px', bottom: '30px', padding: '2px'}}>
-            {list}
-        </RelativeModal>
-    )
+    // return (
+        // <RelativeModal state={openState}
+        //                doubleWrap={true} itemClassname='bulletMenu'
+        //                id={id}
+        //                modalStyle={{right: '115px', bottom: '30px', padding: '2px'}}>
+        //     {list}
+        // </RelativeModal>
+    // )
+    return list;
     
 }
 
