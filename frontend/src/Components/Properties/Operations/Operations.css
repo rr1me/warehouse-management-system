@@ -5,7 +5,7 @@
 .operation {
     padding: 2px 12px;
     background: none;
-    border: 1px solid #6C7A89; /*todo choose color*/
+    border: 1px solid #6C7A89;
     border-radius: 3px;
     transition: 180ms;
 }

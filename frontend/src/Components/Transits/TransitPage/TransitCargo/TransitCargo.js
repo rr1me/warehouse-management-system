@@ -37,7 +37,7 @@ const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach, sort
         e.stopPropagation();
     };
     
-    const filterList = ['by id', 'by stickerId']; //todo rethink about that decision
+    const filterList = ['by id', 'by stickerId'];
     
     return (
         <div className='fullRow'>
@@ -58,7 +58,7 @@ const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach, sort
                                     <button className='btn apply table' onClick={handleAddNewCargoButton}>Add new</button>
                                     <RelativeModal doubleWrap={false} id={'cargoToAttach'} state={cargoToAttachModal} setOpen={setCargoToAttachModal} modalStyle={{top: '5px', right: '315px'}}>
                                         <div className='cargoToAttachList'>
-                                            {cargoToAttach.map((v, i) => { //todo attach cargo by wideLabel onClick
+                                            {cargoToAttach.map((v, i) => {
                                                 return (
                                                     <WideLabel key={i} clickable={true} onClick={() => handleWideLabelClick(v.id)}>
                                                         <WideLabelItem name='id' width='25px'>{v.id}</WideLabelItem>

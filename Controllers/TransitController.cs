@@ -6,7 +6,7 @@ using WebApplication1.Data;
 
 namespace WebApplication1.Controllers;
 
-[ApiController] //todo ASHDAKJSDHKJASDHKJH HOW DID THIS WORKS MAN [FROMBODY] HAHAHAHA?!?!?!?!
+[ApiController]
 [Authorize(Policy = "Manager")]
 [Route("transits")]
 public class TransitController : ControllerBase
@@ -51,7 +51,7 @@ public class TransitController : ControllerBase
         var transit = transitDTO.Transit;
         var cargoToDelete = transitDTO.CargoToDelete;
         
-        context.Cargoes.UpdateRange(transit.AssignedCargo); // todo ahdfjadhfkjahsdkfjahsdkjfah fuck this shit. its working even with temporary PK(id = 0)
+        context.Cargoes.UpdateRange(transit.AssignedCargo);
 
         context.Transits.Update(transit);
         

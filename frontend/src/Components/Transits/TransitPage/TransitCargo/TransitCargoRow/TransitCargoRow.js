@@ -18,7 +18,7 @@ import Error from "../../../../Error/Error";
 
 const TransitCargoRow = ({cargo, states:{edit}, errors:{lettersInSticker, nullSticker}, index, globalEdit}) => {
     
-    const dispatch = useDispatch();  //todo fixbug .unshift makes transitCargoRow update last element neither the new one
+    const dispatch = useDispatch();
     const [deleting, setDeleting] = useState(false);
     
     const handleEditButton = () => {

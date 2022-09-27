@@ -1,6 +1,5 @@
 ﻿import {useDispatch} from "react-redux";
 import './BulletList.css';
-import RelativeModal from "../../RelativeModal/RelativeModal";
 
 const BulletList = ({openState, bulletState, bulletList, bulletStateDispatch, id}) => {
     
@@ -20,23 +19,8 @@ const BulletList = ({openState, bulletState, bulletList, bulletStateDispatch, id
             </div>
         )
     });
-
-    // return (
-        // <RelativeModal state={openState}
-        //                doubleWrap={true} itemClassname='bulletMenu'
-        //                id={id}
-        //                modalStyle={{right: '115px', bottom: '30px', padding: '2px'}}>
-        //     {list}
-        // </RelativeModal>
-    // )
     return list;
     
 }
 
 export default BulletList;
-
-// const rows = [
-//     'By id',
-//     'By name',
-//     'By status'
-// ]
