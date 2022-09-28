@@ -1,5 +1,5 @@
 ﻿import {useDispatch} from "react-redux";
-import './BulletList.css';
+import './BulletList.sass';
 
 const BulletList = ({openState, bulletState, bulletList, bulletStateDispatch, id}) => {
     
