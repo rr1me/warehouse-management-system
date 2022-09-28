@@ -50,7 +50,7 @@ const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach, sort
                             <>
                                 <div>
                                     <button className='btn apply table' onClick={handleFilterButton}>Filter</button>
-                                    <RelativeModal doubleWrap={false} id={'transitCargoFilterModal'} state={filterModal} setOpen={setFilterModal}>
+                                    <RelativeModal doubleWrap={true} id={'transitCargoFilterModal'} state={filterModal} setOpen={setFilterModal} modalStyle={{padding: '5px 10px'}} itemClassname={'blFilterClassname'}>
                                         <BulletList bulletList={filterList} bulletState={sort} bulletStateDispatch={setTransitPageCargoSort}/>
                                     </RelativeModal>
                                 </div>
