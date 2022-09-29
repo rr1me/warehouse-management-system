@@ -37,7 +37,7 @@ const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach, sort
         e.stopPropagation();
     };
     
-    const filterList = ['by id', 'by stickerId'];
+    const filterList = ['By ID', 'By StickerID'];
     
     return (
         <div className='fullRow'>
@@ -50,7 +50,7 @@ const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach, sort
                             <>
                                 <div>
                                     <button className='btn apply table' onClick={handleFilterButton}>Filter</button>
-                                    <RelativeModal doubleWrap={false} id={'transitCargoFilterModal'} state={filterModal} setOpen={setFilterModal} modalStyle={{padding: '5px 10px'}}>
+                                    <RelativeModal doubleWrap={false} id={'transitCargoFilterModal'} state={filterModal} setOpen={setFilterModal} modalStyle={{top: '5px'}}>
                                         <BulletList bulletList={filterList} bulletState={sort} bulletStateDispatch={setTransitPageCargoSort}/>
                                     </RelativeModal>
                                 </div>

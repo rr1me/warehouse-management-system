@@ -19,7 +19,11 @@ const BulletList = ({openState, bulletState, bulletList, bulletStateDispatch, id
             </div>
         )
     });
-    return list;
+    return (
+        <div className='bulletList'>
+            {list}
+        </div>
+    );
     
 }
 
