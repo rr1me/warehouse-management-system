@@ -120,8 +120,8 @@ const transitSlice = createSlice({
             state.transitPage.transit.object.current.additionalTasks = action.payload;
         },
         setTransitPageDate(state, action){
-            console.log(current(state.transitPage.transit.object.current));
-            console.log(action.payload);
+            const {date, index} = action.payload; //todo dont actually need index 
+            state.transitPage.transit.object.current.date = date;
         },
         setTransitPageCargoStickerId(state, action){
             const {index, stickerId} = action.payload;
@@ -232,6 +232,12 @@ const transitSlice = createSlice({
             }else{
                 state.transitPage.cargo.sort((a,b) => a.object.stickerId - b.object.stickerId);
             }
+        },
+        setTransitSort(state, action){
+            const type = action.payload;
+            
+            state.transits.sort(transitSorts[type])
+            state.sort.transit = type;
         }
     },
     extraReducers: (builder) => {
@@ -282,5 +288,15 @@ const transitSlice = createSlice({
 
 export const {getTransitForPage, setTransitPageClient, setTransitPageCommentary, setTransitPageType, setTransitPageStatus, setTransitPageAdditionalTasks, cancelTransitEdit, 
     setTransitPageCargoStickerId, setTransitPageCargoDescription, cancelTransitCargoEdit, applyTransitCargoEdit, sendCargoToDelete, addEmptyCargoToTransit,
-    editTransit, startTransitCargoEdit, attachCargoToTransit, setTransitPageDate, setTransitPageCargoSort} = transitSlice.actions;
+    editTransit, startTransitCargoEdit, attachCargoToTransit, setTransitPageDate, setTransitPageCargoSort, setTransitSort} = transitSlice.actions;
 export default transitSlice.reducer;
+
+const transitSorts = [
+    (a,b) => a.id - b.id,
+    (a,b) => a.type - b.type,
+    (a,b) => {
+        console.log(a.status);
+        return a.status - b.status
+    },
+    (a,b) => new Date(a.date) - new Date(b.date)
+]

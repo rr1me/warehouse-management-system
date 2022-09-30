@@ -1,8 +1,8 @@
 ﻿import './Transits.sass';
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import TransitRow from "./TransitRow/TransitRow";
-import {setTransitPageCargoSort, thunkTransits} from "../../redux/Slices/transitSlice";
+import {setTransitSort, thunkTransits} from "../../redux/Slices/transitSlice";
 import {useNavigate} from "react-router-dom";
 import BlueTable from "../BlueTable/BlueTable";
 import RelativeModal from "../RelativeModal/RelativeModal";
@@ -42,12 +42,14 @@ const Transits = () => {
             <div className='transitHeader'>
                 <div className='title light'>Transits</div>
                 <div>
-                    <button className="btn apply table" onClick={handleFilterClick}>Filter</button>
-                    <button className="btn apply table" onClick={handleAddNewModalClick}>Add new</button>
-                    <RelativeModal doubleWrap={false} id={'transitCargoFilterModal'} state={filterModal} setOpen={setFilterModal} modalStyle={{top: '5px'}}>
-                        <BulletList bulletList={filterList} bulletState={sort} bulletStateDispatch={setTransitPageCargoSort}/>
+                    <div className='titleButtons'>
+                        <button className="btn apply table" onClick={handleFilterClick}>Filter</button>
+                        <button className="btn apply table" onClick={handleAddNewModalClick}>Add new</button>
+                    </div>
+                    <RelativeModal doubleWrap={false} id={'transitCargoFilterModal'} state={filterModal} setOpen={setFilterModal} modalStyle={{top: '5px', right: '55px'}}>
+                        <BulletList bulletList={filterList} bulletState={sort.transit} bulletStateDispatch={setTransitSort}/>
                     </RelativeModal>
-                    <RelativeModal doubleWrap={false} state={newModal} setOpen={setNewModal} id='addNewTransitModal' onClick={e=>e.stopPropagation()} modalStyle={{right: '186px', top: '5px'}}>
+                    <RelativeModal doubleWrap={false} state={newModal} setOpen={setNewModal} id='addNewTransitModal' onClick={e=>e.stopPropagation()} modalStyle={{right: '120px', top: '5px'}}>
                         <div className='addTransitModal'>
                             <div>What transit do you want to add?</div>
                             <div className='controls'>
