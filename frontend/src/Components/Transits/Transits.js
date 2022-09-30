@@ -2,10 +2,11 @@
 import {useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import TransitRow from "./TransitRow/TransitRow";
-import {thunkTransits} from "../../redux/Slices/transitSlice";
+import {setTransitPageCargoSort, thunkTransits} from "../../redux/Slices/transitSlice";
 import {useNavigate} from "react-router-dom";
 import BlueTable from "../BlueTable/BlueTable";
 import RelativeModal from "../RelativeModal/RelativeModal";
+import BulletList from "../Properties/BulletList/BulletList";
 
 const Transits = () => {
     
@@ -13,7 +14,8 @@ const Transits = () => {
     const {transits, sort} = useSelector(state => state.transitSlice);
     
     const [newModal, setNewModal] = useState(false);
-    const addNewBtnRef = useRef();
+    const [filterModal, setFilterModal] = useState(false);
+    // const addNewBtnRef = useRef();
     
     useEffect(() => {
         if (transits.length === undefined)
@@ -30,12 +32,21 @@ const Transits = () => {
     const handleAddNewAcceptanceClick = () => navigate('/transits/add?type=0');
     const handleAddNewDispatchingClick = () => navigate('/transits/add?type=1');
     
+    const handleFilterClick = e => {
+        e.stopPropagation();
+        setFilterModal(value => !value);
+    }
+    
     return (
         <div className='transitContainer'>
             <div className='transitHeader'>
                 <div className='title light'>Transits</div>
                 <div>
-                    <button className="btn apply table" onClick={handleAddNewModalClick} ref={addNewBtnRef}>Add new</button>
+                    <button className="btn apply table" onClick={handleFilterClick}>Filter</button>
+                    <button className="btn apply table" onClick={handleAddNewModalClick}>Add new</button>
+                    <RelativeModal doubleWrap={false} id={'transitCargoFilterModal'} state={filterModal} setOpen={setFilterModal} modalStyle={{top: '5px'}}>
+                        <BulletList bulletList={filterList} bulletState={sort} bulletStateDispatch={setTransitPageCargoSort}/>
+                    </RelativeModal>
                     <RelativeModal doubleWrap={false} state={newModal} setOpen={setNewModal} id='addNewTransitModal' onClick={e=>e.stopPropagation()} modalStyle={{right: '186px', top: '5px'}}>
                         <div className='addTransitModal'>
                             <div>What transit do you want to add?</div>
@@ -65,5 +76,7 @@ const trHeader = [
     'Additional Tasks',
     'Commentary'
 ]
+
+const filterList = ['By ID', 'By type', 'By status', 'By date'];
 
 export default Transits;

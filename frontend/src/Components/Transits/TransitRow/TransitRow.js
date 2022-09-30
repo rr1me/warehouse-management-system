@@ -21,14 +21,3 @@ const TransitRow = ({current}) => {
 };
 
 export default TransitRow;
-
-// const typeLabels = [
-//     {text: 'Acceptance', clr: 'green'},
-//     {text: 'Dispatching', clr: 'blue'}
-// ];
-//
-// const statusLabels = [
-//     {text: 'Planned', clr: 'blue'},
-//     {text: 'Completed', clr: 'green'},
-//     {text: 'Failed', clr: 'red'}
-// ]

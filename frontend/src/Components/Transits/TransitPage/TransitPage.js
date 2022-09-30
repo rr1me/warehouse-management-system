@@ -4,7 +4,6 @@ import {useEffect, useState} from "react";
 import SelectPicker from "../../SelectPicker/SelectPicker";
 import {useDispatch, useSelector} from "react-redux";
 import {DatePicker} from "../../DatePicker/DatePicker";
-import {setArrivalDate} from "../../../redux/Slices/cargoSlice";
 import {
     addTransitThunk,
     cancelTransitEdit,
@@ -13,7 +12,8 @@ import {
     getTransitForPage,
     setTransitPageAdditionalTasks,
     setTransitPageClient,
-    setTransitPageCommentary, setTransitPageDate,
+    setTransitPageCommentary,
+    setTransitPageDate,
     thunkTransits,
     updateTransitThunk
 } from "../../../redux/Slices/transitSlice";
