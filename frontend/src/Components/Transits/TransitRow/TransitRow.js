@@ -1,7 +1,7 @@
-﻿import './TransitRow.css';
-import {DatePicker} from "../../DatePicker/DatePicker";
+﻿import './TransitRow.sass';
 import Label from "../../Label/Label";
 import {statusLabels, typeLabels} from "../TransitProps";
+import {makeDateForInput} from "../../DatePicker/DatePicker";
 
 const TransitRow = ({current}) => {
     
@@ -11,8 +11,8 @@ const TransitRow = ({current}) => {
             <div className='transitRowItem'><Label list={typeLabels} value={current.type}/></div>
             <div className='transitRowItem'><Label list={statusLabels} value={current.status}/></div>
             <div className='transitRowItem'>{current.client}</div>
-            <div className='transitRowItem'>
-                <DatePicker editState={false} incomeDate={current.date}/>
+            <div className='transitRowItem dateTime'>
+                {makeDateForInput(new Date(current.date))}
             </div>
             <div className='transitRowItem'>{current.additionalTasks}</div>
             <div className='transitRowItem'>{current.commentary ? current.commentary : 'No'}</div>

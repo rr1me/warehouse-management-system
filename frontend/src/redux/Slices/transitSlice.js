@@ -221,7 +221,7 @@ const transitSlice = createSlice({
             
             state.transitPage.cargo.sort((a,b) => a.object.id - b.object.id); //todo remake when filter system will be done
             
-            state.transitPage.cargoToAttach = state.transitPage.cargoToAttach.filter(v => v.id !== id);
+            state.transitPage.cargoToAttach = state.transitPage.cargoToAttach.filter(v => v.id !== id); //todo make previous and current for cancellation or leave it like global list and put temporary values in state.transitPage
         },
         setTransitPageCargoSort(state, action){
             const sortType = action.payload;

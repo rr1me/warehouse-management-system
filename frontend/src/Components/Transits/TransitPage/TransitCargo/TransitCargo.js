@@ -63,7 +63,7 @@ const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach, sort
                                                     <WideLabel key={i} clickable={true} onClick={() => handleWideLabelClick(v.id)}>
                                                         <WideLabelItem name='id' width='25px'>{v.id}</WideLabelItem>
                                                         <WideLabelItem name='Sticker id' width='50px'>{v.stickerId}</WideLabelItem>
-                                                        <WideLabelItem name='Description' width='50px'>{v.description}</WideLabelItem>
+                                                        <WideLabelItem name='Description' width='50px'>{v.description ? v.description : 'No'}</WideLabelItem>
                                                     </WideLabel>
                                                 )
                                             })}

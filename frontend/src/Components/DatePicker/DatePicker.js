@@ -1,6 +1,7 @@
 ﻿import {memo, useEffect, useRef, useState} from "react";
 
-import './DatePicker.css';
+// import './DatePicker.css';
+import './DatePicker.sass';
 import DatePickerBuilder from "./dpModules/DatePickerBuilder";
 import {MdEditCalendar} from "react-icons/md";
 import {makeCloseEvent} from "../Properties/makeCloseEvent";
@@ -26,14 +27,14 @@ export const DatePicker = memo(({incomeDate, setDateDispatch, dispatchIndex, id,
         <div className='dpContainer'>
             <div className={'dpInput'+(editState ? '' : ' noEdit')} id={id} onClick={handleInputClick} ref={inputElement}>
                 {makeDateForInput(dateObject)}
-                {editState ? <MdEditCalendar className='dpInputIcon' id={id}/> : null}
+                {/*{editState ? <MdEditCalendar className='dpInputIcon' id={id}/> : null}*/}
             </div>
             <DatePickerBuilder dateObject={dateObject} setDateDispatch={setDateDispatch} dispatchIndex={dispatchIndex} mainElement={inputElement} state={dpState}/>
         </div>
     )
 });
 
-const makeDateForInput = (date) => {
+export const makeDateForInput = (date) => {
     const year = date.getFullYear();
     const month = date.getMonth()+1;
     const day = date.getDate();
