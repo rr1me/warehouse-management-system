@@ -1,23 +1,23 @@
-﻿.dpBtn, .dpSelect {
-    height: 2em;
-    font-size: 15px;
-    background-color: #fff;
-    color: #363636;
-    border: 1px solid #dbdbdb;
-    border-radius: 4px;
-    /*transform: scale(95%);*/
-}
+﻿/*.dpBtn, .dpSelect {*/
+/*    height: 2em;*/
+/*    font-size: 15px;*/
+/*    background-color: #fff;*/
+/*    color: #363636;*/
+/*    border: 1px solid #dbdbdb;*/
+/*    border-radius: 4px;*/
+/*    !*transform: scale(95%);*!*/
+/*}*/
 
-.dpBtn, .dpSelect{
-    cursor: pointer;
-}
+/*.dpBtn, .dpSelect{*/
+/*    cursor: pointer;*/
+/*}*/
 
-.dpBtn:focus, .dpSelect:focus {
-    outline: none;
-}
+/*.dpBtn:focus, .dpSelect:focus {*/
+/*    outline: none;*/
+/*}*/
 
-.dpBtn {
-    justify-content: center;
-    padding: .2em .7em;
-    text-align: center;
-}
+/*.dpBtn {*/
+/*    justify-content: center;*/
+/*    padding: .2em .7em;*/
+/*    text-align: center;*/
+/*}*/

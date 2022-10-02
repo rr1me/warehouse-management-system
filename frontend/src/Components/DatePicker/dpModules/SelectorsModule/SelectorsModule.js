@@ -1,4 +1,5 @@
-﻿import './SelectorsModule.css';
+﻿import './SelectorsModule.sass';
+import {RiArrowLeftSLine, RiArrowRightSLine} from "react-icons/ri";
 
 const CURRENT_DATE = new Date();
 
@@ -24,29 +25,50 @@ const SelectorsModule = ({overallDate, setOverallDate, selectProps}) => {
         
         setOverallDate({month: month, year: year});
     };
-    
+    console.log(overallDateMonth);
     return (
-        <header>
-            <button className='dpBtn' onClick={() => handleMonthButtonClick(false)}>{'<'}</button>
+        <div className='dpHeader'>
+            <div className='dpArrows'>
+                <div>
+                    <RiArrowLeftSLine className='dpIcon double left'/>
+                    <RiArrowLeftSLine className='dpIcon double right'/>
+                </div>
+                <RiArrowLeftSLine className='dpIcon' onClick={() => handleMonthButtonClick(false)}/>
+            </div>
+            
+            {/*<div>*/}
+            {/*    <RiArrowRightSLine className='dpIcon double left'/>*/}
+            {/*    <RiArrowRightSLine className='dpIcon double right'/>*/}
+            {/*</div>*/}
 
-            <select className='dpSelect' onChange={(e) => {
-                handleSelectChange(e);
-            }} value={overallDateMonth}>
-                {selectProps.monthNames.map((name, index) =>
-                    <option key={name} value={index}>{name}</option>
-                )}
-            </select>
+            {/*<select className='dpSelect' onChange={(e) => {*/}
+            {/*    handleSelectChange(e);*/}
+            {/*}} value={overallDateMonth}>*/}
+            {/*    {selectProps.monthNames.map((name, index) =>*/}
+            {/*        <option key={name} value={index}>{name}</option>*/}
+            {/*    )}*/}
+            {/*</select>*/}
+            <div>
+                {selectProps.monthNames[overallDateMonth]} {overallDateYear}
+            </div>
+            
+            {/*<select className='dpSelect' onChange={(e) => {*/}
+            {/*    handleSelectChange(e);*/}
+            {/*}} value={overallDateYear}>*/}
+            {/*    {selectProps.years.map(year =>*/}
+            {/*        <option key={year} value={year}>{year}</option>*/}
+            {/*    )}*/}
+            {/*</select>*/}
 
-            <select className='dpSelect' onChange={(e) => {
-                handleSelectChange(e);
-            }} value={overallDateYear}>
-                {selectProps.years.map(year =>
-                    <option key={year} value={year}>{year}</option>
-                )}
-            </select>
-
-            <button className='dpBtn' onClick={() => handleMonthButtonClick(true)}>{'>'}</button>
-        </header>
+            {/*<RiArrowRightSLine className='dpIcon' onClick={() => handleMonthButtonClick(true)}/>*/}
+            <div className='dpArrows'>
+                <RiArrowRightSLine className='dpIcon' onClick={() => handleMonthButtonClick(true)}/>
+                <div>
+                    <RiArrowRightSLine className='dpIcon double left'/>
+                    <RiArrowRightSLine className='dpIcon double right'/>
+                </div>
+            </div>
+        </div>
     )
 };
 
