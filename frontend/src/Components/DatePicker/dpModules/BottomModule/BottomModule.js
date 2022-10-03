@@ -1,4 +1,4 @@
-﻿import './BottomModule.css';
+﻿import './BottomModule.sass';
 import TimeModule from "./TimeModule/TimeModule";
 
 const BottomModule = ({dispatch, setDateDispatch, dispatchIndex, dateObject}) => {
@@ -10,7 +10,7 @@ const BottomModule = ({dispatch, setDateDispatch, dispatchIndex, dateObject}) =>
     return (
         <div className='bottomModule'>
             <TimeModule dispatch={dispatch} dateObject={dateObject} setDateDispatch={setDateDispatch} dispatchIndex={dispatchIndex}/>
-            <button onClick={handleTodayClick} className='btn apply today'>Today</button>
+            <button onClick={handleTodayClick} className='btn apply'>Today</button>
         </div>
     )
 };

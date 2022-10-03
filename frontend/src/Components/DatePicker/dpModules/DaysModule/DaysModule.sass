@@ -1,0 +1,41 @@
+﻿.days
+  display: grid
+  grid-gap: 5px
+  
+  .dayGrid
+    display: grid
+    grid-template-columns: repeat(7, 1fr)
+
+  .dayName
+    vertical-align: middle
+    text-align: center
+    &.weekends
+      color: #e80000
+
+.day
+  padding: 4px 8px
+  vertical-align: middle
+  text-align: center
+  border: 2px solid transparent
+  
+  &.selected
+    border: 2px solid dodgerblue
+    
+  &.today
+    background-color: dodgerblue
+    color: white
+    
+    &.selected
+      border: 2px solid lightgray
+    
+    &:hover
+      background-color: #0081ff
+      
+  &.aesthetics
+    opacity: .3
+    cursor: default
+    
+  &.practice
+    &:hover
+      background-color: #eaeaea
+      cursor: pointer

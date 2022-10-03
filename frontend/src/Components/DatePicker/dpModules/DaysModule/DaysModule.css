@@ -1,42 +1,42 @@
-﻿.dayName {
-    vertical-align: middle;
-    text-align: center;
-}
+﻿/*.dayName {*/
+/*    vertical-align: middle;*/
+/*    text-align: center;*/
+/*}*/
 
-.day {
-    padding: 4px 8px;
-    vertical-align: middle;
-    text-align: center;
-    border: 2px solid transparent;
-}
+/*.day {*/
+/*    padding: 4px 8px;*/
+/*    vertical-align: middle;*/
+/*    text-align: center;*/
+/*    border: 2px solid transparent;*/
+/*}*/
 
-.aesthetics{
-    opacity: .3;
-    cursor: default;
-}
+/*.aesthetics{*/
+/*    opacity: .3;*/
+/*    cursor: default;*/
+/*}*/
 
-.practice:hover {
-    background-color: #eaeaea;
-    cursor: pointer;
-}
+/*.practice:hover {*/
+/*    background-color: #eaeaea;*/
+/*    cursor: pointer;*/
+/*}*/
 
-.day.selected {
-    border: 2px solid dodgerblue;
-}
+/*.day.selected {*/
+/*    border: 2px solid dodgerblue;*/
+/*}*/
 
-.day.today {
-    background-color: dodgerblue;
-    color: white;
-}
+/*.day.today {*/
+/*    background-color: dodgerblue;*/
+/*    color: white;*/
+/*}*/
 
-.day.today:hover {
-    background-color: #0081ff;
-}
+/*.day.today:hover {*/
+/*    background-color: #0081ff;*/
+/*}*/
 
-.day.today.selected {
-    border: 2px solid lightgray;
-}
+/*.day.today.selected {*/
+/*    border: 2px solid lightgray;*/
+/*}*/
 
-.weekends {
-    color: #e80000;
-}
+/*.weekends {*/
+/*    color: #e80000;*/
+/*}*/

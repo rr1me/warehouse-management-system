@@ -1,5 +1,5 @@
 ﻿import getMonthData from "../Properties/getMonthData";
-import './DaysModule.css';
+import './DaysModule.sass';
 
 const DaysModule = ({selectProps, dispatch, setDateDispatch, dispatchIndex, overallDate, selectedDate, CURRENT_DATE, time}) => {
 
@@ -30,30 +30,28 @@ const DaysModule = ({selectProps, dispatch, setDateDispatch, dispatchIndex, over
         }
 
         return (
-            <td key={index} className={classname} onClick={onClick}>
+            <div key={index} className={classname} onClick={onClick}>
                 {body}
-            </td>
+            </div>
         )
     }
     
     return (
-        <table>
-            <thead>
-            <tr>
+        <div className='days'>
+            <div className='dayGrid'>
                 {selectProps.weekDayNames.map(name =>
-                    <th className={'dayName'+(name === 'Sa' || name === 'Su' ? " weekends" : null)} key={name}>{name}</th>
+                    <div className={'dayName'+(name === 'Sa' || name === 'Su' ? " weekends" : '')} key={name}>{name}</div>
                 )}
-            </tr>
-            </thead>
+            </div>
 
-            <tbody>
-            {monthData.map((week, index) =>
-                <tr key={index} className="week">
-                    { week.map( (date, index) => {return (makeDay(date, index))} ) }
-                </tr>
-            )}
-            </tbody>
-        </table>
+            <div>
+                {monthData.map((week, index) =>
+                    <div key={index} className="dayGrid week">
+                        { week.map( (date, index) => {return (makeDay(date, index))} ) }
+                    </div>
+                )}
+            </div>
+        </div>
     )
 };
 

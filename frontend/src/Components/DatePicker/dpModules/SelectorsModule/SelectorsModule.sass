@@ -5,18 +5,40 @@
   justify-content: space-between
   align-content: space-between
   
+  //padding-top: 5px
+  padding-bottom: 5px
+  //padding: 5px 0 10px
+  
+  .monthAndYear
+    font-size: 15px
+    display: flex
+    align-self: center
+    //position: relative
+    //bottom: 1px
+  
   .dpArrows
     display: flex
     gap: 5px
 
-.dpIcon
-  cursor: pointer
+.dpArrows
+  .iconObject
+    padding: 5px
+    cursor: pointer
+    border-radius: 2px
+    
+    //height: 15px
+    &:hover
+      background-color: #eaeaea
   
-  transform: scale(140%)
-  
-  &.double
+  .dpIcon
     position: relative
-    &.left
-      left: 4px
-    &.right
-      right: 4px
+    top: 1px
+  
+    transform: scale(140%)
+  
+    &.double
+      position: relative
+      &.left
+        left: 4px
+      &.right
+        right: 4px

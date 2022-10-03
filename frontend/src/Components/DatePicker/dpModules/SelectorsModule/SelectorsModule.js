@@ -28,12 +28,22 @@ const SelectorsModule = ({overallDate, setOverallDate, selectProps}) => {
     console.log(overallDateMonth);
     return (
         <div className='dpHeader'>
+            {/*<div className='dpArrows'>*/}
+            {/*    <div>*/}
+            {/*        <RiArrowLeftSLine className='dpIcon double left'/>*/}
+            {/*        <RiArrowLeftSLine className='dpIcon double right'/>*/}
+            {/*    </div>*/}
+            {/*    <RiArrowLeftSLine className='dpIcon' onClick={() => handleMonthButtonClick(false)}/>*/}
+            {/*</div>*/}
+
             <div className='dpArrows'>
-                <div>
+                <div className='iconObject'>
                     <RiArrowLeftSLine className='dpIcon double left'/>
                     <RiArrowLeftSLine className='dpIcon double right'/>
                 </div>
-                <RiArrowLeftSLine className='dpIcon' onClick={() => handleMonthButtonClick(false)}/>
+                <div className='iconObject' onClick={() => handleMonthButtonClick(true)}>
+                    <RiArrowLeftSLine className='dpIcon'/>
+                </div>
             </div>
             
             {/*<div>*/}
@@ -48,7 +58,7 @@ const SelectorsModule = ({overallDate, setOverallDate, selectProps}) => {
             {/*        <option key={name} value={index}>{name}</option>*/}
             {/*    )}*/}
             {/*</select>*/}
-            <div>
+            <div className='monthAndYear'>
                 {selectProps.monthNames[overallDateMonth]} {overallDateYear}
             </div>
             
@@ -62,8 +72,10 @@ const SelectorsModule = ({overallDate, setOverallDate, selectProps}) => {
 
             {/*<RiArrowRightSLine className='dpIcon' onClick={() => handleMonthButtonClick(true)}/>*/}
             <div className='dpArrows'>
-                <RiArrowRightSLine className='dpIcon' onClick={() => handleMonthButtonClick(true)}/>
-                <div>
+                <div className='iconObject' onClick={() => handleMonthButtonClick(true)}>
+                    <RiArrowRightSLine className='dpIcon'/>
+                </div>
+                <div className='iconObject'>
                     <RiArrowRightSLine className='dpIcon double left'/>
                     <RiArrowRightSLine className='dpIcon double right'/>
                 </div>
