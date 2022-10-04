@@ -11,11 +11,21 @@ const SelectorsModule = ({overallDate, setOverallDate, selectProps}) => {
     const handleMonthButtonClick = (operator) => {
         const month = overallDateMonth + (operator ? 1 : -1);
 
-        const yearDistinction = overallDateYear - CURRENT_DATE.getFullYear();
+        // const yearDistinction = overallDateYear - CURRENT_DATE.getFullYear();
+        let monthToDate;
+        let yearToDate;
+        if (month === 12){
+            monthToDate = 0;
+            yearToDate = overallDateYear + 1;
+        }else if(month === -1){
+            monthToDate = 11;
+            yearToDate = overallDateYear -1;
+        }else{
+            monthToDate = month;
+            yearToDate = overallDateYear;
+        }
 
-        if( !( (yearDistinction === 2 && month === 12)
-            || (yearDistinction === -2 && month === -1) ) )
-            setOverallDate({month: month, year: overallDateYear});
+        setOverallDate({month: monthToDate, year: yearToDate})
     };
 
     const handleSelectChange = e => {
@@ -25,7 +35,7 @@ const SelectorsModule = ({overallDate, setOverallDate, selectProps}) => {
         
         setOverallDate({month: month, year: year});
     };
-    console.log(overallDateMonth);
+    console.log(overallDateMonth+" "+overallDateYear);
     return (
         <div className='dpHeader'>
             {/*<div className='dpArrows'>*/}
@@ -41,7 +51,7 @@ const SelectorsModule = ({overallDate, setOverallDate, selectProps}) => {
                     <RiArrowLeftSLine className='dpIcon double left'/>
                     <RiArrowLeftSLine className='dpIcon double right'/>
                 </div>
-                <div className='iconObject' onClick={() => handleMonthButtonClick(true)}>
+                <div className='iconObject' onClick={() => handleMonthButtonClick(false)}>
                     <RiArrowLeftSLine className='dpIcon'/>
                 </div>
             </div>
