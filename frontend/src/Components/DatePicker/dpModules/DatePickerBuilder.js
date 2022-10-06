@@ -1,4 +1,4 @@
-﻿import './DatePickerBuilder.css'
+﻿import './DatePickerBuilder.sass'
 import {useDispatch} from "react-redux";
 import SelectorsModule from "./SelectorsModule/SelectorsModule";
 import DaysModule from "./DaysModule/DaysModule";
@@ -18,7 +18,7 @@ const DatePickerBuilder = ({dateObject, setDateDispatch, dispatchIndex, mainElem
 
     if (state){
         return (
-            <RelativeModal doubleWrap={false} state={true} modalStyle={{zIndex: '1', top: 10+coords.height+'px', left: '5px'}} onClick={e=>e.stopPropagation()}>
+            <RelativeModal doubleWrap={false} state={true} setOpen={} modalStyle={{zIndex: '1', top: 10+coords.height+'px', left: '5px'}} onClick={e=>e.stopPropagation()}>
                 <div className='datepicker'>
                     <SelectorsModule overallDate={overallDate} setOverallDate={setOverallDate} selectProps={selectProps}/>
                     <DaysModule dispatch={dispatch} setDateDispatch={setDateDispatch} dispatchIndex={dispatchIndex}
