@@ -8,6 +8,7 @@ const BulletList = ({openState, bulletState, bulletList, bulletStateDispatch, id
     const bulletClick = e => {
         e.stopPropagation();
         const index = Number(e.target.getAttribute('data-action'));
+        console.log(index);
         dispatch(bulletStateDispatch(index));
     };
     

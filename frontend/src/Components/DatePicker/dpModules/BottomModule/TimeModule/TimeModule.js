@@ -10,7 +10,6 @@ const TimeModule = ({dispatch, dateObject, setDateDispatch, dispatchIndex}) => {
                 value = 0;
             else if(value > 23)
                 value = 23
-            console.log(dateObject.setHours(value));
             dateObject.setHours(value)
             dispatch(setDateDispatch({index: dispatchIndex, date: dateObject.toJSON()}));
         }

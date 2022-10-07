@@ -17,6 +17,15 @@
   vertical-align: middle
   text-align: center
   border: 2px solid transparent
+
+  &.aesthetics
+    opacity: .3
+    cursor: default
+
+  &.practice
+    &:hover
+      background-color: #eaeaea
+      cursor: pointer
   
   &.selected
     border: 2px solid dodgerblue
@@ -29,13 +38,4 @@
       border: 2px solid lightgray
     
     &:hover
-      background-color: #0081ff
-      
-  &.aesthetics
-    opacity: .3
-    cursor: default
-    
-  &.practice
-    &:hover
-      background-color: #eaeaea
-      cursor: pointer
+      background-color: #005bb9

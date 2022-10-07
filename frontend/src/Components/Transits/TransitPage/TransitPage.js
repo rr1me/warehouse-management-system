@@ -146,7 +146,7 @@ const TransitPage = () => {
                 </div>
                 <div className='element'>
                     <div className='name'>Date</div>
-                    <DatePicker incomeDate={current.date} editState={true} dispatchIndex={current.id} id='trDP' setDateDispatch={setTransitPageDate}/>
+                    <DatePicker incomeDate={current.date} editState={edit} dispatchIndex={current.id} id='trDP' setDateDispatch={setTransitPageDate}/>
                 </div>
                 <TransitCargo cargo={cargo} edit={edit} cargoValid={editingCargo} transitType={current.type} cargoToAttach={transitPage.cargoToAttach} sort={sort.cargo}/>
             </div>

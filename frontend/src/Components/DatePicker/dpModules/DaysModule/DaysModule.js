@@ -2,18 +2,18 @@
 import './DaysModule.sass';
 
 const DaysModule = ({selectProps, dispatch, setDateDispatch, dispatchIndex, overallDate, selectedDate, CURRENT_DATE, time}) => {
-
     const monthData = getMonthData(overallDate, time);
 
-    const handleDayClick = date => {
-        console.log(dispatchIndex);
-        dispatch(setDateDispatch({date: date.toJSON(), index: dispatchIndex}));
+    const handleDayClick = e => {
+        const date = e.target.getAttribute('data-date');
+        dispatch(setDateDispatch({date: date, index: dispatchIndex}));
     };
 
     const makeDay = (date, index) => {
         let classname = "day";
         let onClick;
         let body;
+        let data_date;
 
         if (typeof date === 'number'){
             classname += " aesthetics";
@@ -25,12 +25,13 @@ const DaysModule = ({selectProps, dispatch, setDateDispatch, dispatchIndex, over
                 || ( selectedDate === null && date.toDateString() === CURRENT_DATE.toDateString() ))
                 classname += " selected";
 
-            onClick = () => handleDayClick(date);
+            onClick = handleDayClick;
             body = date.getDate();
+            data_date = date.toJSON();
         }
-
+        
         return (
-            <div key={index} className={classname} onClick={onClick}>
+            <div key={index} className={classname} onClick={onClick} data-date={data_date}>
                 {body}
             </div>
         )

@@ -25,9 +25,9 @@ export const DatePicker = memo(({incomeDate, setDateDispatch, dispatchIndex, id,
     
     return (
         <div className='dpContainer'>
-            <div className={'dpInput'+(editState ? '' : ' noEdit')} id={id} onClick={handleInputClick} ref={inputElement}>
+            <div className={'dpInput'+(editState ? '' : ' readonly')} id={id} onClick={handleInputClick} ref={inputElement}>
                 {makeDateForInput(dateObject)}
-                {/*{editState ? <MdEditCalendar className='dpInputIcon' id={id}/> : null}*/}
+                {editState ? <MdEditCalendar className='dpInputIcon' id={id}/> : null}
             </div>
             <DatePickerBuilder dateObject={dateObject} setDateDispatch={setDateDispatch} dispatchIndex={dispatchIndex} mainElement={inputElement} state={dpState}/>
         </div>

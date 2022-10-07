@@ -1,7 +1,6 @@
 ﻿import './SelectorsModule.sass';
 import {RiArrowLeftSLine, RiArrowRightSLine} from "react-icons/ri";
 
-const CURRENT_DATE = new Date();
 
 const SelectorsModule = ({overallDate, setOverallDate, selectProps}) => {
     
@@ -26,15 +25,7 @@ const SelectorsModule = ({overallDate, setOverallDate, selectProps}) => {
 
         setOverallDate({month: monthToDate, year: yearToDate})
     };
-
-    const handleSelectChange = e => {
-        const value = Number(e.target.value);
-        const month = (value < 12 ? value : overallDateMonth);
-        const year = (value > 11 ? value : overallDateYear);
-        
-        setOverallDate({month: month, year: year});
-    };
-    console.log(overallDateMonth+" "+overallDateYear);
+    
     return (
         <div className='dpHeader'>
 

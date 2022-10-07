@@ -10,12 +10,25 @@
     //user-select: none
     //
     //padding: 3px 8px
+    width: auto
+    transition: 350ms
+    
+    border-radius: 5px
+    
+    padding: 10px
+
+    border: 1px solid #2cff2c
     font-family: Tahoma, sans-serif
     cursor: pointer
-    word-break: keep-all
+    //word-break: keep-all
+    
+    &.readonly
+      border: 1px solid rgba(0,0,0,0.1)
+      cursor: default
     
     .dpInputIcon
       padding-left: 10px
       position: relative
       top: 1px
       transform: scale(115%)
+      color: #343434

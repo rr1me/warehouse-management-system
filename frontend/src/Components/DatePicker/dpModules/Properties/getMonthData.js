@@ -1,7 +1,6 @@
 ﻿const getMonthData = (overallDate, time) => {
     const {year, month} = overallDate;
-    const date = new Date(overallDate)
-    
+    const date = new Date(year, month);
     let day = 1;
     
     const daysInMonth = getDaysInMonth(month, year);
