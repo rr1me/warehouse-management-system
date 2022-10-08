@@ -27,7 +27,7 @@ const DatePickerBuilder = ({dateObject, setDateDispatch, dispatchIndex, mainElem
                                 selectedDate={dateObject} time={{hours: dateObject.getHours(), minutes: dateObject.getMinutes()}}/>
                     <hr className='dpSeparator'/>
                     <BottomModule dispatch={dispatch} setDateDispatch={setDateDispatch} dispatchIndex={dispatchIndex}
-                                  dateObject={dateObject}/>
+                                  dateObject={dateObject} setOverallDate={setOverallDate}/>
                 </div>
             </RelativeModal>
         )

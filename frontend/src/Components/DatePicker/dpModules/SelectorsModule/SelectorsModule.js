@@ -26,11 +26,19 @@ const SelectorsModule = ({overallDate, setOverallDate, selectProps}) => {
         setOverallDate({month: monthToDate, year: yearToDate})
     };
     
+    const handleLeftYearButtonClick = () => {
+        setOverallDate({month: overallDateMonth, year: overallDateYear-1})
+    };
+    
+    const handleRightYearButtonClick = () => {
+        setOverallDate({month: overallDateMonth, year: overallDateYear+1})
+    };
+    
     return (
         <div className='dpHeader'>
 
             <div className='dpArrows'>
-                <div className='iconObject'>
+                <div className='iconObject' onClick={handleLeftYearButtonClick}>
                     <RiArrowLeftSLine className='dpIcon double left'/>
                     <RiArrowLeftSLine className='dpIcon double right'/>
                 </div>
@@ -47,7 +55,7 @@ const SelectorsModule = ({overallDate, setOverallDate, selectProps}) => {
                 <div className='iconObject' onClick={() => handleMonthButtonClick(true)}>
                     <RiArrowRightSLine className='dpIcon'/>
                 </div>
-                <div className='iconObject'>
+                <div className='iconObject'  onClick={handleRightYearButtonClick}>
                     <RiArrowRightSLine className='dpIcon double left'/>
                     <RiArrowRightSLine className='dpIcon double right'/>
                 </div>
