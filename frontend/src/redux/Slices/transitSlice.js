@@ -48,7 +48,7 @@ export const updateTransitThunk = createAsyncThunk( //todo added cargo didnt rec
         if (errors.length !== 0) return rejectWithValue(errors);
         
         const transitToUpdate = {...transitPage.transit.object.current, assignedCargo: transitPage.cargo.map(v=>v.object)};
-        
+        // console.log({transit: transitToUpdate, cargoToDelete: cargoToDelete});
         const transitDTO = {transit: transitToUpdate, cargoToDelete: cargoToDelete};
         const r = await updateTransit(transitDTO);
         console.log(r);
@@ -200,13 +200,15 @@ const transitSlice = createSlice({
             console.log(type);
             
             const id = state.transitPage.cargo[index].object.id;
-            if (type === 0){
-                state.cargoToDelete.push(id);
-            }else{
-                const cargo = state.transitPage.cargo[index].object;
-                state.transitPage.cargoToAttach.push(cargo);
-                state.transitPage.cargoToAttach.sort((a,b) => a.id - b.id);
-            }
+            state.cargoToDelete.push(id);
+            console.log(current(state.cargoToDelete));
+            // if (type === 0){
+            //     state.cargoToDelete.push(id);
+            // }else{
+            //     const cargo = state.transitPage.cargo[index].object;
+            //     state.transitPage.cargoToAttach.push(cargo);
+            //     state.transitPage.cargoToAttach.sort((a,b) => a.id - b.id);
+            // }
             state.transitPage.cargo = state.transitPage.cargo.filter(v => v.object.id !== id);
         },
         addEmptyCargoToTransit(state){

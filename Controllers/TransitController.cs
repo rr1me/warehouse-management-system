@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using MoreLinq.Extensions;
 using WebApplication1.Data;
+using WebApplication1.Data.Properties;
 
 namespace WebApplication1.Controllers;
 
@@ -50,22 +52,49 @@ public class TransitController : ControllerBase
     {
         var transit = transitDTO.Transit;
         var cargoToDelete = transitDTO.CargoToDelete;
-        
-        context.Cargoes.UpdateRange(transit.AssignedCargo);
 
-        context.Transits.Update(transit);
-        
-        transit.CargoTransits.ForEach(x =>
+        // context.Cargoes.UpdateRange(transit.AssignedCargo);
+        //
+        // context.Transits.Update(transit);
+
+        if (!cargoToDelete.IsNullOrEmpty() && transit.Type == TransitType.Acceptance)
         {
-            if (context.CargoTransits.Any(y => y == x)) context.Entry(x).State = EntityState.Unchanged; //todo adding same relation bug is won?
-        });
-        
-        if (!cargoToDelete.IsNullOrEmpty())
-        {
+            
             var rangeToDelete = cargoToDelete.Select(x => new Cargo(x)).ToList();
             context.Cargoes.RemoveRange(rangeToDelete);
             Console.WriteLine("deleted");
+
+            // if (transit.Type == TransitType.Acceptance)
+            // {
+            //     var rangeToDelete = cargoToDelete.Select(x => new Cargo(x)).ToList();
+            //     context.Cargoes.RemoveRange(rangeToDelete);
+            //     Console.WriteLine("deleted");                
+            // }
+            // else
+            // {
+            //     context.CargoTransits.RemoveRange(cargoToDelete.Select(x => new CargoTransit(transit.Id, x)));
+            //     Console.WriteLine("detached");
+            // }
         }
+
+        // var cargoToDetach = context.CargoTransits.Where(x => x.Transit == transit && cargoToDelete.Any(y => y == x.CargoId));
+        // context.CargoTransits.RemoveRange(cargoToDelete.Select(x => new CargoTransit(transit.Id, x)));
+        // context.Cargoes.UpdateRange(transit.AssignedCargo);
+        // Console.WriteLine(transit.Type == TransitType.Dispatching);
+        
+        context.Transits.Update(transit);
+
+        var cargoTransits = context.CargoTransits.Where(x => x.Transit == transit);
+
+        cargoTransits.ForEach(x => //todo bug, object instance while trying to detach cargo from dispatching transit
+        {
+            // Console.WriteLine(cargoToDelete.Any(z => z == x.CargoId));
+            if (!cargoToDelete.IsNullOrEmpty() && transit.Type == TransitType.Dispatching && cargoToDelete.Any(z => z == x.CargoId))
+            {
+                context.Entry(x).State = EntityState.Deleted;
+            }
+            else if (transit.CargoTransits.Any(y => y == x)) context.Entry(x).State = EntityState.Unchanged; //todo adding same relation bug is won?
+        });
 
         context.ChangeTracker.DetectChanges();
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
@@ -96,7 +125,7 @@ public class TransitController : ControllerBase
     [HttpDelete("delete/{id}")]
     public IActionResult DeleteOneTransit(int id)
     {
-        var transit = context.Transits.Include(x => x.AssignedCargo).First(x => x.Id == id);
+        var transit = context.Transits.Include(x => x.AssignedCargo).First(x => x.Id == id); //todo what? why dont i just get whole object instead of just id?
         Console.WriteLine(transit);
 
         if (transit.Type == 0)
