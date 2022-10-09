@@ -37,7 +37,15 @@ const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach, sort
         e.stopPropagation();
     };
     
-    const filterList = ['By ID', 'By StickerID'];
+    const attachList = cargoToAttach.length > 0 ? cargoToAttach.map((v, i) => {
+        return (
+            <WideLabel key={i} clickable={true} onClick={() => handleWideLabelClick(v.id)}>
+                <WideLabelItem name='id' width='25px'>{v.id}</WideLabelItem>
+                <WideLabelItem name='Sticker id' width='50px'>{v.stickerId}</WideLabelItem>
+                <WideLabelItem name='Description' width='50px'>{v.description ? v.description : 'No'}</WideLabelItem>
+            </WideLabel>
+        )
+    }) : 'No cargo to attach';
     
     return (
         <div className='fullRow'>
@@ -58,15 +66,7 @@ const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach, sort
                                     <button className='btn apply table' onClick={handleAddNewCargoButton}>Add new</button>
                                     <RelativeModal doubleWrap={false} id={'cargoToAttach'} state={cargoToAttachModal} setOpen={setCargoToAttachModal} modalStyle={{top: '5px', right: '315px'}}>
                                         <div className='cargoToAttachList'>
-                                            {cargoToAttach.map((v, i) => {
-                                                return (
-                                                    <WideLabel key={i} clickable={true} onClick={() => handleWideLabelClick(v.id)}>
-                                                        <WideLabelItem name='id' width='25px'>{v.id}</WideLabelItem>
-                                                        <WideLabelItem name='Sticker id' width='50px'>{v.stickerId}</WideLabelItem>
-                                                        <WideLabelItem name='Description' width='50px'>{v.description ? v.description : 'No'}</WideLabelItem>
-                                                    </WideLabel>
-                                                )
-                                            })}
+                                            {attachList}
                                         </div>
                                     </RelativeModal>
                                 </div>
@@ -85,6 +85,8 @@ const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach, sort
 };
 
 export default TransitCargo;
+
+const filterList = ['By ID', 'By StickerID'];
 
 const cargoHeader = [
     'Id',

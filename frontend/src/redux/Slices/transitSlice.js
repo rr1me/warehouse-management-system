@@ -258,7 +258,7 @@ const transitSlice = createSlice({
             state.transits[index] = transit;
             state.transitPage = {transit: {object: {previous: transit, current: transit}, states: {edit: false}, errors: {nullClient: false, editingCargo: false}}, cargo: transit.assignedCargo.map(v => {
                     return {object: v, states: {edit: false}, errors: {nullSticker: false, lettersInSticker: false}}
-                }), cargoToAttach: state.cargoToAttach};
+                }), cargoToAttach: cargoToAttach};
             
             state.cargoToDelete = [];
             state.cargoToAttach = cargoToAttach;
