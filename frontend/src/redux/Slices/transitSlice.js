@@ -152,6 +152,8 @@ const transitSlice = createSlice({
             const isAnyCargoEditing = state.transitPage.cargo.some(v => {
                 return v.states.edit;
             });
+
+            state.transitPage.cargoToAttach = state.cargoToAttach;
             
             if (JSON.stringify(previous) !== JSON.stringify(current) || JSON.stringify(cargo) !== JSON.stringify(previous.assignedCargo)){
                 state.transitPage.transit.object.current = previous;

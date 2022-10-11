@@ -65,10 +65,10 @@ public class TransitController : ControllerBase
 
         var cargoTransits = context.CargoTransits.Where(x => x.Transit == transit);
 
-        cargoTransits.ForEach(x => //todo bug, object instance while trying to detach cargo from dispatching transit
+        cargoTransits.ForEach(x =>
         {
             if (!cargoToDelete.IsNullOrEmpty() && transit.Type == TransitType.Dispatching && cargoToDelete.Any(z => z == x.CargoId)) context.Entry(x).State = EntityState.Deleted;
-            else if (transit.CargoTransits.Any(y => y == x)) context.Entry(x).State = EntityState.Unchanged; //todo adding same relation bug is won?
+            else if (transit.CargoTransits.Any(y => y == x)) context.Entry(x).State = EntityState.Unchanged;
         });
 
         context.ChangeTracker.DetectChanges();
