@@ -74,7 +74,12 @@ public class TransitController : ControllerBase
         context.ChangeTracker.DetectChanges();
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
         context.SaveChanges();
-        return Ok(context.Cargoes.Include(x => x.Transits).Where(x => x.Transits.Count == 1).ToList());
+
+        var responseObject = new AddTransitDTO();
+        responseObject.Transit = transit;
+        responseObject.CargoToAttach = context.Cargoes.Include(x => x.Transits).Where(x => x.Transits.Count == 1).ToList();
+
+        return Ok(responseObject);
     }
 
     [HttpPut("add")]

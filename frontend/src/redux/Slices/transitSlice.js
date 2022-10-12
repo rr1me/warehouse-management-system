@@ -51,9 +51,13 @@ export const updateTransitThunk = createAsyncThunk( //todo added cargo didnt rec
         // console.log({transit: transitToUpdate, cargoToDelete: cargoToDelete});
         const transitDTO = {transit: transitToUpdate, cargoToDelete: cargoToDelete};
         const r = await updateTransit(transitDTO);
+        
         console.log(r);
         
-        return {transit: transitToUpdate, cargoToAttach: r.data};
+        const {transit, cargoToAttach} = r.data;
+        transit.assignedCargo.sort((a,b) => (a.id - b.id)); //todo rethink
+        
+        return {transit: transit, cargoToAttach: cargoToAttach};
     }
 );
 
@@ -175,12 +179,16 @@ const transitSlice = createSlice({
         },
         cancelTransitCargoEdit(state, action){
             const index = action.payload;
-            const {transit:{object: {current}}, cargo} = state.transitPage;
+            const {transit:{object}, cargo} = state.transitPage;
             
-            if (JSON.stringify(current.assignedCargo) !== JSON.stringify(cargo.map(v=>v.object)))
-                state.transitPage.cargo[index].object = current.assignedCargo[index]
-            
-            state.transitPage.cargo[index].states.edit = false;
+            if (cargo[index].object.id !== 0){
+                if (JSON.stringify(object.current.assignedCargo) !== JSON.stringify(cargo.map(v=>v.object)))
+                    state.transitPage.cargo[index].object = current.assignedCargo[index]
+
+                state.transitPage.cargo[index].states.edit = false;
+            }else{
+                state.transitPage.cargo = state.transitPage.cargo.filter((v, i) => i !== index)
+            }
         },
         applyTransitCargoEdit(state, action){
             const index = action.payload;
@@ -204,6 +212,9 @@ const transitSlice = createSlice({
             const id = state.transitPage.cargo[index].object.id;
             state.cargoToDelete.push(id);
             console.log(current(state.cargoToDelete));
+            // if (id !== 0){
+            //     state.cargoToDelete.push(id);
+            // }
             // if (type === 0){
             //     state.cargoToDelete.push(id);
             // }else{
