@@ -56,10 +56,9 @@ const TransitPage = () => {
             return;
         }
         
-        if (current.id === 0) {
+        if (current.id === 0)
             dispatch(addTransitThunk()).then(r => navigate('../transits/'+r.payload.transit.id));
-        }
-        else 
+        else
             dispatch(updateTransitThunk());
         
     };

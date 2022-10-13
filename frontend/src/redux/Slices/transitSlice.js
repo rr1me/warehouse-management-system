@@ -26,11 +26,9 @@ export const addTransitThunk = createAsyncThunk( //todo decide what to do with c
         const {transitPage} = getState().transitSlice;
 
         const errors = validateTransit(transitPage);
-        console.log(errors.length);
         if (errors.length !== 0) return rejectWithValue(errors);
         
         let transitToAdd = {...transitPage.transit.object.current, assignedCargo: transitPage.cargo.map(v=>v.object)};
-        
         const r = await addTransit(transitToAdd);
         console.log(r);
         
@@ -41,22 +39,22 @@ export const addTransitThunk = createAsyncThunk( //todo decide what to do with c
 export const updateTransitThunk = createAsyncThunk( //todo added cargo didnt receiving theirs new ids
     'updateTransit',
     async (_, {getState, rejectWithValue}) => {
-        const {transitPage, cargoToDelete} = getState().transitSlice;
+        const {transitPage, cargoToDelete, sort} = getState().transitSlice;
         
         const errors = validateTransit(transitPage);
-        console.log(errors.length);
         if (errors.length !== 0) return rejectWithValue(errors);
         
         const transitToUpdate = {...transitPage.transit.object.current, assignedCargo: transitPage.cargo.map(v=>v.object)};
-        // console.log({transit: transitToUpdate, cargoToDelete: cargoToDelete});
+
+        const previous = {...transitPage.transit.object.previous, assignedCargo: Array.from(transitPage.transit.object.previous.assignedCargo).sort(cargoSorts[sort.cargo])};
+        if (JSON.stringify(previous) === JSON.stringify(transitToUpdate)) return rejectWithValue('same objects');
+        
         const transitDTO = {transit: transitToUpdate, cargoToDelete: cargoToDelete};
         const r = await updateTransit(transitDTO);
-        
         console.log(r);
         
         const {transit, cargoToAttach} = r.data;
-        transit.assignedCargo.sort((a,b) => (a.id - b.id)); //todo rethink
-        
+        transit.assignedCargo.sort(cargoSorts[sort.cargo]);
         return {transit: transit, cargoToAttach: cargoToAttach};
     }
 );
@@ -242,11 +240,12 @@ const transitSlice = createSlice({
             const sortType = action.payload;
             
             state.sort.cargo = sortType;
-            if (sortType === 0){
-                state.transitPage.cargo.sort((a,b) => a.object.id - b.object.id);
-            }else{
-                state.transitPage.cargo.sort((a,b) => a.object.stickerId - b.object.stickerId);
-            }
+            // if (sortType === 0){
+            //     state.transitPage.cargo.sort((a,b) => a.object.id - b.object.id);
+            // }else{
+            //     state.transitPage.cargo.sort((a,b) => a.object.stickerId - b.object.stickerId);
+            // }
+            state.transitPage.cargo.sort(cargoObjectSorts[sortType]);
         },
         setTransitSort(state, action){
             const type = action.payload;
@@ -294,6 +293,11 @@ const transitSlice = createSlice({
         }).addCase(updateTransitThunk.rejected, (state, action) => {
             const errors = action.payload;
             
+            if (errors === 'same objects') {
+                state.transitPage.transit.states.edit = false;
+                return;
+            }
+            
             errors.map(v => {
                 state.transitPage.transit.errors[v] = true;
             })
@@ -314,4 +318,14 @@ const transitSorts = [
         return a.status - b.status
     },
     (a,b) => new Date(a.date) - new Date(b.date)
+]
+
+const cargoSorts = [
+    (a,b) => a.id - b.id,
+    (a,b) => a.stickerId - b.stickerId
+]
+
+const cargoObjectSorts = [
+    (a,b) => a.object.id - b.object.id,
+    (a,b) => a.object.stickerId - b.object.stickerId
 ]
