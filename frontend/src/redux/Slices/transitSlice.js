@@ -205,21 +205,20 @@ const transitSlice = createSlice({
         sendCargoToDelete(state, action){
             const index = action.payload;
             const type = state.transitPage.transit.object.current.type;
-            console.log(type);
             
             const id = state.transitPage.cargo[index].object.id;
             state.cargoToDelete.push(id);
-            console.log(current(state.cargoToDelete));
-            // if (id !== 0){
-            //     state.cargoToDelete.push(id);
-            // }
-            // if (type === 0){
-            //     state.cargoToDelete.push(id);
-            // }else{
-            //     const cargo = state.transitPage.cargo[index].object;
-            //     state.transitPage.cargoToAttach.push(cargo);
-            //     state.transitPage.cargoToAttach.sort((a,b) => a.id - b.id);
-            // }
+            
+            if (type === 0){
+                state.cargoToDelete.push(id);
+            }else if(type !== 0 && state.cargoToAttach.some(x => x.id === id)){
+                const sortType = state.sort.cargo;
+                const cargo = state.transitPage.cargo[index].object;
+                
+                state.transitPage.cargoToAttach.push(cargo);
+                state.transitPage.cargoToAttach.sort(cargoSorts[sortType]);
+            }
+            
             state.transitPage.cargo = state.transitPage.cargo.filter(v => v.object.id !== id);
         },
         addEmptyCargoToTransit(state){
@@ -240,11 +239,6 @@ const transitSlice = createSlice({
             const sortType = action.payload;
             
             state.sort.cargo = sortType;
-            // if (sortType === 0){
-            //     state.transitPage.cargo.sort((a,b) => a.object.id - b.object.id);
-            // }else{
-            //     state.transitPage.cargo.sort((a,b) => a.object.stickerId - b.object.stickerId);
-            // }
             state.transitPage.cargo.sort(cargoObjectSorts[sortType]);
         },
         setTransitSort(state, action){
