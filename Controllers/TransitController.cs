@@ -102,20 +102,18 @@ public class TransitController : ControllerBase
         return context.Cargoes.Where(x => x.Transits.Exists(y => y.Id == id)).ToList();
     }
 
-    [HttpDelete("delete/{id}")]
-    public IActionResult DeleteOneTransit(int id)
+    [HttpPost("delete")]
+    public IActionResult DeleteOneTransit(Transit transit)
     {
-        var transit = context.Transits.Include(x => x.AssignedCargo).First(x => x.Id == id); //todo what? why dont i just get whole object instead of just id?
-        Console.WriteLine(transit);
+        context.Transits.Attach(transit);
 
         if (transit.Type == 0)
         {
-            var transitAssignedCargo = transit.AssignedCargo;
-            var isAnyCargoAttachedToDispatching = transitAssignedCargo.Any(x => x.Transits.Count == 2);
+            var isAnyCargoAttachedToDispatching = transit.AssignedCargo.Any(x => x.Transits.Count == 2);
             if (isAnyCargoAttachedToDispatching)
                 return Problem("some cargo is attached to dispatching");
             
-            context.Cargoes.RemoveRange(transitAssignedCargo);
+            context.Cargoes.RemoveRange(transit.AssignedCargo);
         }
         else
         {

@@ -75,9 +75,12 @@ const validateTransit = transitPage => {
 
 export const deleteTransitThunk = createAsyncThunk(
     'deleteTransit',
-    async (id: number) => {
+    async (id: number, {getState}) => {
+        const {transitPage} = getState().transitSlice;
+
+        const transitToDelete = {...transitPage.transit.object.current, assignedCargo: transitPage.cargo.map(v=>v.object)};
         
-        const r = await deleteTransit(id);
+        const r = await deleteTransit(transitToDelete);
         console.log(r);
         return {id: id, cargoToAttach: r.data};
     }
@@ -271,7 +274,7 @@ const transitSlice = createSlice({
         }).addCase(deleteTransitThunk.fulfilled, (state, action) => {
             const {id, cargoToAttach} = action.payload;
             
-            state.transits = state.transits.filter(v => {return v.id !== id});
+            state.transits = state.transits.filter(v => v.id !== id);
             state.cargoToAttach = cargoToAttach;
         }).addCase(addTransitThunk.fulfilled, (state, action) => {
             const {transit, cargoToAttach} = action.payload;

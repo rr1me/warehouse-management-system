@@ -10,6 +10,6 @@ export const addTransit = transit => axios.put('/api/transits/add', transit).cat
 
 export const getAssignedCargo = id => axios.get('/api/transits/getCargo/'+id).catch(catcher);
 
-export const deleteTransit = id => axios.delete('/api/transits/delete/'+id).catch(catcher);
+export const deleteTransit = transit => axios.post('/api/transits/delete/', transit).catch(catcher);
 
 const catcher = v => {throw v};
