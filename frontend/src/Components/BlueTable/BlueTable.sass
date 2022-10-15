@@ -41,6 +41,21 @@
       
       align-content: center
       
+      display: flex
+      justify-content: space-between
+      
+      .btIconBlock
+        display: flex
+        flex-direction: row
+      .btIcon
+        transform: scalex(90%)
+        position: relative
+        top: 2px
+        &.inverted
+          transform: rotate(180deg) scaleX(90%)
+          position: relative
+          right: 4px
+      
   .trCargoHeader, .row
     //font-family: "Poppins Medium", serif
     font-family: Poppins, sans-serif

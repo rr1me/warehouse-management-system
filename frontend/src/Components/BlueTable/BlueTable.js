@@ -1,8 +1,10 @@
 ﻿import './BlueTable.sass'
 
+import {HiOutlineArrowDown} from "react-icons/hi";
+
 import {useNavigate} from "react-router-dom";
 
-const BlueTable = ({header, children, gridTemplate, clickable, lightStyle}) => {
+const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort, setSortDispatch}) => { //todo BiDotsVerticalRounded HiOutlineArrowsUpDown
     
     const navigate = useNavigate()
     
@@ -21,6 +23,15 @@ const BlueTable = ({header, children, gridTemplate, clickable, lightStyle}) => {
     
     const getHeaderStyle = () => gridTemplate + ' trCargoHeader ' + getStyle();
     
+    const UpDownArrows = () => {
+        return (
+            <div className='btIconBlock'>
+                <HiOutlineArrowDown className='btIcon'/>
+                <HiOutlineArrowDown className='btIcon inverted'/>
+            </div>
+        )
+    }
+    
     return (
         <div className={'blueTable '+getStyle()}>
             <div className={getHeaderStyle()}>
@@ -28,6 +39,8 @@ const BlueTable = ({header, children, gridTemplate, clickable, lightStyle}) => {
                     return (
                         <div className={'item '+getStyle()} key={index}>
                             {value}
+                            {/*<HiOutlineArrowDown className='btIcon'/>*/}
+                            <UpDownArrows/>
                         </div>
                     )
                 })}
