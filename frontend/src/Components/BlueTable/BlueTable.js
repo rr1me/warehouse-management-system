@@ -3,9 +3,11 @@
 import {HiOutlineArrowDown} from "react-icons/hi";
 
 import {useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
 
 const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort, setSortDispatch}) => { //todo BiDotsVerticalRounded HiOutlineArrowsUpDown
     
+    const dispatch = useDispatch();
     const navigate = useNavigate()
     
     const handleRowClick = id => {
@@ -23,14 +25,23 @@ const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort,
     
     const getHeaderStyle = () => gridTemplate + ' trCargoHeader ' + getStyle();
     
-    const UpDownArrows = () => {
-        return (
-            <div className='btIconBlock'>
+    const handleArrowClick = index => {
+        // const index = Number(e.target.getAttribute('data-index'));
+        console.log(index, sort);
+        // console.log(sort);
+        const newVar = index === Math.abs(sort) && isNegative(sort) ? index : -index;
+        console.log(newVar);
+        const toDispatch = setSortDispatch(newVar);
+        dispatch(toDispatch);
+    };
+    
+    const UpDownArrows = ({index}) => index === Math.abs(sort) ? <HiOutlineArrowDown className={'btIcon' + (isNegative(sort) ? ' inverted' : '')} onClick={() => handleArrowClick(index)}/>
+        : (
+            <div className='btIconBlock' onClick={() => handleArrowClick(index)}>
                 <HiOutlineArrowDown className='btIcon'/>
-                <HiOutlineArrowDown className='btIcon inverted'/>
+                <HiOutlineArrowDown className='btIcon inverted positioned'/>
             </div>
-        )
-    }
+        );
     
     return (
         <div className={'blueTable '+getStyle()}>
@@ -40,7 +51,7 @@ const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort,
                         <div className={'item '+getStyle()} key={index}>
                             {value}
                             {/*<HiOutlineArrowDown className='btIcon'/>*/}
-                            <UpDownArrows/>
+                            <UpDownArrows index={index}/>
                         </div>
                     )
                 })}
@@ -57,3 +68,11 @@ const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort,
 };
 
 export default BlueTable;
+
+const isNegative = number => {
+    if (number === 0){
+        return Object.is(number, -0);
+    }else{
+        return number < 0
+    }
+}

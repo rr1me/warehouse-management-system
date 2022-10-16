@@ -246,7 +246,7 @@ const transitSlice = createSlice({
         },
         setTransitSort(state, action){
             const type = action.payload;
-            
+            console.log(type);
             state.transits.sort(transitSorts[type])
             state.sort.transit = type;
         }
