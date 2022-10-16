@@ -1,5 +1,7 @@
 ﻿import {createAsyncThunk, createSlice, current} from "@reduxjs/toolkit";
 import {addTransit, deleteTransit, getTransits, updateTransit} from "../../Services/transitService";
+import {isNegative} from "../../Components/BlueTable/BlueTable";
+import {trHeader} from "../../Components/Transits/Transits";
 
 export const thunkTransits = createAsyncThunk(
     'getTransits',
@@ -246,8 +248,13 @@ const transitSlice = createSlice({
         },
         setTransitSort(state, action){
             const type = action.payload;
-            console.log(type);
-            state.transits.sort(transitSorts[type])
+            const s = filterVars[Math.abs(type)];
+            console.log(s);
+            state.transits.sort((a,b) => {
+                console.log(a['commentary']);
+                const func = s !== 'date' ? a[s] - b[s] : new Date(a[s]) - new Date(b[s]);
+                return isNegative(type) ? -func : func;
+            })
             state.sort.transit = type;
         }
     },
@@ -310,10 +317,7 @@ export default transitSlice.reducer;
 const transitSorts = [
     (a,b) => a.id - b.id,
     (a,b) => a.type - b.type,
-    (a,b) => {
-        console.log(a.status);
-        return a.status - b.status
-    },
+    (a,b) => a.status - b.status,
     (a,b) => new Date(a.date) - new Date(b.date)
 ]
 
@@ -325,4 +329,14 @@ const cargoSorts = [
 const cargoObjectSorts = [
     (a,b) => a.object.id - b.object.id,
     (a,b) => a.object.stickerId - b.object.stickerId
+];
+
+const filterVars = [
+    'id',
+    'type',
+    'status',
+    'client',
+    'date',
+    'additionalTasks',
+    'commentary'
 ]

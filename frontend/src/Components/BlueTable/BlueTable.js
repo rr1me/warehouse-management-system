@@ -25,15 +25,7 @@ const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort,
     
     const getHeaderStyle = () => gridTemplate + ' trCargoHeader ' + getStyle();
     
-    const handleArrowClick = index => {
-        // const index = Number(e.target.getAttribute('data-index'));
-        console.log(index, sort);
-        // console.log(sort);
-        const newVar = index === Math.abs(sort) && isNegative(sort) ? index : -index;
-        console.log(newVar);
-        const toDispatch = setSortDispatch(newVar);
-        dispatch(toDispatch);
-    };
+    const handleArrowClick = index => dispatch(setSortDispatch(index === Math.abs(sort) && !isNegative(sort) ? -index : index));
     
     const UpDownArrows = ({index}) => index === Math.abs(sort) ? <HiOutlineArrowDown className={'btIcon' + (isNegative(sort) ? ' inverted' : '')} onClick={() => handleArrowClick(index)}/>
         : (
@@ -50,7 +42,6 @@ const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort,
                     return (
                         <div className={'item '+getStyle()} key={index}>
                             {value}
-                            {/*<HiOutlineArrowDown className='btIcon'/>*/}
                             <UpDownArrows index={index}/>
                         </div>
                     )
@@ -69,7 +60,7 @@ const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort,
 
 export default BlueTable;
 
-const isNegative = number => {
+export const isNegative = number => {
     if (number === 0){
         return Object.is(number, -0);
     }else{
