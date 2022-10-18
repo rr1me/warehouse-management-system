@@ -11,12 +11,9 @@ import {useState} from "react";
 import RelativeModal from "../../../RelativeModal/RelativeModal";
 import WideLabel, {WideLabelItem} from "../../../WideLabel/WideLabel";
 import Error from "../../../Error/Error";
-import BulletList from "../../../Properties/BulletList/BulletList";
 
 const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach, sort}) => {
     const [cargoToAttachModal, setCargoToAttachModal] = useState(false);
-    
-    const [filterModal, setFilterModal] = useState(false);
     
     const dispatch = useDispatch();
     
@@ -30,11 +27,6 @@ const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach, sort
     
     const handleWideLabelClick = id => {
         dispatch(attachCargoToTransit(id));
-    };
-    
-    const handleFilterButton = e => {
-        setFilterModal(value => !value);
-        e.stopPropagation();
     };
     
     const attachList = cargoToAttach.length > 0 ? cargoToAttach.map((v, i) => {
@@ -56,24 +48,16 @@ const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach, sort
                     <div className={'trCargoControls' + (edit ? ' block' : ' def')}>
                         {edit ?
                             <>
-                                <div>
-                                    <button className='btn apply table' onClick={handleFilterButton}>Filter</button>
-                                    <RelativeModal doubleWrap={false} id={'transitCargoFilterModal'} state={filterModal} setOpen={setFilterModal} modalStyle={{top: '5px'}}>
-                                        <BulletList bulletList={filterList} bulletState={sort} bulletStateDispatch={setTransitPageCargoSort}/>
-                                    </RelativeModal>
-                                </div>
-                                <div>
-                                    <button className='btn apply table' onClick={handleAddNewCargoButton}>Add new</button>
-                                    <RelativeModal doubleWrap={false} id={'cargoToAttach'} state={cargoToAttachModal} setOpen={setCargoToAttachModal} modalStyle={{top: '5px', right: '315px'}}>
-                                        <div className='cargoToAttachList'>
-                                            {attachList}
-                                        </div>
-                                    </RelativeModal>
-                                </div>
+                                <button className='btn apply table' onClick={handleAddNewCargoButton}>Add new</button>
+                                <RelativeModal doubleWrap={false} id={'cargoToAttach'} state={cargoToAttachModal} setOpen={setCargoToAttachModal} modalStyle={{top: '5px', right: '315px'}}>
+                                    <div className='cargoToAttachList'>
+                                        {attachList}
+                                    </div>
+                                </RelativeModal>
                             </>
                             : null}
                     </div>
-                    <BlueTable header={cargoHeader} gridTemplate='trCargoGridTemplate' clickable={false} lightStyle={true}>
+                    <BlueTable header={cargoHeader} gridTemplate='trCargoGridTemplate' clickable={false} lightStyle={true} sort={sort} setSortDispatch={setTransitPageCargoSort} actionRow={true}>
                         {cargo.map((value, index) => {
                             return {element: <TransitCargoRow cargo={value.object} states={value.states} errors={value.errors} index={index} globalEdit={edit}/> , id: index};
                         })}
@@ -85,8 +69,6 @@ const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach, sort
 };
 
 export default TransitCargo;
-
-const filterList = ['By ID', 'By StickerID'];
 
 const cargoHeader = [
     'Id',

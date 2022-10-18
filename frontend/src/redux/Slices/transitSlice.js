@@ -241,18 +241,36 @@ const transitSlice = createSlice({
             state.transitPage.cargoToAttach = state.transitPage.cargoToAttach.filter(v => v.id !== id); //todo make previous and current for cancellation or leave it like global list and put temporary values in state.transitPage
         },
         setTransitPageCargoSort(state, action){
-            const sortType = action.payload;
-            
-            state.sort.cargo = sortType;
-            state.transitPage.cargo.sort(cargoObjectSorts[sortType]);
-        },
-        setTransitSort(state, action){
             const type = action.payload;
-            const s = filterVars[Math.abs(type)];
-            console.log(s);
+            const s = cargoLayout[Math.abs(type)];
+            state.transitPage.cargo.sort((a,b) => {
+                const aObj = a.object[s];
+                const bObj = b.object[s];
+                
+                let func;
+                if (s !== 'description') func = aObj - bObj;
+                else{
+                    if (aObj.toLowerCase() < bObj.toLowerCase()) func = -1;
+                    else if (aObj.toLowerCase() > bObj.toLowerCase()) func = 1;
+                    else func = 0;
+                }
+                return isNegative(type) ? -func : func;
+            });
+            state.sort.cargo = type;
+        },
+        setTransitSort(state, action){ //todo what to fuck is that
+            const type = action.payload;
+            const s = transitLayout[Math.abs(type)];
             state.transits.sort((a,b) => {
-                console.log(a['commentary']);
-                const func = s !== 'date' ? a[s] - b[s] : new Date(a[s]) - new Date(b[s]);
+                let func;
+                if(s !== 'client' && s !== 'commentary'){
+                    if(s === 'date') func = new Date([a[s]]) - new Date(b[s]);
+                    else func = a[s] - b[s];
+                }else{
+                    if(a[s].toLowerCase() < b[s].toLowerCase()) func = -1;
+                    else if(a[s].toLowerCase() > b[s].toLowerCase()) func = 1;
+                    else func = 0;
+                }
                 return isNegative(type) ? -func : func;
             })
             state.sort.transit = type;
@@ -331,7 +349,7 @@ const cargoObjectSorts = [
     (a,b) => a.object.stickerId - b.object.stickerId
 ];
 
-const filterVars = [
+const transitLayout = [
     'id',
     'type',
     'status',
@@ -339,4 +357,10 @@ const filterVars = [
     'date',
     'additionalTasks',
     'commentary'
+];
+
+const cargoLayout = [
+    'id',
+    'stickerId',
+    'description'
 ]

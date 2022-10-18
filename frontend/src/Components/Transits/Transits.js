@@ -32,20 +32,17 @@ const Transits = () => {
     const handleAddNewAcceptanceClick = () => navigate('/transits/add?type=0');
     const handleAddNewDispatchingClick = () => navigate('/transits/add?type=1');
     
-    const handleFilterClick = e => {
-        e.stopPropagation();
-        setFilterModal(value => !value);
-    }
+    // const handleFilterClick = e => {
+    //     e.stopPropagation();
+    //     setFilterModal(value => !value);
+    // }
     
     return (
         <div className='transitContainer'>
             <div className='transitHeader'>
                 <div className='title light'>Transits</div>
                 <div>
-                    <div className='titleButtons'>
-                        <button className="btn apply table" onClick={handleFilterClick}>Filter</button>
-                        <button className="btn apply table" onClick={handleAddNewModalClick}>Add new</button>
-                    </div>
+                    <button className="btn apply table" onClick={handleAddNewModalClick}>Add new</button>
                     <RelativeModal doubleWrap={false} id={'transitCargoFilterModal'} state={filterModal} setOpen={setFilterModal} modalStyle={{top: '5px', right: '55px'}}>
                         <BulletList bulletList={filterList} bulletState={sort.transit} bulletStateDispatch={setTransitSort}/>
                     </RelativeModal>

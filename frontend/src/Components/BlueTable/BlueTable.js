@@ -5,7 +5,7 @@ import {HiOutlineArrowDown} from "react-icons/hi";
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 
-const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort, setSortDispatch}) => { //todo BiDotsVerticalRounded HiOutlineArrowsUpDown
+const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort, setSortDispatch, actionRow}) => { //todo BiDotsVerticalRounded HiOutlineArrowsUpDown
     
     const dispatch = useDispatch();
     const navigate = useNavigate()
@@ -42,7 +42,7 @@ const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort,
                     return (
                         <div className={'item '+getStyle()} key={index}>
                             {value}
-                            <UpDownArrows index={index}/>
+                            {actionRow && header.length-1 === index ? null : <UpDownArrows index={index}/>}
                         </div>
                     )
                 })}
