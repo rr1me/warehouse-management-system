@@ -4,9 +4,10 @@ import {HiOutlineArrowDown} from "react-icons/hi";
 
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
+import {TiArrowSortedDown, TiArrowSortedUp, TiArrowUnsorted} from "react-icons/ti";
 
-const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort, setSortDispatch, actionRow}) => { //todo BiDotsVerticalRounded HiOutlineArrowsUpDown
-    
+const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort, setSortDispatch, actionColumn}) => { //actionColumn
+    console.log(actionColumn);
     const dispatch = useDispatch();
     const navigate = useNavigate()
     
@@ -35,6 +36,15 @@ const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort,
             </div>
         );
     
+    const SortArrows = ({index, length}) => {
+        if (actionColumn && length === index) return null;
+        
+        if (index === Math.abs(sort)){
+            return isNegative(sort) ? <TiArrowSortedUp className='btIcon' onClick={() => handleArrowClick(index)}/> : <TiArrowSortedDown className='btIcon' onClick={() => handleArrowClick(index)}/>
+        }
+        return <TiArrowUnsorted className='btIcon' onClick={() => handleArrowClick(index)}/>
+    }
+    
     return (
         <div className={'blueTable '+getStyle()}>
             <div className={getHeaderStyle()}>
@@ -42,7 +52,8 @@ const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort,
                     return (
                         <div className={'item '+getStyle()} key={index}>
                             {value}
-                            {actionRow && header.length-1 === index ? null : <UpDownArrows index={index}/>}
+                            {/*{actionColumn && header.length-1 === index ? null : <UpDownArrows index={index}/>}*/}
+                            <SortArrows index={index} length={header.length-1}/>
                         </div>
                     )
                 })}
