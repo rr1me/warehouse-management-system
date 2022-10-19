@@ -1,13 +1,10 @@
 ﻿import './BlueTable.sass'
 
-import {HiOutlineArrowDown} from "react-icons/hi";
-
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {TiArrowSortedDown, TiArrowSortedUp, TiArrowUnsorted} from "react-icons/ti";
 
-const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort, setSortDispatch, actionColumn}) => { //actionColumn
-    console.log(actionColumn);
+const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort, setSortDispatch, actionColumn}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
     
@@ -28,14 +25,6 @@ const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort,
     
     const handleArrowClick = index => dispatch(setSortDispatch(index === Math.abs(sort) && !isNegative(sort) ? -index : index));
     
-    const UpDownArrows = ({index}) => index === Math.abs(sort) ? <HiOutlineArrowDown className={'btIcon' + (isNegative(sort) ? ' inverted' : '')} onClick={() => handleArrowClick(index)}/>
-        : (
-            <div className='btIconBlock' onClick={() => handleArrowClick(index)}>
-                <HiOutlineArrowDown className='btIcon'/>
-                <HiOutlineArrowDown className='btIcon inverted positioned'/>
-            </div>
-        );
-    
     const SortArrows = ({index, length}) => {
         if (actionColumn && length === index) return null;
         
@@ -52,7 +41,6 @@ const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort,
                     return (
                         <div className={'item '+getStyle()} key={index}>
                             {value}
-                            {/*{actionColumn && header.length-1 === index ? null : <UpDownArrows index={index}/>}*/}
                             <SortArrows index={index} length={header.length-1}/>
                         </div>
                     )

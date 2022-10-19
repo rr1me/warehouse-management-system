@@ -2,7 +2,7 @@
     min-width: 150px;
     width: 14%;
     position: sticky;
-    top: 5px;
+    top: 59px;
     height: min-content;
 }
 
@@ -19,22 +19,22 @@
     gap: 5px;
 }
 
-.sbClose{
-    cursor: pointer;
-    align-self: end;
-    
-    border: none;
-    background-color: var(--color-green);
-    width: min-content;
-    padding: 5px 10px;
-    
-    border-radius: 3px;
-}
+/*.sbClose{*/
+/*    cursor: pointer;*/
+/*    align-self: end;*/
+/*    */
+/*    border: none;*/
+/*    !*background-color: var(--color-green);*!*/
+/*    width: min-content;*/
+/*    padding: 5px 10px;*/
+/*    */
+/*    border-radius: 3px;*/
+/*}*/
 
-.sbCloseIcon{
-    color: white;
-    transform: scale(150%);
-    
-    position: relative;
-    top: 1px;
-}
+/*.sbCloseIcon{*/
+/*    color: white;*/
+/*    transform: scale(150%);*/
+/*    */
+/*    position: relative;*/
+/*    top: 1px;*/
+/*}*/
