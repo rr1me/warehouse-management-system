@@ -1,5 +1,4 @@
-﻿// import './Navbar.css';
-import './Navbar.sass';
+﻿import './Navbar.sass';
 import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import {unlogged} from "../../redux/Slices/authSlice";
@@ -18,11 +17,15 @@ const Navbar = () => {
 
     return (
         <div className='navbar'>
-            <Link className='navlink myWMS' to='/'>MyWMS</Link>
+            <div className='navWrapper'>
+                <div className='navInner'>
+                    <Link className='navlink myWMS' to='/'>MyWMS</Link>
 
-            <div>
-                <Link className='navlink' to="/1">{username}</Link>
-                <Link className='navlink' onClick={() => { logout() }} to="/login">Logout</Link>
+                    <div>
+                        <Link className='navlink' to="/1">{username}</Link>
+                        <Link className='navlink' onClick={() => { logout() }} to="/login">Logout</Link>
+                    </div>
+                </div>
             </div>
         </div>
     )

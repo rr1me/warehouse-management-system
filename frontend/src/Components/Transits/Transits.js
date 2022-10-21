@@ -32,11 +32,6 @@ const Transits = () => {
     const handleAddNewAcceptanceClick = () => navigate('/transits/add?type=0');
     const handleAddNewDispatchingClick = () => navigate('/transits/add?type=1');
     
-    // const handleFilterClick = e => {
-    //     e.stopPropagation();
-    //     setFilterModal(value => !value);
-    // }
-    
     return (
         <div className='transitContainer'>
             <div className='transitHeader'>
