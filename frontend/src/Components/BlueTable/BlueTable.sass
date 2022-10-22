@@ -1,4 +1,11 @@
 ﻿.blueTable
+  
+  @mixin font
+    font-family: "Poppins Medium", serif
+    font-size: 14px
+    letter-spacing: -0.5px
+    color: #739cad
+  
   $border: 1px solid #c1d8ea
   &.hard
     border: $border
@@ -23,7 +30,7 @@
     &.odd
       background-color: #f3f3f3
     
-  .trCargoHeader
+  .trCargoHeader //todo change it from cargo to smth else. its another component actually
     display: grid
     background-color: #cee1f2
     
@@ -31,10 +38,11 @@
       &.hard
         border: $border
       
-      font-family: "Poppins Medium", serif
-      font-size: 14px
-      letter-spacing: -0.5px
-      color: #739cad
+      //font-family: "Poppins Medium", serif
+      //font-size: 14px
+      //letter-spacing: -0.5px
+      //color: #739cad
+      @include font
       text-transform: uppercase
   
       padding: 8px
@@ -49,8 +57,66 @@
         position: relative
         top: 2px
         cursor: pointer
+    
+  .blFooter
+    background-color: #cee1f2
+    padding: 6px
+    align-items: center
+    @include font
+    
+    position: relative
+    top: 1px
+    
+    display: flex
+    justify-content: end
+    gap: 30px
+    
+    .rowsPerPage
+      display: flex
+      gap: 10px
+      align-items: center
       
-  .trCargoHeader, .row
+      .blfSelectPicker
+        //transform: scale(70%)
+        
+        display: flex
+        gap: 8px
+        cursor: pointer
+        padding: 4px 7px
+        
+        box-shadow: 0 0 3px rgba(99, 180, 253, 0.35)
+        border-radius: 3px
+        
+        &:hover
+          box-shadow: 0 0 3px #63b4fd
+          transition: 300ms
+          
+        .blfSPItem
+          padding: 5px 7px
+        
+        .ninetyDegArrow
+          transform: rotate(90deg) scale(110%)
+          position: relative
+          top: 4px
+      
+    .blfArrows
+      display: flex
+      gap: 15px
+      .blfIcon
+        transform: scale(110%)
+        position: relative
+        bottom: 1px
+        cursor: pointer
+        padding: 3px
+        &.reversed
+          transform: rotate(180deg) scale(110%)
+        
+        &:hover
+          box-shadow: 0 0 3px #63b4fd
+          border-radius: 3px
+          transition: 300ms
+      
+  .trCargoHeader, .row //todo change it from cargo to smth else. its another component actually
     font-family: Poppins, sans-serif
     font-size: 15px
     
