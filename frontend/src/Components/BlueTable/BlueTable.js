@@ -25,7 +25,7 @@ const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort,
         return style;
     };
     
-    const getHeaderStyle = () => gridTemplate + ' trCargoHeader ' + getStyle();
+    const getHeaderStyle = () => gridTemplate + ' blueTableHeader ' + getStyle();
     
     const handleArrowClick = index => dispatch(setSortDispatch(index === Math.abs(sort) && !isNegative(sort) ? -index : index));
     
