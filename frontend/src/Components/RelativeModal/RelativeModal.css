@@ -5,6 +5,13 @@
     background-color: white;
 }
 
+.trying{
+    position: absolute;
+    left: 0;
+    background-color: white;
+    padding: 5px;
+}
+
 /*.absolute{*/
 /*    position:absolute;*/
 /*}*/

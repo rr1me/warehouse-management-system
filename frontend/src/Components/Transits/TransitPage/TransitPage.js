@@ -71,7 +71,7 @@ const TransitPage = () => {
         dispatch(cancelTransitEdit(id));
     };
     
-    const makeStyle = (style, invalid) => (style ? style+' ' : '')+(edit ? (invalid ? 'invalid' : 'editing') : 'readonly');
+    const makeStyle = (style, invalid) => (style ? style+' ' : '')+(edit ? (invalid ? 'invalid' : 'active') : 'readonly');
     
     const handleClientInput = e => {
         dispatch(setTransitPageClient(e.target.value));
@@ -132,7 +132,7 @@ const TransitPage = () => {
                 <div className='element'>
                     <div className='name'>Additional tasks</div>
                     <SelectPicker defaultValue={current.additionalTasks} id='taskSelector'
-                                  customStyle={makeStyle('')} activeStyle={makeStyle('active')} readOnly={!edit} 
+                                  activeStyle={'active'} openStyle={'active editing'} readOnly={!edit} 
                                   reducer={setTransitPageAdditionalTasks}>
                         {additionalTasks.map((value, index)=>{
                             return (

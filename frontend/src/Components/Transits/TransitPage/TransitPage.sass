@@ -36,9 +36,8 @@
       font-size: 20px
       
     .selectPicker
-      border: $border
       transition: 350ms
-      &.active
+      &.editing
         box-shadow: $box-shadow
   
   .textarea
@@ -66,7 +65,7 @@
     cursor: default
     outline: none
     
-  .editing
+  .active
     transition: 250ms
     border: $border-green !important
     &:focus
