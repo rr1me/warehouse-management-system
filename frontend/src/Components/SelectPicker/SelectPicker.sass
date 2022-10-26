@@ -11,16 +11,12 @@
   
   &.readonly
     cursor: default
-  
-  //.style
-  //  border: 1px solid rgba(0,0,0,0.1)
     
   .content
     position: relative
     bottom: 1px
     align-self: center
 
-    //font: 15px Lato, serif
     .item
       padding: 5px 10px
       &:first-child
@@ -31,26 +27,28 @@
         background-color: whitesmoke
     
   .controls
+    font: 25px "Poppins Medium", serif
     display: flex
     .separator
       transform: rotate(90deg) scaleX(150%) scaleY(40%)
       color: rgba(79, 79, 79, 0.4)
       margin-inline: -5px
 
-  .arrow 
-    position: relative
-    top: 5px
-    left: 1px
-    transform: scale(85%) //font-size affects on it
-
-    transition: 100ms
-    &.dark
-      color: rgb(63, 63, 63)
-    &.bright
-      color: rgb(168, 168, 168)
+    .arrow 
+      position: relative
+      top: 5px
+      left: 1px
+      transform: scale(85%) //font-size affects on it
+  
+      transition: 100ms
+      &.dark
+        color: rgb(63, 63, 63)
+      &.bright
+        color: rgb(168, 168, 168)
 
 .item
   padding: 5px 10px
+  //font: 15px Lato, serif
   &:first-child
     border-radius: 5px 5px 0 0
   &:last-child

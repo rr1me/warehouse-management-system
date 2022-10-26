@@ -37,19 +37,9 @@ const SelectPicker = memo(({children, defaultValue, id, customStyle, activeStyle
     const handleSPClick = e => {
         e.stopPropagation();
         setOpen(value => {
-            // if (!readOnly)
-            //     return !value;
             return !readOnly ? !value : null;
         })
     };
-    
-    // const getStyle = () => {
-    //     if (openStyle && open)
-    //         return openStyle;
-    //     if (customStyle)
-    //         return customStyle;
-    //     return 'style';
-    // };
     
     const getStyle = () => {
         let style = customStyle ? customStyle : 'selectPicker';
@@ -65,13 +55,11 @@ const SelectPicker = memo(({children, defaultValue, id, customStyle, activeStyle
         dispatch(reducer(index));
     };
     
-    const modalOrientation = () => {
-        let orientation;
-        if (upwardModal){
-            const crds = selectPickerRef.current.getBoundingClientRect().height;
-            console.log(crds);
-        }
-        return '-93px';
+    const getModalStyle = () => {
+        if (!selectPickerRef.current) return null;
+        const top = selectPickerRef.current.offsetHeight;
+        console.log(id, top);
+        return {width: selectPickerRef.current.offsetWidth, top: (!customStyle ? top-5 : top), left: (!customStyle ? -10 : -7)}
     }
     
     return (
@@ -79,8 +67,8 @@ const SelectPicker = memo(({children, defaultValue, id, customStyle, activeStyle
             <div className='content'>
                 {children[defaultValue]}
                 <RelativeModal state={open}
-                               modalStyle={{width: (selectPickerRef.current !== undefined ? selectPickerRef.current.offsetWidth-2+'px' : null), right: '10px', top: '15px'}}
-                               doubleWrap={false} newLogic={true} newLogicRef={selectPickerRef}>
+                               modalStyle={getModalStyle()}
+                               doubleWrap={false} upwardModal={upwardModal}>
                     {children.map((value, index) => {
                         return (
                             <div className='item' onClick={() => handleSPContentClick(index)} key={index}>
