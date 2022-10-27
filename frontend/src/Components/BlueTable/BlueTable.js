@@ -4,7 +4,6 @@ import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {TiArrowSortedDown, TiArrowSortedUp, TiArrowUnsorted} from "react-icons/ti";
 import {MdArrowForwardIos} from "react-icons/md";
-import {useState} from "react";
 import SelectPicker from "../SelectPicker/SelectPicker";
 
 const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort, setSortDispatch, actionColumn}) => {
@@ -37,12 +36,6 @@ const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort,
         return <TiArrowUnsorted className='btIcon' onClick={() => handleArrowClick(index)}/>
     }
     
-    const [blfSelectPickerOpen, blfSelectPickerSetOpen] = useState(false);
-    const blfSelectPickerHandle = e => {
-        e.stopPropagation();
-        blfSelectPickerSetOpen(v => !v);
-    }
-    
     return (
         <div className={'blueTable '+getStyle()}>
             <div className={getHeaderStyle()}>
@@ -66,9 +59,9 @@ const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort,
                 <div className='rowsPerPage'>
                     Rows per page:
                     <SelectPicker defaultValue={0} id='blfSelectPicker' upwardModal={true} customStyle='blfSelectPicker' customControls={<MdArrowForwardIos className='ninetyDegArrow'/>}>
-                        <div className='blfSPItem'>10</div>
-                        <div className='blfSPItem'>25</div>
-                        <div className='blfSPItem'>50</div>
+                        <div>10</div>
+                        <div>25</div>
+                        <div>50</div>
                     </SelectPicker>
                 </div>
                 
@@ -82,7 +75,7 @@ const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort,
                 </div>
             </div>
         </div>
-    )//todo MdArrowForwardIos MdArrowBackIosNew
+    )
 };
 
 export default BlueTable;
