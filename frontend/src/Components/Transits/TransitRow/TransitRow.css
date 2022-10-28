@@ -1,8 +1,0 @@
-.transitRowItem{
-    padding: 8px;
-    word-break: break-word;
-}
-
-.transitRowItem > .dpContainer {
-    margin-left: -4px;
-}

@@ -5,10 +5,14 @@ import {useDispatch} from "react-redux";
 import {TiArrowSortedDown, TiArrowSortedUp, TiArrowUnsorted} from "react-icons/ti";
 import {MdArrowForwardIos} from "react-icons/md";
 import SelectPicker from "../SelectPicker/SelectPicker";
+import {useState} from "react";
 
 const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort, setSortDispatch, actionColumn}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
+    
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(0);
     
     const handleRowClick = id => {
         navigate('/transits/'+id);
@@ -58,7 +62,8 @@ const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort,
             <div className='blFooter'>
                 <div className='rowsPerPage'>
                     Rows per page:
-                    <SelectPicker defaultValue={0} id='blfSelectPicker' upwardModal={true} customStyle='blfSelectPicker' customControls={<MdArrowForwardIos className='ninetyDegArrow'/>}>
+                    <SelectPicker defaultValue={rowsPerPage} id='blfSelectPicker' upwardModal={true} customStyle='blfSelectPicker' customControls={<MdArrowForwardIos className='ninetyDegArrow'/>} 
+                                  setValue={setRowsPerPage}>
                         <div>10</div>
                         <div>25</div>
                         <div>50</div>
@@ -70,8 +75,8 @@ const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort,
                 </div>
                 
                 <div className='blfArrows'>
-                    <MdArrowForwardIos className='blfIcon reversed'/>
-                    <MdArrowForwardIos className='blfIcon'/>
+                    <MdArrowForwardIos className='blfIcon reversed' onClick={() => setPage(value => value-1)}/>
+                    <MdArrowForwardIos className='blfIcon' onClick={() => setPage(value => value+1)}/>
                 </div>
             </div>
         </div>

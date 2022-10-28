@@ -3,10 +3,9 @@ import {MdOutlineHorizontalRule} from "react-icons/md";
 import {IoIosArrowDown} from "react-icons/io";
 import {memo, useEffect, useMemo, useRef, useState} from "react";
 import RelativeModal from "../RelativeModal/RelativeModal";
-import {useDispatch} from "react-redux";
 import {makeCloseEvent} from "../Properties/makeCloseEvent";
 
-const SelectPicker = memo(({children, defaultValue, id, customStyle, activeStyle, openStyle, readOnly, reducer, upwardModal, customControls}) => {
+const SelectPicker = memo(({children, defaultValue, id, customStyle, activeStyle, openStyle, readOnly, setValue, upwardModal, customControls}) => {
     
     const icons = useMemo(() => {
         return (
@@ -49,16 +48,13 @@ const SelectPicker = memo(({children, defaultValue, id, customStyle, activeStyle
         return style;
     }
     
-    const dispatch = useDispatch();
-    
-    const handleSPContentClick = index => {
-        dispatch(reducer(index));
-    };
+    const handleSPContentClick = index => setValue(index)
     
     const getModalStyle = () => {
         if (!selectPickerRef.current) return null;
+        
         const top = selectPickerRef.current.offsetHeight;
-        console.log(id, top);
+        
         return {width: selectPickerRef.current.offsetWidth, top: (!customStyle ? top-5 : top), left: (!customStyle ? -10 : -7)}
     }
     

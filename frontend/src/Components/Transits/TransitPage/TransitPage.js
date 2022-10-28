@@ -73,13 +73,11 @@ const TransitPage = () => {
     
     const makeStyle = (style, invalid) => (style ? style+' ' : '')+(edit ? (invalid ? 'invalid' : 'active') : 'readonly');
     
-    const handleClientInput = e => {
-        dispatch(setTransitPageClient(e.target.value));
-    };
+    const handleClientInput = e => dispatch(setTransitPageClient(e.target.value));
     
-    const handleCommentaryInput = e => {
-        dispatch(setTransitPageCommentary(e.target.value));
-    };
+    const handleCommentaryInput = e => dispatch(setTransitPageCommentary(e.target.value));
+
+    const selectPickerSetValueFunc = index => dispatch(setTransitPageAdditionalTasks(index));
     
     const handleDeleteButton = e => {
         e.stopPropagation();
@@ -92,9 +90,7 @@ const TransitPage = () => {
             navigate('/transits');
     };
     
-    const handleCancelDeleting = () => {
-        setDeleting(false);
-    };
+    const handleCancelDeleting = () => setDeleting(false);
 
     return (
         <div className='transitPage'>
@@ -133,7 +129,7 @@ const TransitPage = () => {
                     <div className='name'>Additional tasks</div>
                     <SelectPicker defaultValue={current.additionalTasks} id='taskSelector'
                                   activeStyle={'active'} openStyle={'active editing'} readOnly={!edit} 
-                                  reducer={setTransitPageAdditionalTasks} upwardModal={true}>
+                                  setValue={selectPickerSetValueFunc} upwardModal={true}>
                         {additionalTasks.map((value, index)=>{
                             return (
                                 <div key={index}>
