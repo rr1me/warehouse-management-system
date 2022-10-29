@@ -54,8 +54,9 @@ const SelectPicker = memo(({children, defaultValue, id, customStyle, activeStyle
         if (!selectPickerRef.current) return null;
         
         const top = selectPickerRef.current.offsetHeight;
+        const width = selectPickerRef.current.offsetWidth;
         
-        return {width: selectPickerRef.current.offsetWidth, top: (!customStyle ? top-5 : top), left: (!customStyle ? -10 : -7)}
+        return {width: (!customStyle ? width-1 : width), top: (!customStyle ? top-5 : top), left: (!customStyle ? -10 : -7)}
     }
     
     return (

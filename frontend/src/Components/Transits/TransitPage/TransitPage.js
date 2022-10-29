@@ -129,7 +129,7 @@ const TransitPage = () => {
                     <div className='name'>Additional tasks</div>
                     <SelectPicker defaultValue={current.additionalTasks} id='taskSelector'
                                   activeStyle={'active'} openStyle={'active editing'} readOnly={!edit} 
-                                  setValue={selectPickerSetValueFunc} upwardModal={true}>
+                                  setValue={selectPickerSetValueFunc}>
                         {additionalTasks.map((value, index)=>{
                             return (
                                 <div key={index}>
