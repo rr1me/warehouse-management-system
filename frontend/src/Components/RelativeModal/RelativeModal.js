@@ -3,7 +3,7 @@ import {memo, useEffect, useRef, useState} from "react";
 import {makeCloseEvent} from "../Properties/makeCloseEvent";
 
 const RelativeModal = memo(({state, doubleWrap, children, id, modalStyle, itemClassname, onClick, setOpen, upwardModal}) => {
-
+console.log("?WHAT");
     const modalRef = useRef();
     
     const [height, setHeight] = useState();

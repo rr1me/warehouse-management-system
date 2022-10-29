@@ -68,7 +68,7 @@ const SelectPicker = memo(({children, defaultValue, id, customStyle, activeStyle
                                doubleWrap={false} upwardModal={upwardModal}>
                     {children.map((value, index) => {
                         return (
-                            <div className='item' onClick={() => handleSPContentClick(index)} key={index}>
+                            <div className='spItem' onClick={() => handleSPContentClick(index)} key={index}>
                                 {value}
                             </div>
                         )

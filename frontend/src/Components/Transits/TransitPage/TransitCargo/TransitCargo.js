@@ -49,7 +49,7 @@ const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach, sort
                         {edit ?
                             <>
                                 <button className='btn apply table' onClick={handleAddNewCargoButton}>Add new</button>
-                                <RelativeModal doubleWrap={false} id={'cargoToAttach'} state={cargoToAttachModal} setOpen={setCargoToAttachModal} modalStyle={{top: '5px', right: '315px'}}>
+                                <RelativeModal doubleWrap={false} id={'cargoToAttach'} state={cargoToAttachModal} setOpen={setCargoToAttachModal} modalStyle={{top: 10}}>
                                     <div className='cargoToAttachList'>
                                         {attachList}
                                     </div>
