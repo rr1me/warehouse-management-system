@@ -1,6 +1,5 @@
-﻿import {memo, useEffect, useRef, useState} from "react";
+﻿import {memo, useEffect, useState} from "react";
 
-// import './DatePicker.css';
 import './DatePicker.sass';
 import DatePickerBuilder from "./dpModules/DatePickerBuilder";
 import {MdEditCalendar} from "react-icons/md";
@@ -10,26 +9,25 @@ export const DatePicker = memo(({incomeDate, setDateDispatch, dispatchIndex, id,
     
     const dateObject = new Date(incomeDate);
 
-    useEffect(() => {
-        makeCloseEvent(id, setDPState);
-    });
-    
-    const inputElement = useRef();
+    // useEffect(() => {
+        // makeCloseEvent(id, setDPState);
+    // });
 
     const [dpState, setDPState] = useState(false)
     
-    const handleInputClick = () => {
+    const handleInputClick = e => {
+        e.stopPropagation();
         if (editState)
             setDPState(value => !value);
     };
     
     return (
         <div className='dpContainer'>
-            <div className={'dpInput'+(editState ? '' : ' readonly')} id={id} onClick={handleInputClick} ref={inputElement}>
+            <div className={'dpInput'+(editState ? '' : ' readonly')} id={id} onClick={handleInputClick}>
                 {makeDateForInput(dateObject)}
                 {editState ? <MdEditCalendar className='dpInputIcon' id={id}/> : null}
             </div>
-            <DatePickerBuilder dateObject={dateObject} setDateDispatch={setDateDispatch} dispatchIndex={dispatchIndex} mainElement={inputElement} state={dpState}/>
+            <DatePickerBuilder id={id} dateObject={dateObject} setDateDispatch={setDateDispatch} dispatchIndex={dispatchIndex} state={dpState} setState={setDPState}/>
         </div>
     )
 });

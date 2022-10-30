@@ -6,9 +6,8 @@ import {useState} from "react";
 import BottomModule from "./BottomModule/BottomModule";
 import RelativeModal from "../../RelativeModal/RelativeModal";
 
-const DatePickerBuilder = ({dateObject, setDateDispatch, dispatchIndex, mainElement, state}) => {
+const DatePickerBuilder = ({id, dateObject, setDateDispatch, dispatchIndex, state, setState}) => {
     
-    const coords = mainElement.current !== undefined ? mainElement.current.getBoundingClientRect() : null;
     const dispatch = useDispatch();
     
     const [overallDate, setOverallDate] = useState({
@@ -18,7 +17,7 @@ const DatePickerBuilder = ({dateObject, setDateDispatch, dispatchIndex, mainElem
 
     if (state){
         return (
-            <RelativeModal doubleWrap={false} state={true} modalStyle={{zIndex: '1', top: 10+coords.height+'px'}} onClick={e=>e.stopPropagation()}>
+            <RelativeModal id={id} state={state} setOpen={setState} modalStyle={{zIndex: '1', top: 10}}>
                 <div className='datepicker'>
                     <SelectorsModule overallDate={overallDate} setOverallDate={setOverallDate} selectProps={selectProps}/>
                     <hr className='dpSeparator'/>

@@ -4,9 +4,9 @@ import {makeCloseEvent} from "../makeCloseEvent";
 
 const FilterButton = ({sortType, sortList, sortDispatch, id}) => {
 
-    useEffect(() => {
-        makeCloseEvent(id, setFilterOpen);
-    });
+    // useEffect(() => {
+    //     makeCloseEvent(id, setFilterOpen);
+    // });
 
     const [filterOpen, setFilterOpen] = useState(false);
 

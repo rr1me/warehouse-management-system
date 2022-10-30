@@ -20,7 +20,7 @@ const SelectPicker = memo(({children, defaultValue, id, customStyle, activeStyle
     
     const [open, setOpen] = useState(false);
     
-    useEffect(() => {
+    useEffect(() => { //todo why there is custom logic? try to remake
         if (spRef.current && open)
             setOpen(false);
     }, [readOnly]);
@@ -65,7 +65,7 @@ const SelectPicker = memo(({children, defaultValue, id, customStyle, activeStyle
                 {children[defaultValue]}
                 <RelativeModal state={open}
                                modalStyle={getModalStyle()}
-                               doubleWrap={false} upwardModal={upwardModal}>
+                               upwardModal={upwardModal}>
                     {children.map((value, index) => {
                         return (
                             <div className='spItem' onClick={() => handleSPContentClick(index)} key={index}>

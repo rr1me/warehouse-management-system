@@ -6,9 +6,9 @@ import {makeCloseEvent} from "../../Properties/makeCloseEvent";
 
 const Sidebar = ({setSidebarState, handleSidebarButtonClick}) => {
 
-    useEffect(() => {
-        makeCloseEvent('sidebar', setSidebarState);
-    })
+    // useEffect(() => {
+    //     makeCloseEvent('sidebar', setSidebarState);
+    // })
     
     return (
         <div className='sidebar' id='sidebar' onClick={e=>e.stopPropagation()}>

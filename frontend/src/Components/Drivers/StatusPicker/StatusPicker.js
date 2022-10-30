@@ -12,9 +12,9 @@ const StatusPicker = memo(({status, editing, index}) => {
     
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        makeCloseEvent('relativeModal', setStatusModalOpened);
-    });
+    // useEffect(() => {
+    //     makeCloseEvent('relativeModal', setStatusModalOpened);
+    // });
 
     const Status = ({status, editing, modalOpened}) => {
         let value;

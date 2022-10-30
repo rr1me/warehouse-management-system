@@ -23,7 +23,7 @@ export const additionalTasks = [
 
 export const ModalDeleteWarning = ({modalState, modalSetState, modalId, confirmHandle, cancelHandler}) => {
     return (
-        <RelativeModal state={modalState} id={modalId} doubleWrap={false} setOpen={modalSetState} onClick={e=>e.stopPropagation()}>
+        <RelativeModal state={modalState} id={modalId} setOpen={modalSetState} onClick={e=>e.stopPropagation()} modalStyle={{top: 10, right: 0, width: 'max-content'}}>
             <div className='deleteWarning'>
                 <div className='warningText'>Are you sure?</div>
                 <div className='warningCtrl'>

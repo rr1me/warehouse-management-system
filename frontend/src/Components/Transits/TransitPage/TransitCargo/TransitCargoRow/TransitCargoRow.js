@@ -61,24 +61,26 @@ const TransitCargoRow = ({cargo, states:{edit}, errors:{lettersInSticker, nullSt
             <div className='transitCargoRow'>{cargo.id}</div>
             <div className='transitCargoRow'>
                 <Editable state={edit}>
-                    <HookedTextarea value={cargo.stickerId} onChange={stickerIdInputHandle} className='trCargoTextarea editing'/>
+                    <HookedTextarea value={cargo.stickerId} onChange={stickerIdInputHandle} className='trCargoTextarea active'/>
                 </Editable>
                 <Error state={nullSticker} errorMessage='Sticker ID cant be null'/>
                 <Error state={lettersInSticker} errorMessage='Sticker ID cant have letters'/>
             </div>
             <div className='transitCargoRow'>
                 <Editable state={edit}>
-                    <HookedTextarea value={(!edit && !cargo.description) ? 'No description' : cargo.description} onChange={descriptionInputHandle} className='trCargoTextarea editing'/>
+                    <HookedTextarea value={(!edit && !cargo.description) ? 'No description' : cargo.description} onChange={descriptionInputHandle} className='trCargoTextarea active'/>
                 </Editable>
             </div>
             <div className='transitCargoRow actions'>
                 <button className={'btn edit'+ (globalEdit ? '' : ' readonly')} onClick={handleEditButton}>
                     {edit ? <AiOutlineCheck className='icon'/> : <AiFillEdit className='icon'/>}
                 </button>
-                <button className={'btn delete'+ (globalEdit ? '' : ' readonly')} onClick={handleDeleteButton}>
-                    {edit ? <TiCancel className='cancelIcon'/> : <AiFillDelete className='icon'/>}
-                </button>
-                <ModalDeleteWarning modalId='trCargoDeleteModal' confirmHandle={handleConfirmedDeleteButton} cancelHandler={handleCancelDeleting} modalState={deleting} modalSetState={setDeleting}/>
+                <div className='tcrButtonWithModal'>
+                    <button className={'btn delete'+ (globalEdit ? '' : ' readonly')} onClick={handleDeleteButton}>
+                        {edit ? <TiCancel className='cancelIcon'/> : <AiFillDelete className='icon'/>}
+                    </button>
+                    <ModalDeleteWarning modalId='trCargoDeleteModal' confirmHandle={handleConfirmedDeleteButton} cancelHandler={handleCancelDeleting} modalState={deleting} modalSetState={setDeleting}/>
+                </div>
             </div>
         </>
     )

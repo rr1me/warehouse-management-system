@@ -46,8 +46,7 @@ const Operations = ({index, editing, id, editDispatch, deleteDispatch, cancelEdi
             <button className='operation delete' onClick={handleDeleteClick}>
                 {editing ? icons.cancel : icons.delete}
             </button>
-            <RelativeModal state={deleting}
-                           doubleWrap={false} id='deleteModal'
+            <RelativeModal state={deleting} id='deleteModal'
                            modalStyle={{padding: '3px 6px', width: '140px', textAlign: 'center', top: '30px', right: '65px'}}
                            onClick={e => e.stopPropagation()}>
                 <div>Are you sure you want to delete this?</div>

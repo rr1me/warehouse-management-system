@@ -38,10 +38,10 @@ const Transits = () => {
                 <div className='title light'>Transits</div>
                 <div>
                     <button className="btn apply table" onClick={handleAddNewModalClick}>Add new</button>
-                    <RelativeModal doubleWrap={false} id={'transitCargoFilterModal'} state={filterModal} setOpen={setFilterModal} modalStyle={{top: '5px', right: '55px'}}>
+                    <RelativeModal id={'transitCargoFilterModal'} state={filterModal} setOpen={setFilterModal} modalStyle={{top: '5px', right: '55px'}}>
                         <BulletList bulletList={filterList} bulletState={sort.transit} bulletStateDispatch={setTransitSort}/>
                     </RelativeModal>
-                    <RelativeModal doubleWrap={false} state={newModal} setOpen={setNewModal} id='addNewTransitModal' onClick={e=>e.stopPropagation()} modalStyle={{right: 0, top: 10}}>
+                    <RelativeModal state={newModal} setOpen={setNewModal} id='addNewTransitModal' onClick={e=>e.stopPropagation()} modalStyle={{right: 0, top: 10}}>
                         <div className='addTransitModal'>
                             <div>What transit do you want to add?</div>
                             <div className='controls'>
