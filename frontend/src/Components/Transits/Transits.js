@@ -15,7 +15,6 @@ const Transits = () => {
     
     const [newModal, setNewModal] = useState(false);
     const [filterModal, setFilterModal] = useState(false);
-    // const addNewBtnRef = useRef();
     
     useEffect(() => {
         if (transits.length === undefined)
@@ -43,7 +42,7 @@ const Transits = () => {
                     </RelativeModal>
                     <RelativeModal state={newModal} setOpen={setNewModal} id='addNewTransitModal' onClick={e=>e.stopPropagation()} modalStyle={{right: 0, top: 10}}>
                         <div className='addTransitModal'>
-                            <div>What transit do you want to add?</div>
+                            <div onClick={e=>e.stopPropagation()}>What transit do you want to add?</div>
                             <div className='controls'>
                                 <button className='btn green table' onClick={handleAddNewAcceptanceClick}>Acceptance</button>
                                 <button className='btn apply table' onClick={handleAddNewDispatchingClick}>Dispatching</button>

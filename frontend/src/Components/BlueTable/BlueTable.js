@@ -40,6 +40,38 @@ const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort,
         return <TiArrowUnsorted className='btIcon' onClick={() => handleArrowClick(index)}/>
     }
     
+    // const tableBody = () => {
+    //     if (!children) return '';
+    //     const splice = children.splice( page * rowsPerPageToActualValue(), ((page + 1) * rowsPerPageToActualValue())-1 );
+    //     return splice;
+    // };
+    // console.log(tableBody());
+    
+    const rowsPerPageToActualValue = () => {
+        if (rowsPerPage === 0) return 10;
+        if (rowsPerPage === 1) return 25;
+        if (rowsPerPage === 2) return 50;
+    }
+    
+    const tableBody = () => {
+        if (!children) return {info: ''};
+        
+        console.log(Math.floor(children.length / rowsPerPageToActualValue()));
+        
+        const firstElement = page * rowsPerPageToActualValue();
+        const lastElement = ((page+1) * rowsPerPageToActualValue());
+        console.log(firstElement, lastElement);
+        const body = Array.from(children)
+        const splice = body.slice( firstElement, lastElement )
+        return {info: (firstElement+1) + '-' + (lastElement >= children.length ? children.length : lastElement) + ' of ' + children.length, array: splice};
+    }
+    // console.log(tableBody());
+    
+    const setRowPerPageForSelectPicker = rpp => {
+        setRowsPerPage(rpp);
+        setPage(0);
+    };
+    
     return (
         <div className={'blueTable '+getStyle()}>
             <div className={getHeaderStyle()}>
@@ -52,7 +84,14 @@ const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort,
                     )
                 })}
             </div>
-            {children ? children.map((value, index) => {
+            {/*{children ? children.map((value, index) => {*/}
+            {/*    return (*/}
+            {/*        <div className={getRowStyle(index % 2)} key={index} onClick={clickable ? () => handleRowClick(value.id) : null}>*/}
+            {/*            {value.element}*/}
+            {/*        </div>*/}
+            {/*    )*/}
+            {/*}) : null}*/}
+            {children ? tableBody().array.map((value, index) => {
                 return (
                     <div className={getRowStyle(index % 2)} key={index} onClick={clickable ? () => handleRowClick(value.id) : null}>
                         {value.element}
@@ -63,7 +102,7 @@ const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort,
                 <div className='rowsPerPage'>
                     Rows per page:
                     <SelectPicker defaultValue={rowsPerPage} id='blfSelectPicker' upwardModal={true} customStyle='blfSelectPicker' customControls={<MdArrowForwardIos className='ninetyDegArrow'/>} 
-                                  setValue={setRowsPerPage}>
+                                  setValue={setRowPerPageForSelectPicker}>
                         <div>10</div>
                         <div>25</div>
                         <div>50</div>
@@ -71,12 +110,15 @@ const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort,
                 </div>
                 
                 <div>
-                    0-0 of 050
+                    {/*0-0 of 050*/}
+                    {/*{rowsPerPageToActualValue()}*/}
+                    {/*{page}*/}
+                    {tableBody().info}
                 </div>
                 
                 <div className='blfArrows'>
-                    <MdArrowForwardIos className='blfIcon reversed' onClick={() => setPage(value => value-1)}/>
-                    <MdArrowForwardIos className='blfIcon' onClick={() => setPage(value => value+1)}/>
+                    <MdArrowForwardIos className='blfIcon reversed' onClick={() => setPage(value => value !== 0 ? value-1 : value)}/>
+                    <MdArrowForwardIos className='blfIcon' onClick={() => setPage(value => Math.floor(children.length / rowsPerPageToActualValue()) !== value ? value+1 : value )}/>
                 </div>
             </div>
         </div>
