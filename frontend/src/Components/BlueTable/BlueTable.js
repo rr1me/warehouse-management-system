@@ -40,13 +40,6 @@ const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort,
         return <TiArrowUnsorted className='btIcon' onClick={() => handleArrowClick(index)}/>
     }
     
-    // const tableBody = () => {
-    //     if (!children) return '';
-    //     const splice = children.splice( page * rowsPerPageToActualValue(), ((page + 1) * rowsPerPageToActualValue())-1 );
-    //     return splice;
-    // };
-    // console.log(tableBody());
-    
     const rowsPerPageToActualValue = () => {
         if (rowsPerPage === 0) return 10;
         if (rowsPerPage === 1) return 25;
@@ -56,20 +49,19 @@ const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort,
     const tableBody = () => {
         if (!children) return {info: ''};
         
-        console.log(Math.floor(children.length / rowsPerPageToActualValue()));
-        
         const firstElement = page * rowsPerPageToActualValue();
         const lastElement = ((page+1) * rowsPerPageToActualValue());
-        console.log(firstElement, lastElement);
+        
         const body = Array.from(children)
-        const splice = body.slice( firstElement, lastElement )
-        return {info: (firstElement+1) + '-' + (lastElement >= children.length ? children.length : lastElement) + ' of ' + children.length, array: splice};
+        const slice = body.slice(firstElement, lastElement)
+        return {info: (firstElement+1) + '-' + (lastElement >= children.length ? children.length : lastElement) + ' of ' + children.length, array: slice};
     }
-    // console.log(tableBody());
     
     const setRowPerPageForSelectPicker = rpp => {
         setRowsPerPage(rpp);
-        setPage(0);
+        
+        const lastPage = Math.floor(children.length / rowsPerPageToActualValue());
+        if (page > 0 && page >= lastPage) setPage(lastPage-1);
     };
     
     return (
@@ -84,13 +76,6 @@ const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort,
                     )
                 })}
             </div>
-            {/*{children ? children.map((value, index) => {*/}
-            {/*    return (*/}
-            {/*        <div className={getRowStyle(index % 2)} key={index} onClick={clickable ? () => handleRowClick(value.id) : null}>*/}
-            {/*            {value.element}*/}
-            {/*        </div>*/}
-            {/*    )*/}
-            {/*}) : null}*/}
             {children ? tableBody().array.map((value, index) => {
                 return (
                     <div className={getRowStyle(index % 2)} key={index} onClick={clickable ? () => handleRowClick(value.id) : null}>
@@ -110,9 +95,6 @@ const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort,
                 </div>
                 
                 <div>
-                    {/*0-0 of 050*/}
-                    {/*{rowsPerPageToActualValue()}*/}
-                    {/*{page}*/}
                     {tableBody().info}
                 </div>
                 
