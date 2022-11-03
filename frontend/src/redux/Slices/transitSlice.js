@@ -30,7 +30,7 @@ export const addTransitThunk = createAsyncThunk( //todo decide what to do with c
         const errors = validateTransit(transitPage);
         if (errors.length !== 0) return rejectWithValue(errors);
         
-        let transitToAdd = {...transitPage.transit.object.current, assignedCargo: transitPage.cargo.map(v=>v.object)};
+        let transitToAdd = {...transitPage.transit.object.current, assignedCargo: transitPage.cargo.map(v=>v.object.current)};
         const r = await addTransit(transitToAdd);
         console.log(r);
         
@@ -46,7 +46,7 @@ export const updateTransitThunk = createAsyncThunk( //todo added cargo didnt rec
         const errors = validateTransit(transitPage);
         if (errors.length !== 0) return rejectWithValue(errors);
         
-        const transitToUpdate = {...transitPage.transit.object.current, assignedCargo: transitPage.cargo.map(v=>v.object)};
+        const transitToUpdate = {...transitPage.transit.object.current, assignedCargo: transitPage.cargo.map(v=>v.object.current)};
 
         const previous = {...transitPage.transit.object.previous, assignedCargo: Array.from(transitPage.transit.object.previous.assignedCargo).sort(cargoSorts[sort.cargo])};
         if (JSON.stringify(previous) === JSON.stringify(transitToUpdate)) return rejectWithValue('same objects');
@@ -107,8 +107,8 @@ const transitSlice = createSlice({
                 transit = state.transits.find(v=>v.id === Number(id));
             }
             
-            state.transitPage = {transit: {object: {previous: transit, current: transit}, states: {edit: id === 'add'}, errors: {nullClient: false, editingCargo: false}}, cargo: transit.assignedCargo.map(v => {
-                return {object: v, states: {edit: false}, errors: {nullSticker: false, lettersInSticker: false}}
+            state.transitPage = {transit: {object: divideObject(transit), states: {edit: id === 'add'}, errors: transitErrors}, cargo: transit.assignedCargo.map(v => {
+                return {object: divideObject(v), states: {edit: false}, errors: cargoErrors}
                 }), cargoToAttach: state.cargoToAttach}
         },
         setTransitPageClient(state, action){
@@ -136,11 +136,11 @@ const transitSlice = createSlice({
                 state.transitPage.cargo[index].errors.lettersInSticker = true;
                 return;
             }
-            state.transitPage.cargo[index].object.stickerId = (stickerId !== '' ? Number(stickerId) : '');
+            state.transitPage.cargo[index].object.current.stickerId = (stickerId !== '' ? Number(stickerId) : '');
         },
         setTransitPageCargoDescription(state, action){
             const {index, desc} = action.payload;
-            state.transitPage.cargo[index].object.description = desc;
+            state.transitPage.cargo[index].object.current.description = desc;
         },
         editTransit(state){
             state.transitPage.transit.states.edit = true;
@@ -165,28 +165,30 @@ const transitSlice = createSlice({
             if (JSON.stringify(previous) !== JSON.stringify(current) || JSON.stringify(cargo) !== JSON.stringify(previous.assignedCargo)){
                 state.transitPage.transit.object.current = previous;
                 state.transitPage.cargo = previous.assignedCargo.map(v => {
-                    return {object: v, states: {edit: false}, errors: {nullSticker: false, lettersInSticker: false}}
+                    return {object: divideObject(v), states: {edit: false}, errors: cargoErrors}
                 });
                 state.cargoToDelete = [];
             }else if (isAnyCargoEditing){
                 state.transitPage.cargo.map(v => v.states.edit = false);
             }
             state.transitPage.transit.states.edit = false;
-            state.transitPage.transit.errors = {nullClient: false, editingCargo: false};
+            state.transitPage.transit.errors = transitErrors;
         },
         startTransitCargoEdit(state, action){
             const index = action.payload;
             
             state.transitPage.cargo[index].states.edit = true;
-            state.transitPage.cargo[index].errors = {nullSticker: false, lettersInSticker: false};
+            state.transitPage.cargo[index].errors = cargoErrors;
         },
         cancelTransitCargoEdit(state, action){
             const index = action.payload;
             const {transit:{object}, cargo} = state.transitPage;
             
-            if (cargo[index].object.id !== 0){
+            console.log(current(cargo));
+            
+            if (cargo[index].object.id !== 0 && !cargo[index].states.added){
                 if (JSON.stringify(object.current.assignedCargo) !== JSON.stringify(cargo.map(v=>v.object)))
-                    state.transitPage.cargo[index].object = current.assignedCargo[index]
+                    state.transitPage.cargo[index].object.current = state.transitPage.cargo[index].object.previous
 
                 state.transitPage.cargo[index].states.edit = false;
             }else{
@@ -202,40 +204,43 @@ const transitSlice = createSlice({
                 return;
             }
 
-            if (JSON.stringify(current.assignedCargo) !== JSON.stringify(cargo.map(v=>v.object)))
-                state.transitPage.transit.object.current.assignedCargo[index] = cargo[index].object
+            if (JSON.stringify(cargo.map(v=>v.object.previous)) !== JSON.stringify(cargo.map(v=>v.object.current)))
+                state.transitPage.cargo[index].object.previous = cargo[index].object.current;
+            
             state.transitPage.cargo[index].states.edit = false;
-            state.transitPage.cargo[index].errors = {nullSticker: false, lettersInSticker: false};
+            state.transitPage.cargo[index].errors = cargoErrors;
+            
+            if (state.transitPage.cargo[index].states.added)
+                state.transitPage.cargo[index].states.added = false
         },
         sendCargoToDelete(state, action){
             const index = action.payload;
             const type = state.transitPage.transit.object.current.type;
             
-            const id = state.transitPage.cargo[index].object.id;
+            const id = state.transitPage.cargo[index].object.current.id;
             state.cargoToDelete.push(id);
             
             if (type === 0){
                 state.cargoToDelete.push(id);
             }else if(type !== 0 && state.cargoToAttach.some(x => x.id === id)){
                 const sortType = state.sort.cargo;
-                const cargo = state.transitPage.cargo[index].object;
+                const cargo = state.transitPage.cargo[index].object.current;
                 
                 state.transitPage.cargoToAttach.push(cargo);
                 state.transitPage.cargoToAttach.sort(cargoSorts[sortType]);
             }
             
-            state.transitPage.cargo = state.transitPage.cargo.filter(v => v.object.id !== id);
+            state.transitPage.cargo = state.transitPage.cargo.filter(v => v.object.current.id !== id);
         },
         addEmptyCargoToTransit(state){
-            state.transitPage.cargo.unshift({object: {id: 0, stickerId: '', description: ''}, states: {edit: true}, errors: {nullSticker: false, lettersInSticker: false}});
+            const cargo = {id: 0, stickerId: '', description: ''};
+            state.transitPage.cargo.unshift({object: divideObject(cargo), states: {edit: true}, errors: cargoErrors});
         },
         attachCargoToTransit(state, action){
             const id = action.payload;
-
             const cargoToAttach = state.transitPage.cargoToAttach.find(x=>x.id === id);
-            console.log(current(cargoToAttach));
-            state.transitPage.cargo.unshift({object: cargoToAttach, states: {edit: false}, errors: {nullSticker: false, lettersInSticker: false}});
             
+            state.transitPage.cargo.unshift({object: divideObject(cargoToAttach), states: {edit: false}, errors: cargoErrors});
             state.transitPage.cargo.sort((a,b) => a.object.id - b.object.id); //todo remake when filter system will be done
             
             state.transitPage.cargoToAttach = state.transitPage.cargoToAttach.filter(v => v.id !== id); //todo make previous and current for cancellation or leave it like global list and put temporary values in state.transitPage
@@ -290,8 +295,8 @@ const transitSlice = createSlice({
             const index = state.transits.findIndex(v => v.id === transit.id);
             
             state.transits[index] = transit;
-            state.transitPage = {transit: {object: {previous: transit, current: transit}, states: {edit: false}, errors: {nullClient: false, editingCargo: false}}, cargo: transit.assignedCargo.map(v => {
-                    return {object: v, states: {edit: false}, errors: {nullSticker: false, lettersInSticker: false}}
+            state.transitPage = {transit: {object: divideObject(transit), states: {edit: false}, errors: transitErrors}, cargo: transit.assignedCargo.map(cargo => {
+                    return {object: divideObject(cargo), states: {edit: false}, errors: cargoErrors}
                 }), cargoToAttach: cargoToAttach};
             
             state.cargoToDelete = [];
@@ -332,22 +337,22 @@ export const {getTransitForPage, setTransitPageClient, setTransitPageCommentary,
     editTransit, startTransitCargoEdit, attachCargoToTransit, setTransitPageDate, setTransitPageCargoSort, setTransitSort} = transitSlice.actions;
 export default transitSlice.reducer;
 
-const transitSorts = [
-    (a,b) => a.id - b.id,
-    (a,b) => a.type - b.type,
-    (a,b) => a.status - b.status,
-    (a,b) => new Date(a.date) - new Date(b.date)
-]
+// const transitSorts = [
+//     (a,b) => a.id - b.id,
+//     (a,b) => a.type - b.type,
+//     (a,b) => a.status - b.status,
+//     (a,b) => new Date(a.date) - new Date(b.date)
+// ]
 
 const cargoSorts = [
     (a,b) => a.id - b.id,
     (a,b) => a.stickerId - b.stickerId
 ]
 
-const cargoObjectSorts = [
-    (a,b) => a.object.id - b.object.id,
-    (a,b) => a.object.stickerId - b.object.stickerId
-];
+// const cargoObjectSorts = [
+//     (a,b) => a.object.id - b.object.id,
+//     (a,b) => a.object.stickerId - b.object.stickerId
+// ];
 
 const transitLayout = [
     'id',
@@ -363,4 +368,8 @@ const cargoLayout = [
     'id',
     'stickerId',
     'description'
-]
+];
+
+const divideObject = obj => {return {previous: obj, current: obj}};
+const transitErrors = {nullClient: false, editingCargo: false};
+const cargoErrors = {nullSticker: false, lettersInSticker: false}

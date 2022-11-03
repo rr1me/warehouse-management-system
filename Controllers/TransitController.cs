@@ -67,7 +67,8 @@ public class TransitController : ControllerBase
 
         cargoTransits.ForEach(x =>
         {
-            if (!cargoToDelete.IsNullOrEmpty() && transit.Type == TransitType.Dispatching && cargoToDelete.Any(z => z == x.CargoId)) context.Entry(x).State = EntityState.Deleted;
+            if (!cargoToDelete.IsNullOrEmpty() && transit.Type == TransitType.Dispatching && cargoToDelete.Any(z => z == x.CargoId)) 
+                context.Entry(x).State = EntityState.Deleted;
             else if (transit.CargoTransits.Any(y => y == x)) context.Entry(x).State = EntityState.Unchanged;
         });
 
@@ -87,6 +88,13 @@ public class TransitController : ControllerBase
     {
         context.Transits.Attach(transit);
         context.Transits.Add(transit);
+        
+        if (transit.Type == TransitType.Dispatching)
+            context.Cargoes.UpdateRange(transit.AssignedCargo);
+        
+        context.ChangeTracker.DetectChanges();
+        Console.WriteLine(context.ChangeTracker.DebugView.ShortView);
+        
         context.SaveChanges();
 
         AddTransitDTO responseObject = new AddTransitDTO();

@@ -16,7 +16,7 @@ import {TiCancel} from "react-icons/ti";
 import {ModalDeleteWarning} from "../../../TransitProps";
 import Error from "../../../../Error/Error";
 
-const TransitCargoRow = ({cargo, states:{edit}, errors:{lettersInSticker, nullSticker}, index, globalEdit}) => {
+const TransitCargoRow = ({cargo:{current}, states:{edit}, errors:{lettersInSticker, nullSticker}, index, globalEdit}) => {
     
     const dispatch = useDispatch();
     const [deleting, setDeleting] = useState(false);
@@ -58,17 +58,17 @@ const TransitCargoRow = ({cargo, states:{edit}, errors:{lettersInSticker, nullSt
     
     return (
         <>
-            <div className='transitCargoRow'>{cargo.id}</div>
+            <div className='transitCargoRow'>{current.id}</div>
             <div className='transitCargoRow'>
                 <Editable state={edit}>
-                    <HookedTextarea value={cargo.stickerId} onChange={stickerIdInputHandle} className='trCargoTextarea active'/>
+                    <HookedTextarea value={current.stickerId} onChange={stickerIdInputHandle} className='trCargoTextarea active'/>
                 </Editable>
                 <Error state={nullSticker} errorMessage='Sticker ID cant be null'/>
                 <Error state={lettersInSticker} errorMessage='Sticker ID cant have letters'/>
             </div>
             <div className='transitCargoRow'>
                 <Editable state={edit}>
-                    <HookedTextarea value={(!edit && !cargo.description) ? 'No description' : cargo.description} onChange={descriptionInputHandle} className='trCargoTextarea active'/>
+                    <HookedTextarea value={(!edit && !current.description) ? 'No description' : current.description} onChange={descriptionInputHandle} className='trCargoTextarea active'/>
                 </Editable>
             </div>
             <div className='transitCargoRow actions'>

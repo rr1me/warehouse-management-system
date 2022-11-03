@@ -83,7 +83,7 @@ const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort,
                     </div>
                 )
             }) : null}
-            <div className='blFooter'>
+            <div className='blFooter' style={lightStyle ? {borderRadius: '5px'} : null}>
                 <div className='rowsPerPage'>
                     Rows per page:
                     <SelectPicker defaultValue={rowsPerPage} id='blfSelectPicker' upwardModal={true} customStyle='blfSelectPicker' customControls={<MdArrowForwardIos className='ninetyDegArrow'/>} 
