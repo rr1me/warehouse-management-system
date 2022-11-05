@@ -4,17 +4,25 @@ import {useState} from "react";
 import Editable from "../../../../Properties/Editable";
 import HookedTextarea from "../../../../Properties/HookedTextarea";
 import {useDispatch} from "react-redux";
-import {
-    applyTransitCargoEdit,
-    cancelTransitCargoEdit,
-    sendCargoToDelete,
-    setTransitPageCargoDescription,
-    setTransitPageCargoStickerId,
-    startTransitCargoEdit
-} from "../../../../../redux/Slices/transitSlice";
+// import {
+//     applyTransitCargoEdit,
+//     cancelTransitCargoEdit,
+//     sendCargoToDelete,
+//     setTransitPageCargoDescription,
+//     setTransitPageCargoStickerId,
+//     startTransitCargoEdit
+// } from "../../../../../redux/Slices/transitSlice";
 import {TiCancel} from "react-icons/ti";
 import {ModalDeleteWarning} from "../../../TransitProps";
 import Error from "../../../../Error/Error";
+import {
+    applyEdit,
+    cancelEdit,
+    startEdit,
+    setStickerId,
+    setDescription,
+    sendCargoToDelete
+} from "../../../../../redux/Slices/transitSlice/transitCargoReducers";
 
 const TransitCargoRow = ({cargo:{current}, states:{edit}, errors:{lettersInSticker, nullSticker}, index, globalEdit}) => {
     
@@ -23,7 +31,7 @@ const TransitCargoRow = ({cargo:{current}, states:{edit}, errors:{lettersInStick
     
     const handleEditButton = () => {
         if (globalEdit)
-            dispatch(edit ? applyTransitCargoEdit(index) : startTransitCargoEdit(index));
+            dispatch(edit ? applyEdit(index) : startEdit(index));
     };
     
     const handleDeleteButton = e => {
@@ -31,7 +39,7 @@ const TransitCargoRow = ({cargo:{current}, states:{edit}, errors:{lettersInStick
             return;
         
         if (edit){
-            dispatch(cancelTransitCargoEdit(index)); //todo remake this
+            dispatch(cancelEdit(index)); //todo remake this
         }else{
             e.stopPropagation();
             setDeleting(value => !value);
@@ -39,11 +47,11 @@ const TransitCargoRow = ({cargo:{current}, states:{edit}, errors:{lettersInStick
     };
     
     const stickerIdInputHandle = e => {
-        dispatch(setTransitPageCargoStickerId({index: index, stickerId: e.target.value}));
+        dispatch(setStickerId({index: index, stickerId: e.target.value}));
     };
     
     const descriptionInputHandle = e => {
-        dispatch(setTransitPageCargoDescription({index: index, desc: e.target.value}));
+        dispatch(setDescription({index: index, desc: e.target.value}));
     };
     
     const handleCancelDeleting = e => {

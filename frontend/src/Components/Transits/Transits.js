@@ -2,12 +2,16 @@
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import TransitRow from "./TransitRow/TransitRow";
-import {setTransitSort, thunkTransits} from "../../redux/Slices/transitSlice";
 import {useNavigate} from "react-router-dom";
 import BlueTable from "../BlueTable/BlueTable";
 import RelativeModal from "../RelativeModal/RelativeModal";
 import BulletList from "../Properties/BulletList/BulletList";
 
+import {actions, thunkTransits} from "../../redux/Slices/transitSlice/transitSlice";
+// import {setSort} from "../../redux/Slices/transitSlice/transitMainReducers";
+
+const {setSort} = actions;
+    
 const Transits = () => {
     
     const dispatch = useDispatch();
@@ -38,7 +42,7 @@ const Transits = () => {
                 <div>
                     <button className="btn apply table" onClick={handleAddNewModalClick}>Add new</button>
                     <RelativeModal id={'transitCargoFilterModal'} state={filterModal} setOpen={setFilterModal} modalStyle={{top: '5px', right: '55px'}}>
-                        <BulletList bulletList={filterList} bulletState={sort.transit} bulletStateDispatch={setTransitSort}/>
+                        <BulletList bulletList={filterList} bulletState={sort.transit} bulletStateDispatch={setSort}/>
                     </RelativeModal>
                     <RelativeModal state={newModal} setOpen={setNewModal} id='addNewTransitModal' onClick={e=>e.stopPropagation()} modalStyle={{right: 0, top: 10}}>
                         <div className='addTransitModal'>
@@ -51,7 +55,7 @@ const Transits = () => {
                     </RelativeModal>
                 </div>
             </div>
-            <BlueTable header={trHeader} gridTemplate='transitGridTemplate' clickable={true} lightStyle={false} sort={sort.transit} setSortDispatch={setTransitSort}>
+            <BlueTable header={trHeader} gridTemplate='transitGridTemplate' clickable={true} lightStyle={false} sort={sort.transit} setSortDispatch={setSort}>
                 {transits.length !== undefined ? transits.map((value, index) => {
                     return {element: <TransitRow key={index} current={value}/>, id: value.id}
                 }) : null}

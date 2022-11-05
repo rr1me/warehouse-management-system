@@ -1,31 +1,33 @@
 ﻿import {combineReducers} from "@reduxjs/toolkit";
-import {cargoErrors, divideObject, transitErrors, transitLayout} from "./transitSliceProps";
-import {isNegative} from "../../../Components/BlueTable/BlueTable";
+import {cargoErrors, divideObject, transitErrors} from "./transitSliceProps";
 
-export const transitPageReducers = combineReducers({
-    setTransitPageClient(state, action){
+export const editTransit = (state) => {
+    console.log(state);
+    state.transitPage.transit.states.edit = true;
+}
+
+export const transitPageReducers = {
+    setClient(state, action){
         state.transitPage.transit.object.current.client = action.payload;
     },
-    setTransitPageCommentary(state, action){
+    setCommentary(state, action){
         state.transitPage.transit.object.current.commentary = action.payload;
     },
-    setTransitPageType(state, action){
+    setType(state, action){
         state.transitPage.transit.object.current.type = action.payload;
     },
-    setTransitPageStatus(state, action){
+    setStatus(state, action){
         state.transitPage.transit.object.current.status = action.payload;
     },
-    setTransitPageAdditionalTasks(state, action){
+    setAdditionalTasks(state, action){
         state.transitPage.transit.object.current.additionalTasks = action.payload;
     },
-    setTransitPageDate(state, action){
+    setDate(state, action){
         const {date} = action.payload; //todo dont actually need index 
         state.transitPage.transit.object.current.date = date;
     },
-    editTransit(state){
-        state.transitPage.transit.states.edit = true;
-    },
-    cancelTransitEdit(state, action){
+    editTransit,
+    cancelEdit(state, action){
         const id = action.payload;
         const index = state.transits.findIndex(v => v.id === Number(id));
 
@@ -54,21 +56,6 @@ export const transitPageReducers = combineReducers({
         state.transitPage.transit.states.edit = false;
         state.transitPage.transit.errors = transitErrors;
     },
-    setTransitSort(state, action){ //todo what to fuck is that
-        const type = action.payload;
-        const s = transitLayout[Math.abs(type)];
-        state.transits.sort((a,b) => {
-            let func;
-            if(s !== 'client' && s !== 'commentary'){
-                if(s === 'date') func = new Date([a[s]]) - new Date(b[s]);
-                else func = a[s] - b[s];
-            }else{
-                if(a[s].toLowerCase() < b[s].toLowerCase()) func = -1;
-                else if(a[s].toLowerCase() > b[s].toLowerCase()) func = 1;
-                else func = 0;
-            }
-            return isNegative(type) ? -func : func;
-        })
-        state.sort.transit = type;
-    }
-})
+}
+
+// export const {setClient, setCommentary, setType, setStatus, setAdditionalTasks, setDate, cancelEdit} = transitPageReducers

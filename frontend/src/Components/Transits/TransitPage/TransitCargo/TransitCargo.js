@@ -2,15 +2,12 @@
 import BlueTable from "../../../BlueTable/BlueTable";
 import TransitCargoRow from "./TransitCargoRow/TransitCargoRow";
 import {useDispatch} from "react-redux";
-import {
-    addEmptyCargoToTransit,
-    attachCargoToTransit,
-    setTransitPageCargoSort
-} from "../../../../redux/Slices/transitSlice";
 import {useState} from "react";
 import RelativeModal from "../../../RelativeModal/RelativeModal";
 import WideLabel, {WideLabelItem} from "../../../WideLabel/WideLabel";
 import Error from "../../../Error/Error";
+import {addEmptyCargo, attachCargo, setSort} from "../../../../redux/Slices/transitSlice/transitCargoReducers";
+// import {attachCargo} from "../../../../redux/Slices/transitSlice/transitCargoReducers";
 
 const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach, sort}) => {
     const [cargoToAttachModal, setCargoToAttachModal] = useState(false);
@@ -20,13 +17,13 @@ const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach, sort
     const handleAddNewCargoButton = e => {
         e.stopPropagation();
         if (!transitType)
-            dispatch(addEmptyCargoToTransit());
+            dispatch(addEmptyCargo());
         else 
             setCargoToAttachModal(value => !value);
     };
     
     const handleWideLabelClick = id => {
-        dispatch(attachCargoToTransit(id));
+        dispatch(attachCargo(id));
     };
     
     const attachList = cargoToAttach.length > 0 ? cargoToAttach.map((v, i) => {
@@ -57,7 +54,7 @@ const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach, sort
                             </>
                             : null}
                     </div>
-                    <BlueTable header={cargoHeader} gridTemplate='trCargoGridTemplate' clickable={false} lightStyle={true} sort={sort} setSortDispatch={setTransitPageCargoSort} actionColumn={true}>
+                    <BlueTable header={cargoHeader} gridTemplate='trCargoGridTemplate' clickable={false} lightStyle={true} sort={sort} setSortDispatch={setSort} actionColumn={true}>
                         {cargo.map((value, index) => {
                             return {element: <TransitCargoRow cargo={value.object} states={value.states} errors={value.errors} index={index} globalEdit={edit}/> , id: index};
                         })}

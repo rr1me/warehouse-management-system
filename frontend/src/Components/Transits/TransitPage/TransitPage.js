@@ -4,24 +4,41 @@ import {useEffect, useState} from "react";
 import SelectPicker from "../../SelectPicker/SelectPicker";
 import {useDispatch, useSelector} from "react-redux";
 import {DatePicker} from "../../DatePicker/DatePicker";
-import {
-    addTransitThunk,
-    cancelTransitEdit,
-    deleteTransitThunk,
-    editTransit,
-    getTransitForPage,
-    setTransitPageAdditionalTasks,
-    setTransitPageClient,
-    setTransitPageCommentary,
-    setTransitPageDate,
-    thunkTransits,
-    updateTransitThunk
-} from "../../../redux/Slices/transitSlice";
+// import {
+//     addTransitThunk,
+//     cancelTransitEdit,
+//     deleteTransitThunk,
+//     editTransit,
+//     getTransitForPage,
+//     setTransitPageAdditionalTasks,
+//     setTransitPageClient,
+//     setTransitPageCommentary,
+//     setTransitPageDate,
+//     thunkTransits,
+//     updateTransitThunk
+// } from "../../../redux/Slices/transitSlice";
 import TransitCargo from "./TransitCargo/TransitCargo";
 import {additionalTasks, ModalDeleteWarning, statusLabels, typeLabels} from "../TransitProps";
 import Label from "../../Label/Label";
 import WideLabel, {WideLabelItem} from "../../WideLabel/WideLabel";
 import Error from "../../Error/Error";
+import {
+    actions,
+    addTransitThunk,
+    deleteTransitThunk,
+    thunkTransits,
+    updateTransitThunk
+} from "../../../redux/Slices/transitSlice/transitSlice";
+// import {
+//     cancelEdit,
+//     editTransit,
+//     setAdditionalTasks,
+//     setClient,
+//     setCommentary, setDate
+// } from "../../../redux/Slices/transitSlice/transitPageReducers";
+// import {getTransitForPage} from "../../../redux/Slices/transitSlice/transitMainReducers";
+
+const {getTransitForPage, editTransit, cancelEdit, setClient} = actions;
 
 const TransitPage = () => {
 
@@ -68,16 +85,16 @@ const TransitPage = () => {
             return;
         }
         
-        dispatch(cancelTransitEdit(id));
+        dispatch(cancelEdit(id));
     };
     
     const makeStyle = (style, invalid) => (style ? style+' ' : '')+(edit ? (invalid ? 'invalid' : 'active') : 'readonly');
     
-    const handleClientInput = e => dispatch(setTransitPageClient(e.target.value));
+    const handleClientInput = e => dispatch(setClient(e.target.value));
     
-    const handleCommentaryInput = e => dispatch(setTransitPageCommentary(e.target.value));
+    const handleCommentaryInput = e => dispatch(setCommentary(e.target.value));
 
-    const selectPickerSetValueFunc = index => dispatch(setTransitPageAdditionalTasks(index));
+    const selectPickerSetValueFunc = index => dispatch(setAdditionalTasks(index));
     
     const handleDeleteButton = e => {
         e.stopPropagation();
@@ -141,7 +158,7 @@ const TransitPage = () => {
                 </div>
                 <div className='element'>
                     <div className='name'>Date</div>
-                    <DatePicker incomeDate={current.date} editState={edit} dispatchIndex={current.id} id='trDP' setDateDispatch={setTransitPageDate}/>
+                    <DatePicker incomeDate={current.date} editState={edit} dispatchIndex={current.id} id='trDP' setDateDispatch={setDate}/>
                 </div>
                 <TransitCargo cargo={cargo} edit={edit} cargoValid={editingCargo} transitType={current.type} cargoToAttach={transitPage.cargoToAttach} sort={sort.cargo}/>
             </div>
