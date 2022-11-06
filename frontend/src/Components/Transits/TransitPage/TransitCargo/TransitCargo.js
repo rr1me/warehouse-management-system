@@ -6,8 +6,9 @@ import {useState} from "react";
 import RelativeModal from "../../../RelativeModal/RelativeModal";
 import WideLabel, {WideLabelItem} from "../../../WideLabel/WideLabel";
 import Error from "../../../Error/Error";
-import {addEmptyCargo, attachCargo, setSort} from "../../../../redux/Slices/transitSlice/transitCargoReducers";
-// import {attachCargo} from "../../../../redux/Slices/transitSlice/transitCargoReducers";
+import {actions} from "../../../../redux/Slices/transitSlice/transitSlice";
+
+const {addEmptyCargo, attachCargo, setCargoSort} = actions;
 
 const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach, sort}) => {
     const [cargoToAttachModal, setCargoToAttachModal] = useState(false);
@@ -54,7 +55,7 @@ const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach, sort
                             </>
                             : null}
                     </div>
-                    <BlueTable header={cargoHeader} gridTemplate='trCargoGridTemplate' clickable={false} lightStyle={true} sort={sort} setSortDispatch={setSort} actionColumn={true}>
+                    <BlueTable header={cargoHeader} gridTemplate='trCargoGridTemplate' clickable={false} lightStyle={true} sort={sort} setSortDispatch={setCargoSort} actionColumn={true}>
                         {cargo.map((value, index) => {
                             return {element: <TransitCargoRow cargo={value.object} states={value.states} errors={value.errors} index={index} globalEdit={edit}/> , id: index};
                         })}

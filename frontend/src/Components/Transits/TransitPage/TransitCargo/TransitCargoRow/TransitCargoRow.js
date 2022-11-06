@@ -4,25 +4,12 @@ import {useState} from "react";
 import Editable from "../../../../Properties/Editable";
 import HookedTextarea from "../../../../Properties/HookedTextarea";
 import {useDispatch} from "react-redux";
-// import {
-//     applyTransitCargoEdit,
-//     cancelTransitCargoEdit,
-//     sendCargoToDelete,
-//     setTransitPageCargoDescription,
-//     setTransitPageCargoStickerId,
-//     startTransitCargoEdit
-// } from "../../../../../redux/Slices/transitSlice";
 import {TiCancel} from "react-icons/ti";
 import {ModalDeleteWarning} from "../../../TransitProps";
 import Error from "../../../../Error/Error";
-import {
-    applyEdit,
-    cancelEdit,
-    startEdit,
-    setStickerId,
-    setDescription,
-    sendCargoToDelete
-} from "../../../../../redux/Slices/transitSlice/transitCargoReducers";
+import {actions} from "../../../../../redux/Slices/transitSlice/transitSlice";
+
+const {applyCargoEdit, startCargoEdit, cancelCargoEdit, setCargoStickerId, setCargoDescription, sendCargoToDelete} = actions;
 
 const TransitCargoRow = ({cargo:{current}, states:{edit}, errors:{lettersInSticker, nullSticker}, index, globalEdit}) => {
     
@@ -31,7 +18,7 @@ const TransitCargoRow = ({cargo:{current}, states:{edit}, errors:{lettersInStick
     
     const handleEditButton = () => {
         if (globalEdit)
-            dispatch(edit ? applyEdit(index) : startEdit(index));
+            dispatch(edit ? applyCargoEdit(index) : startCargoEdit(index));
     };
     
     const handleDeleteButton = e => {
@@ -39,7 +26,7 @@ const TransitCargoRow = ({cargo:{current}, states:{edit}, errors:{lettersInStick
             return;
         
         if (edit){
-            dispatch(cancelEdit(index)); //todo remake this
+            dispatch(cancelCargoEdit(index)); //todo remake this
         }else{
             e.stopPropagation();
             setDeleting(value => !value);
@@ -47,11 +34,11 @@ const TransitCargoRow = ({cargo:{current}, states:{edit}, errors:{lettersInStick
     };
     
     const stickerIdInputHandle = e => {
-        dispatch(setStickerId({index: index, stickerId: e.target.value}));
+        dispatch(setCargoStickerId({index: index, stickerId: e.target.value}));
     };
     
     const descriptionInputHandle = e => {
-        dispatch(setDescription({index: index, desc: e.target.value}));
+        dispatch(setCargoDescription({index: index, desc: e.target.value}));
     };
     
     const handleCancelDeleting = e => {

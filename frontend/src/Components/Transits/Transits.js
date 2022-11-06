@@ -6,9 +6,8 @@ import {useNavigate} from "react-router-dom";
 import BlueTable from "../BlueTable/BlueTable";
 import RelativeModal from "../RelativeModal/RelativeModal";
 import BulletList from "../Properties/BulletList/BulletList";
-
-import {actions, thunkTransits} from "../../redux/Slices/transitSlice/transitSlice";
-// import {setSort} from "../../redux/Slices/transitSlice/transitMainReducers";
+import {thunkTransits} from "../../redux/Slices/transitSlice/transitThunks";
+import {actions} from "../../redux/Slices/transitSlice/transitSlice";
 
 const {setSort} = actions;
     

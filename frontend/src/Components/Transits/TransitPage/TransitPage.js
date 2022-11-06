@@ -4,41 +4,20 @@ import {useEffect, useState} from "react";
 import SelectPicker from "../../SelectPicker/SelectPicker";
 import {useDispatch, useSelector} from "react-redux";
 import {DatePicker} from "../../DatePicker/DatePicker";
-// import {
-//     addTransitThunk,
-//     cancelTransitEdit,
-//     deleteTransitThunk,
-//     editTransit,
-//     getTransitForPage,
-//     setTransitPageAdditionalTasks,
-//     setTransitPageClient,
-//     setTransitPageCommentary,
-//     setTransitPageDate,
-//     thunkTransits,
-//     updateTransitThunk
-// } from "../../../redux/Slices/transitSlice";
 import TransitCargo from "./TransitCargo/TransitCargo";
 import {additionalTasks, ModalDeleteWarning, statusLabels, typeLabels} from "../TransitProps";
 import Label from "../../Label/Label";
 import WideLabel, {WideLabelItem} from "../../WideLabel/WideLabel";
 import Error from "../../Error/Error";
+import {actions} from "../../../redux/Slices/transitSlice/transitSlice";
 import {
-    actions,
     addTransitThunk,
     deleteTransitThunk,
     thunkTransits,
     updateTransitThunk
-} from "../../../redux/Slices/transitSlice/transitSlice";
-// import {
-//     cancelEdit,
-//     editTransit,
-//     setAdditionalTasks,
-//     setClient,
-//     setCommentary, setDate
-// } from "../../../redux/Slices/transitSlice/transitPageReducers";
-// import {getTransitForPage} from "../../../redux/Slices/transitSlice/transitMainReducers";
+} from "../../../redux/Slices/transitSlice/transitThunks";
 
-const {getTransitForPage, editTransit, cancelEdit, setClient} = actions;
+const {getTransitForPage, editTransit, cancelEdit, setClient, setCommentary, setAdditionalTasks, setDate} = actions;
 
 const TransitPage = () => {
 

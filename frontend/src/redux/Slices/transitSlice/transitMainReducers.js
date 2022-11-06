@@ -1,5 +1,4 @@
-﻿import {combineReducers} from "@reduxjs/toolkit";
-import {cargoErrors, divideObject, transitErrors, transitLayout} from "./transitSliceProps";
+﻿import {cargoErrors, divideObject, transitErrors, transitLayout} from "./transitSliceProps";
 import {isNegative} from "../../../Components/BlueTable/BlueTable";
 
 export const transitMainReducers = {
@@ -35,5 +34,3 @@ export const transitMainReducers = {
         state.sort.transit = type;
     }
 }
-
-// export const {setSort} = transitMainReducers()

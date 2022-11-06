@@ -1,10 +1,4 @@
-﻿import {combineReducers} from "@reduxjs/toolkit";
-import {cargoErrors, divideObject, transitErrors} from "./transitSliceProps";
-
-export const editTransit = (state) => {
-    console.log(state);
-    state.transitPage.transit.states.edit = true;
-}
+﻿import {cargoErrors, divideObject, transitErrors} from "./transitSliceProps";
 
 export const transitPageReducers = {
     setClient(state, action){
@@ -26,7 +20,9 @@ export const transitPageReducers = {
         const {date} = action.payload; //todo dont actually need index 
         state.transitPage.transit.object.current.date = date;
     },
-    editTransit,
+    editTransit(state){
+        state.transitPage.transit.states.edit = true;
+    },
     cancelEdit(state, action){
         const id = action.payload;
         const index = state.transits.findIndex(v => v.id === Number(id));
@@ -57,5 +53,3 @@ export const transitPageReducers = {
         state.transitPage.transit.errors = transitErrors;
     },
 }
-
-// export const {setClient, setCommentary, setType, setStatus, setAdditionalTasks, setDate, cancelEdit} = transitPageReducers
