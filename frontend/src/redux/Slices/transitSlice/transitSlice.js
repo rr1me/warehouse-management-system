@@ -1,5 +1,5 @@
 ﻿import {createSlice, current} from "@reduxjs/toolkit";
-import {cargoErrors, divideObject, transitErrors} from "./transitSliceProps";
+import {cargoErrors, cargoStates, divideObject, transitErrors} from "./transitSliceProps";
 import {transitMainReducers} from "./transitMainReducers";
 import {transitCargoReducers} from "./transitCargoReducers";
 import {transitPageReducers} from "./transitPageReducers";
@@ -30,7 +30,7 @@ const transitSlice = createSlice({
             
             state.transits[index] = transit;
             state.transitPage = {transit: {object: divideObject(transit), states: {edit: false}, errors: transitErrors}, cargo: transit.assignedCargo.map(cargo => {
-                    return {object: divideObject(cargo), states: {edit: false}, errors: cargoErrors}
+                    return {object: divideObject(cargo), states: cargoStates(), errors: cargoErrors}
                 }), cargoToAttach: cargoToAttach};
             
             state.cargoToDelete = [];

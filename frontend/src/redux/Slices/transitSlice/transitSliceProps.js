@@ -2,7 +2,7 @@
 export const transitErrors = {nullClient: false, editingCargo: false};
 export const cargoErrors = {nullSticker: false, lettersInSticker: false}
 
-export const cargoSorts = [
+export const cargoSorts = [ //todo its used in cargoToAttach, need to get rid of that
     (a,b) => a.id - b.id,
     (a,b) => a.stickerId - b.stickerId
 ];
@@ -22,3 +22,7 @@ export const cargoLayout = [
     'stickerId',
     'description'
 ];
+
+export const cargoStates = (edit = false, added = false, attached = false) => {
+    return {edit: edit, added: added, attached: attached}
+}

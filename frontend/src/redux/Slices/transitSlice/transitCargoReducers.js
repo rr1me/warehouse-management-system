@@ -1,6 +1,12 @@
 ﻿import {current} from "@reduxjs/toolkit";
-import {cargoErrors, cargoLayout, cargoSorts, divideObject} from "./transitSliceProps";
+import {cargoErrors, cargoLayout, cargoSorts, cargoStates, divideObject} from "./transitSliceProps";
 import {isNegative} from "../../../Components/BlueTable/BlueTable";
+
+const decomposeCargo = cargo => {
+    const requiredCargo = cargo;
+    const {previous: previousCargo, current: currentCargo} = requiredCargo.object;
+    return {requiredCargo, previousCargo, currentCargo}
+}
 
 export const transitCargoReducers = {
     startCargoEdit(state, action){
@@ -11,16 +17,21 @@ export const transitCargoReducers = {
     },
     cancelCargoEdit(state, action){
         const index = action.payload;
-        const {transit:{object}, cargo} = state.transitPage;
+        const {cargo} = state.transitPage;
 
-        console.log(current(cargo));
-
-        if (cargo[index].object.id !== 0 && !cargo[index].states.added){
-            if (JSON.stringify(object.current.assignedCargo) !== JSON.stringify(cargo.map(v=>v.object)))
-                state.transitPage.cargo[index].object.current = state.transitPage.cargo[index].object.previous
+        const {requiredCargo, previousCargo, currentCargo} = decomposeCargo(cargo[index]);
+        
+        console.log(requiredCargo.states.added);
+        if (!requiredCargo.states.added){
+            if (JSON.stringify(previousCargo) !== JSON.stringify(currentCargo))
+                state.transitPage.cargo[index].object.current = previousCargo
 
             state.transitPage.cargo[index].states.edit = false;
+            console.log(current(cargo));
         }else{
+            console.log(!requiredCargo.states.added);
+            console.log(currentCargo.id !== 0);
+            console.log(currentCargo.id);
             state.transitPage.cargo = state.transitPage.cargo.filter((v, i) => i !== index)
         }
     },
@@ -28,18 +39,20 @@ export const transitCargoReducers = {
         const index = action.payload;
         const {transit:{object: {current}}, cargo} = state.transitPage;
 
-        if (cargo[index].object.stickerId === ''){
+        const {requiredCargo, previousCargo, currentCargo} = decomposeCargo(cargo[index]);
+
+        if (currentCargo.stickerId === ''){
             state.transitPage.cargo[index].errors.nullSticker = true;
             return;
         }
 
-        if (JSON.stringify(cargo.map(v=>v.object.previous)) !== JSON.stringify(cargo.map(v=>v.object.current)))
-            state.transitPage.cargo[index].object.previous = cargo[index].object.current;
+        if (JSON.stringify(previousCargo) !== JSON.stringify(currentCargo))
+            state.transitPage.cargo[index].object.previous = currentCargo;
 
-        state.transitPage.cargo[index].states.edit = false;
+        state.transitPage.cargo[index].states = cargoStates()
         state.transitPage.cargo[index].errors = cargoErrors;
 
-        if (state.transitPage.cargo[index].states.added)
+        if (requiredCargo.states.added)
             state.transitPage.cargo[index].states.added = false
     },
     sendCargoToDelete(state, action){
@@ -63,13 +76,13 @@ export const transitCargoReducers = {
     },
     addEmptyCargo(state){
         const cargo = {id: 0, stickerId: '', description: ''};
-        state.transitPage.cargo.unshift({object: divideObject(cargo), states: {edit: true}, errors: cargoErrors});
+        state.transitPage.cargo.unshift({object: divideObject(cargo), states: cargoStates(true, true), errors: cargoErrors});
     },
     attachCargo(state, action){
         const id = action.payload;
         const cargoToAttach = state.transitPage.cargoToAttach.find(x=>x.id === id);
 
-        state.transitPage.cargo.unshift({object: divideObject(cargoToAttach), states: {edit: false}, errors: cargoErrors});
+        state.transitPage.cargo.unshift({object: divideObject(cargoToAttach), states: cargoStates(false, true), errors: cargoErrors});
         state.transitPage.cargo.sort((a,b) => a.object.id - b.object.id); //todo remake when filter system will be done
 
         state.transitPage.cargoToAttach = state.transitPage.cargoToAttach.filter(v => v.id !== id); //todo make previous and current for cancellation or leave it like global list and put temporary values in state.transitPage
