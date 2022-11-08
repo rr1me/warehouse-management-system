@@ -1,5 +1,4 @@
-﻿import {current} from "@reduxjs/toolkit";
-import {cargoErrors, cargoLayout, cargoSorts, cargoStates, divideObject} from "./transitSliceProps";
+﻿import {cargoErrors, cargoLayout, cargoSorts, cargoStates, divideObject} from "./transitSliceProps";
 import {isNegative} from "../../../Components/BlueTable/BlueTable";
 
 const decomposeCargo = cargo => {
@@ -21,17 +20,12 @@ export const transitCargoReducers = {
 
         const {requiredCargo, previousCargo, currentCargo} = decomposeCargo(cargo[index]);
         
-        console.log(requiredCargo.states.added);
         if (!requiredCargo.states.added){
             if (JSON.stringify(previousCargo) !== JSON.stringify(currentCargo))
                 state.transitPage.cargo[index].object.current = previousCargo
 
             state.transitPage.cargo[index].states.edit = false;
-            console.log(current(cargo));
         }else{
-            console.log(!requiredCargo.states.added);
-            console.log(currentCargo.id !== 0);
-            console.log(currentCargo.id);
             state.transitPage.cargo = state.transitPage.cargo.filter((v, i) => i !== index)
         }
     },
@@ -82,7 +76,7 @@ export const transitCargoReducers = {
         const id = action.payload;
         const cargoToAttach = state.transitPage.cargoToAttach.find(x=>x.id === id);
 
-        state.transitPage.cargo.unshift({object: divideObject(cargoToAttach), states: cargoStates(false, true), errors: cargoErrors});
+        state.transitPage.cargo.unshift({object: divideObject(cargoToAttach), states: cargoStates(false, false, true), errors: cargoErrors});
         state.transitPage.cargo.sort((a,b) => a.object.id - b.object.id); //todo remake when filter system will be done
 
         state.transitPage.cargoToAttach = state.transitPage.cargoToAttach.filter(v => v.id !== id); //todo make previous and current for cancellation or leave it like global list and put temporary values in state.transitPage
