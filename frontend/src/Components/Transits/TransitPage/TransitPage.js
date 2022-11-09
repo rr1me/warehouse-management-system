@@ -101,12 +101,15 @@ const TransitPage = () => {
                     </div>
                 </div>
                 <div className='ctrlButtons'>
-                    <button className='btn delete table' onClick={handleDeleteButton}>Delete</button>
-                    {edit ? <button className='btn edit table' onClick={handleCancelButton}>Cancel</button> : null}
+                    {edit ? <button className='btn edit table' onClick={handleCancelButton}>Cancel</button> 
+                        :
+                        <div>
+                            <button className='btn delete table' onClick={handleDeleteButton}>Delete</button>
+                            <ModalDeleteWarning modalId='transitDeleteModal' confirmHandle={handleConfirmedDeleteButton} cancelHandler={handleCancelDeleting}
+                                                modalState={deleting} modalSetState={setDeleting} modalStyle={{right: 0, top: 10, width: 'max-content'}}/>
+                        </div>
+                    }
                     <button className='btn apply table' onClick={handleEditButton}>{edit ? 'Apply' : 'Edit'}</button>
-                    {deleting ?
-                        <ModalDeleteWarning modalId='transitDeleteModal' confirmHandle={handleConfirmedDeleteButton} cancelHandler={handleCancelDeleting} modalState={deleting} modalSetState={setDeleting}/>
-                        : null}
                 </div>
             </div>
             <div className='transitMain'>

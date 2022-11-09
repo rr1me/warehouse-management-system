@@ -1,4 +1,4 @@
-﻿import {cargoErrors, divideObject, transitErrors} from "./transitSliceProps";
+﻿import {cargoErrors, cargoStates, divideObject, transitErrors} from "./transitSliceProps";
 
 export const transitPageReducers = {
     setClient(state, action){
@@ -17,7 +17,7 @@ export const transitPageReducers = {
         state.transitPage.transit.object.current.additionalTasks = action.payload;
     },
     setDate(state, action){
-        const {date} = action.payload; //todo dont actually need index 
+        const {date} = action.payload;
         state.transitPage.transit.object.current.date = date;
     },
     editTransit(state){
@@ -43,7 +43,7 @@ export const transitPageReducers = {
         if (JSON.stringify(previous) !== JSON.stringify(current) || JSON.stringify(cargo) !== JSON.stringify(previous.assignedCargo)){
             state.transitPage.transit.object.current = previous;
             state.transitPage.cargo = previous.assignedCargo.map(v => {
-                return {object: divideObject(v), states: {edit: false}, errors: cargoErrors}
+                return {object: divideObject(v), states: cargoStates(), errors: cargoErrors}
             });
             state.cargoToDelete = [];
         }else if (isAnyCargoEditing){

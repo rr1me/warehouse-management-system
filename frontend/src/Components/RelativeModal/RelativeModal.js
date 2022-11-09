@@ -17,6 +17,7 @@ const RelativeModal = memo(({state, children, id, modalStyle, itemClassname, set
     });
     
     const getStyle = () => {
+        if (!modalStyle) return null;
         const top = (height ? -(height + modalStyle.top) : modalStyle.top/2);
         return {...modalStyle, top: top};   
     }

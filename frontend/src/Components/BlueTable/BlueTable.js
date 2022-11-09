@@ -9,14 +9,14 @@ import {useState} from "react";
 
 const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort, setSortDispatch, actionColumn}) => {
     const dispatch = useDispatch();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(0);
     
     const handleRowClick = id => {
         navigate('/transits/'+id);
-    }
+    };
     
     const getStyle = () => (lightStyle ? 'light' : 'hard')
     
@@ -38,13 +38,13 @@ const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort,
             return isNegative(sort) ? <TiArrowSortedUp className='btIcon' onClick={() => handleArrowClick(index)}/> : <TiArrowSortedDown className='btIcon' onClick={() => handleArrowClick(index)}/>
         }
         return <TiArrowUnsorted className='btIcon' onClick={() => handleArrowClick(index)}/>
-    }
+    };
     
-    const rowsPerPageToActualValue = () => {
-        if (rowsPerPage === 0) return 10;
-        if (rowsPerPage === 1) return 25;
-        if (rowsPerPage === 2) return 50;
-    }
+    const rowsPerPageToActualValue = (rpp = rowsPerPage) => {
+        if (rpp === 0) return 10;
+        if (rpp === 1) return 25;
+        if (rpp === 2) return 50;
+    };
     
     const tableBody = () => {
         if (!children) return {info: ''};
@@ -55,13 +55,12 @@ const BlueTable = ({header, children, gridTemplate, clickable, lightStyle, sort,
         const body = Array.from(children)
         const slice = body.slice(firstElement, lastElement)
         return {info: (firstElement+1) + '-' + (lastElement >= children.length ? children.length : lastElement) + ' of ' + children.length, array: slice};
-    }
+    };
     
     const setRowPerPageForSelectPicker = rpp => {
         setRowsPerPage(rpp);
-        
-        const lastPage = Math.floor(children.length / rowsPerPageToActualValue());
-        if (page > 0 && page >= lastPage) setPage(lastPage-1);
+        const lastPage = Math.floor(children.length / rowsPerPageToActualValue(rpp));
+        if (page > 0 && page >= lastPage) setPage(lastPage);
     };
     
     return (
@@ -115,4 +114,4 @@ export const isNegative = number => {
     }else{
         return number < 0
     }
-}
+};

@@ -74,7 +74,7 @@ const TransitCargoRow = ({cargo:{current}, states:{edit}, errors:{lettersInStick
                     <button className={'btn delete'+ (globalEdit ? '' : ' readonly')} onClick={handleDeleteButton}>
                         {edit ? <TiCancel className='cancelIcon'/> : <AiFillDelete className='icon'/>}
                     </button>
-                    <ModalDeleteWarning modalId='trCargoDeleteModal' confirmHandle={handleConfirmedDeleteButton} cancelHandler={handleCancelDeleting} modalState={deleting} modalSetState={setDeleting}/>
+                    <ModalDeleteWarning modalStyle={{width: 'max-content', right: 0, top: 10}} modalId='trCargoDeleteModal' confirmHandle={handleConfirmedDeleteButton} cancelHandler={handleCancelDeleting} modalState={deleting} modalSetState={setDeleting}/>
                 </div>
             </div>
         </>
