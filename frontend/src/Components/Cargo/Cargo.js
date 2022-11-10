@@ -56,10 +56,10 @@ const rows = [
     'By status'
 ];
 
-export const cargoHeader = [
-    'Id',
-    'StickerId',
-    'Description',
-    'Status',
-    'Quality'
-]
+// export const cargoHeader = [
+//     'Id',
+//     'StickerId',
+//     'Description',
+//     'Status',
+//     'Quality'
+// ]
