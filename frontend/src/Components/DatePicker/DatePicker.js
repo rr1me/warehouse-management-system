@@ -1,17 +1,12 @@
-﻿import {memo, useEffect, useState} from "react";
+﻿import {memo, useState} from "react";
 
 import './DatePicker.sass';
 import DatePickerBuilder from "./dpModules/DatePickerBuilder";
 import {MdEditCalendar} from "react-icons/md";
-import {makeCloseEvent} from "../Properties/makeCloseEvent";
 
 export const DatePicker = memo(({incomeDate, setDateDispatch, dispatchIndex, id, editState}) => {
     
     const dateObject = new Date(incomeDate);
-
-    // useEffect(() => {
-        // makeCloseEvent(id, setDPState);
-    // });
 
     const [dpState, setDPState] = useState(false)
     

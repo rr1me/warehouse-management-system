@@ -1,12 +1,12 @@
 ﻿import {cargoErrors, cargoLayout, cargoSorts, cargoStates, divideObject} from "./transitSliceProps";
 import {isNegative} from "../../../Components/BlueTable/BlueTable";
+import {current} from "@reduxjs/toolkit";
 
 const decomposeCargo = cargo => {
     const requiredCargo = cargo;
     const {previous: previousCargo, current: currentCargo} = requiredCargo.object;
     return {requiredCargo, previousCargo, currentCargo}
 }
-
 export const transitCargoReducers = {
     startCargoEdit(state, action){
         const index = action.payload;
@@ -85,9 +85,9 @@ export const transitCargoReducers = {
         const type = action.payload;
         const s = cargoLayout[Math.abs(type)];
         state.transitPage.cargo.sort((a,b) => {
-            const aObj = a.object[s];
-            const bObj = b.object[s];
-
+            const aObj = a.object.current[s];
+            const bObj = b.object.current[s];
+            // console.log(current(a), current(b));
             let func;
             if (s !== 'description') func = aObj - bObj;
             else{
