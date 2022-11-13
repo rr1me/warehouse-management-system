@@ -1,6 +1,6 @@
 ﻿import './TransitRow.sass';
 import Label from "../../Label/Label";
-import {statusLabels, typeLabels} from "../TransitProps";
+import {additionalTasks, statusLabels, typeLabels} from "../TransitProps";
 import {makeDateForInput} from "../../DatePicker/DatePicker";
 
 const TransitRow = ({current}) => {
@@ -14,7 +14,7 @@ const TransitRow = ({current}) => {
             <div className='transitRowItem dateTime'>
                 {makeDateForInput(new Date(current.date))}
             </div>
-            <div className='transitRowItem'>{current.additionalTasks}</div>
+            <div className='transitRowItem'>{additionalTasks[current.additionalTasks]}</div>
             <div className='transitRowItem'>{current.commentary ? current.commentary : 'No'}</div>
         </>
     )
