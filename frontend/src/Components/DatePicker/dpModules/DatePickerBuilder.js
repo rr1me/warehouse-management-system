@@ -17,7 +17,7 @@ const DatePickerBuilder = ({id, dateObject, setDateDispatch, dispatchIndex, stat
 
     if (state){
         return (
-            <RelativeModal id={id} state={state} setOpen={setState} modalStyle={{zIndex: '1', top: 10}}>
+            <RelativeModal id={id} state={state} setOpen={setState} modalStyle={{zIndex: '1', top: 10}} stopPropagation>
                 <div className='datepicker'>
                     <SelectorsModule overallDate={overallDate} setOverallDate={setOverallDate} selectProps={selectProps}/>
                     <hr className='dpSeparator'/>

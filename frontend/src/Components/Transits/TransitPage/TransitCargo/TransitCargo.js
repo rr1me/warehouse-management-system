@@ -23,9 +23,7 @@ const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach, sort
             setCargoToAttachModal(value => !value);
     };
     
-    const handleWideLabelClick = id => {
-        dispatch(attachCargo(id));
-    };
+    const handleWideLabelClick = id => dispatch(attachCargo(id));
     
     const attachList = cargoToAttach.length > 0 ? cargoToAttach.map((v, i) => {
         return (

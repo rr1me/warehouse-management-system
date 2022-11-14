@@ -2,7 +2,7 @@
 import {memo, useEffect, useRef, useState} from "react";
 import {makeCloseEvent} from "../Properties/makeCloseEvent";
 
-const RelativeModal = memo(({state, children, id, modalStyle, itemClassname, setOpen, upwardModal}) => {
+const RelativeModal = memo(({state, children, id, modalStyle, itemClassname, setOpen, upwardModal, stopPropagation}) => {
     
     const modalRef = useRef();
     
@@ -21,9 +21,11 @@ const RelativeModal = memo(({state, children, id, modalStyle, itemClassname, set
         const top = (height ? -(height + modalStyle.top) : modalStyle.top/2);
         return {...modalStyle, top: top};   
     }
+
+    const onClick = e => stopPropagation ? e.stopPropagation() : null;
     
     if (state) return (
-            <div style={{position: 'relative'}} id={id}>
+            <div style={{position: 'relative'}} id={id} onClick={onClick}>
                 <div className='absoluteModal' ref={modalRef} style={getStyle()}>
                     {height !== undefined ? children : null}
                 </div>
