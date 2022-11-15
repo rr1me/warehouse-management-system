@@ -55,10 +55,10 @@ export const transitCargoReducers = {
 
         const id = state.transitPage.cargo[index].object.current.id;
         state.cargoToDelete.push(id);
-
+        console.log(id, index, type);
         if (type === 0){
             state.cargoToDelete.push(id);
-        }else if(type !== 0 && state.cargoToAttach.some(x => x.id === id)){
+        }else{ //state.cargoToAttach.some(x => x.id === id)
             const sortType = state.sort.cargo;
             const cargo = state.transitPage.cargo[index].object.current;
 
@@ -87,7 +87,6 @@ export const transitCargoReducers = {
         state.transitPage.cargo.sort((a,b) => {
             const aObj = a.object.current[s];
             const bObj = b.object.current[s];
-            // console.log(current(a), current(b));
             let func;
             if (s !== 'description') func = aObj - bObj;
             else{
