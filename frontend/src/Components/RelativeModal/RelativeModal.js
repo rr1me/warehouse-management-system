@@ -18,8 +18,12 @@ const RelativeModal = memo(({state, children, id, modalStyle, itemClassname, set
     
     const getStyle = () => {
         if (!modalStyle) return null;
+        console.log(height);
         const top = (height ? -(height + modalStyle.top) : modalStyle.top/2);
-        return {...modalStyle, top: top};   
+        console.log(top);
+        let newVar = {...modalStyle, top: top};
+        console.log(newVar);
+        return newVar;
     }
 
     const onClick = e => stopPropagation ? e.stopPropagation() : null;

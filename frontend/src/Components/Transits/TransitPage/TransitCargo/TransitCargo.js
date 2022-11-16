@@ -7,10 +7,14 @@ import RelativeModal from "../../../RelativeModal/RelativeModal";
 import WideLabel, {WideLabelItem} from "../../../WideLabel/WideLabel";
 import Error from "../../../Error/Error";
 import {actions} from "../../../../redux/Slices/transitSlice/transitSlice";
+import SelectPicker from "../../../SelectPicker/SelectPicker";
+import SimpleBar from "simplebar-react";
 
 const {addEmptyCargo, attachCargo, setCargoSort} = actions;
 
 const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach, sort}) => {
+    const [attachFilterType, setAttachFilterType] = useState(0);
+
     const [cargoToAttachModal, setCargoToAttachModal] = useState(false);
     
     const dispatch = useDispatch();
@@ -29,7 +33,7 @@ const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach, sort
         return (
             <WideLabel key={i} clickable={true} onClick={() => handleWideLabelClick(v.id)}>
                 <WideLabelItem name='id' width='25px'>{v.id}</WideLabelItem>
-                <WideLabelItem name='Sticker id' width='50px'>{v.stickerId}</WideLabelItem>
+                <WideLabelItem name='Sticker id' width='maxContent'>{v.stickerId}</WideLabelItem>
                 <WideLabelItem name='Description' width='50px'>{v.description ? v.description : 'No'}</WideLabelItem>
             </WideLabel>
         )
@@ -45,10 +49,20 @@ const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach, sort
                         {edit ?
                             <>
                                 <button className='btn apply table' onClick={handleAddNewCargoButton}>Add new</button>
-                                <RelativeModal id={'cargoToAttach'} state={cargoToAttachModal} setOpen={setCargoToAttachModal} modalStyle={{top: 10}}>
-                                    <div className='cargoToAttachList'>
-                                        {attachList}
-                                    </div>
+                                <RelativeModal id={'cargoToAttach'} state={cargoToAttachModal} setOpen={setCargoToAttachModal} modalStyle={{top: 10, overflow: 'visible'}}>
+                                    <SimpleBar>
+                                        <div className='cargoToAttachList' onClick={e=>e.stopPropagation()}>
+                                            <div className='attachFilter'>
+                                                <input type='text' placeholder='Search' aria-label='Search' className='attachSearch'/>
+                                                <SelectPicker id='attachSearchType' defaultValue={0} setValue={setAttachFilterType} customStyle='attachSearchTypeSelect' customControls='none'>
+                                                    <div>ID</div>
+                                                    <div>Sticker ID</div>
+                                                    <div>Description</div>
+                                                </SelectPicker>
+                                            </div>
+                                            {attachList}
+                                        </div>
+                                    </SimpleBar>
                                 </RelativeModal>
                             </>
                             : null}

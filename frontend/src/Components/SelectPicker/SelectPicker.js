@@ -58,6 +58,22 @@ const SelectPicker = memo(({children, defaultValue, id, customStyle, activeStyle
         
         return {width: (!customStyle ? width-1 : width), top: (!customStyle ? top-5 : top), left: (!customStyle ? -10 : -7)}
     }
+
+    const Controls = () => {
+        if (customControls === 'none')
+            return null;
+        return customControls ? customControls
+            :
+            <div className='controls'>
+                <div className='separator'>
+                    {icons.separator}
+                </div>
+                <div className={'arrow'+(open ? ' dark' : ' bright')}>
+                    {icons.arrow}
+                </div>
+            </div>
+
+    }
     
     return (
         <div className={getStyle()} onClick={handleSPClick} ref={selectPickerRef}>
@@ -75,17 +91,7 @@ const SelectPicker = memo(({children, defaultValue, id, customStyle, activeStyle
                     })}
                 </RelativeModal>
             </div>
-            {customControls ? customControls 
-            :
-                <div className='controls'>
-                    <div className='separator'>
-                        {icons.separator}
-                    </div>
-                    <div className={'arrow'+(open ? ' dark' : ' bright')}>
-                        {icons.arrow}
-                    </div>
-                </div>
-            }
+            <Controls/>
         </div>
     )
 });
