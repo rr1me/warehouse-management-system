@@ -2,13 +2,12 @@
 import BlueTable from "../../../BlueTable/BlueTable";
 import TransitCargoRow from "./TransitCargoRow/TransitCargoRow";
 import {useDispatch} from "react-redux";
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import RelativeModal from "../../../RelativeModal/RelativeModal";
 import WideLabel, {WideLabelItem} from "../../../WideLabel/WideLabel";
 import Error from "../../../Error/Error";
 import {actions} from "../../../../redux/Slices/transitSlice/transitSlice";
 import SelectPicker from "../../../SelectPicker/SelectPicker";
-import SimpleBar from "simplebar-react";
 
 const {addEmptyCargo, attachCargo, setCargoSort} = actions;
 
@@ -18,7 +17,6 @@ const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach, sort
     const [cargoToAttachModal, setCargoToAttachModal] = useState(false);
     
     const dispatch = useDispatch();
-    
     const handleAddNewCargoButton = e => {
         e.stopPropagation();
         if (!transitType)
@@ -49,20 +47,23 @@ const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach, sort
                         {edit ?
                             <>
                                 <button className='btn apply table' onClick={handleAddNewCargoButton}>Add new</button>
-                                <RelativeModal id={'cargoToAttach'} state={cargoToAttachModal} setOpen={setCargoToAttachModal} modalStyle={{top: 10, overflow: 'visible'}}>
-                                    <SimpleBar>
-                                        <div className='cargoToAttachList' onClick={e=>e.stopPropagation()}>
-                                            <div className='attachFilter'>
-                                                <input type='text' placeholder='Search' aria-label='Search' className='attachSearch'/>
-                                                <SelectPicker id='attachSearchType' defaultValue={0} setValue={setAttachFilterType} customStyle='attachSearchTypeSelect' customControls='none'>
-                                                    <div>ID</div>
-                                                    <div>Sticker ID</div>
-                                                    <div>Description</div>
-                                                </SelectPicker>
-                                            </div>
-                                            {attachList}
+                                <RelativeModal id={'cargoToAttach'} state={cargoToAttachModal} setOpen={setCargoToAttachModal} modalStyle={{top: 10, maxHeight: '150px'}}>
+                                    <div className='cargoToAttachList' onClick={e=>e.stopPropagation()}>
+                                        <div className='attachFilter'>
+                                            <input type='text' placeholder='Search' aria-label='Search' className='attachSearch'/>
+                                            <SelectPicker id='attachSearchType' defaultValue={attachFilterType} setValue={setAttachFilterType} customStyle='attachSearchTypeSelect' customControls='none'>
+                                                <div>ID</div>
+                                                <div>Sticker ID</div>
+                                                <div>Description</div>
+                                            </SelectPicker>
                                         </div>
-                                    </SimpleBar>
+                                        {attachList}
+                                    </div>
+                                    {/*<div style={{position: 'absolute'}}>*/}
+                                    {/*    <div>asdasd</div>*/}
+                                    {/*    <div>asdasd</div>*/}
+                                    {/*    <div>asdasd</div>*/}
+                                    {/*</div>*/}
                                 </RelativeModal>
                             </>
                             : null}
