@@ -9,7 +9,7 @@ const RelativeModal = memo(({state, children, id, modalStyle, itemClassname, set
     const contentRef = useRef();
     
     const [height, setHeight] = useState();
-    const [width, setWidth] = useState((modalStyle && modalStyle.width) ? modalStyle.width : 'auto');
+    const [width, setWidth] = useState((modalStyle && modalStyle.width) ? modalStyle.width : 'initial');
     
     useEffect(() => {
         if (setOpen)

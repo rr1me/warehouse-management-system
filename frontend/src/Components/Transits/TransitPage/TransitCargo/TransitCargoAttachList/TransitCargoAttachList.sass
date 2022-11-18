@@ -1,0 +1,52 @@
+.cargoToAttachList
+  $border: 1px solid rgba(0, 0, 0, 0.1)
+
+  font: 18px "Roboto Condensed", serif
+
+  width: max-content
+  padding: 5px 7px
+
+  //display: grid
+  //grid-template-columns: 1fr 1fr
+  //flex-direction: column
+  //gap: 3px
+  //z-index: 196
+
+  .cargoToAttachItem
+    padding: 2px 4px
+
+  .attachFilter
+    display: flex
+    height: 100%
+    width: 100%
+    padding-bottom: 10px
+
+    .attachSearch
+      width: 100%
+      font: 15px Poppins, serif
+      border: none
+      outline: none
+      padding: 4px 10px
+      //flex-basis: 75%
+
+      border: $border
+      border-radius: 5px 0 0 5px
+
+    //border: $border
+    //border-radius: 5px
+
+    .attachSearchTypeSelect
+      min-width: 100px
+      display: flex
+      justify-content: center
+      align-items: center
+
+      user-select: none
+      border: $border
+      border-radius: 0 5px 5px 0
+
+      background-color: #e9ecef
+
+      cursor: pointer
+      &:hover
+        box-shadow: 0 0 0 1px rgba(0,0,0,0.1)

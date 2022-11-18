@@ -8,12 +8,13 @@ import WideLabel, {WideLabelItem} from "../../../WideLabel/WideLabel";
 import Error from "../../../Error/Error";
 import {actions} from "../../../../redux/Slices/transitSlice/transitSlice";
 import SelectPicker from "../../../SelectPicker/SelectPicker";
+import TransitCargoAttachList from "./TransitCargoAttachList/TransitCargoAttachList";
 
 const {addEmptyCargo, attachCargo, setCargoSort} = actions;
 
 const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach, sort}) => {
-    const [attachFilterType, setAttachFilterType] = useState(0);
-
+    // const [attachFilterType, setAttachFilterType] = useState(0);
+    //
     const [cargoToAttachModal, setCargoToAttachModal] = useState(false);
     
     const dispatch = useDispatch();
@@ -25,17 +26,17 @@ const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach, sort
             setCargoToAttachModal(value => !value);
     };
     
-    const handleWideLabelClick = id => dispatch(attachCargo(id));
+    // const handleWideLabelClick = id => dispatch(attachCargo(id));
     
-    const attachList = cargoToAttach.length > 0 ? cargoToAttach.map((v, i) => {
-        return (
-            <WideLabel key={i} clickable={true} onClick={() => handleWideLabelClick(v.id)}>
-                <WideLabelItem name='id' width='25px'>{v.id}</WideLabelItem>
-                <WideLabelItem name='Sticker id' width='maxContent'>{v.stickerId}</WideLabelItem>
-                <WideLabelItem name='Description' width='50px'>{v.description ? v.description : 'No'}</WideLabelItem>
-            </WideLabel>
-        )
-    }) : 'No cargo to attach';
+    // const attachList = cargoToAttach.length > 0 ? cargoToAttach.map((v, i) => {
+    //     return (
+    //         <WideLabel key={i} clickable={true} onClick={() => handleWideLabelClick(v.id)}>
+    //             <WideLabelItem name='id' width='25px'>{v.id}</WideLabelItem>
+    //             <WideLabelItem name='Sticker id' width='maxContent'>{v.stickerId}</WideLabelItem>
+    //             <WideLabelItem name='Description' width='50px'>{v.description ? v.description : 'No'}</WideLabelItem>
+    //         </WideLabel>
+    //     )
+    // }) : 'No cargo to attach';
     
     return (
         <div className='fullRow'>
@@ -47,24 +48,7 @@ const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach, sort
                         {edit ?
                             <>
                                 <button className='btn apply table' onClick={handleAddNewCargoButton}>Add new</button>
-                                <RelativeModal id={'cargoToAttach'} state={cargoToAttachModal} setOpen={setCargoToAttachModal} modalStyle={{top: 10, maxHeight: '150px'}}>
-                                    <div className='cargoToAttachList' onClick={e=>e.stopPropagation()}>
-                                        <div className='attachFilter'>
-                                            <input type='text' placeholder='Search' aria-label='Search' className='attachSearch'/>
-                                            <SelectPicker id='attachSearchType' defaultValue={attachFilterType} setValue={setAttachFilterType} customStyle='attachSearchTypeSelect' customControls='none'>
-                                                <div>ID</div>
-                                                <div>Sticker ID</div>
-                                                <div>Description</div>
-                                            </SelectPicker>
-                                        </div>
-                                        {attachList}
-                                    </div>
-                                    {/*<div style={{position: 'absolute'}}>*/}
-                                    {/*    <div>asdasd</div>*/}
-                                    {/*    <div>asdasd</div>*/}
-                                    {/*    <div>asdasd</div>*/}
-                                    {/*</div>*/}
-                                </RelativeModal>
+                                <TransitCargoAttachList cargoToAttach={cargoToAttach} open={cargoToAttachModal} setOpen={setCargoToAttachModal}/>
                             </>
                             : null}
                     </div>
