@@ -1,32 +1,20 @@
 .attachItemList
+  font: 15px "Poppins Medium", serif
 
   display: grid
-  gap: 5px
+  grid-template-columns: repeat(3, max-content) 1fr max-content 1fr
+  row-gap: 5px
 
-  .attachRow
-    display: grid
-    grid-template-columns: 60px 1fr 1fr
+  $border: 1px solid rgba(0, 0, 0, 0.1)
 
-    .attachElement
+  .tcal-item
+    border: $border
+    padding: 5px 10px
 
-      display: grid
-      grid-template-columns: 1fr 1fr
-
-      $border: 1px solid rgba(0, 0, 0, 0.1)
-
-      &:first-child
-        .tcal-name
-          border-radius: 5px 0 0 5px
-
-      &:last-child
-        .tcal-expression
-          border-radius: 0 5px 5px 0
-
-      .tcal-item
-        border: $border
-        padding: 5px
-
-        &.tcal-name
-
-        &.tcal-expression
-          background-color: #e9ecef
+    //&.tcal-name
+    &.tcal-expression
+      background-color: #e9ecef
+    &:nth-child(6n+1)
+      border-radius: 5px 0 0 5px
+    &:nth-child(6n)
+      border-radius: 0 5px 5px 0

@@ -18,19 +18,13 @@ const ItemList = ({list}) => {
 };
 
 const AttachRow = ({v}) =>
-    <div className='attachRow'>
-        <div className='attachElement'>
-            <div className='tcal-item tcal-name'>ID</div>
-            <div className='tcal-item tcal-expression'>{v.id}</div>
-        </div>
-        <div className='attachElement'>
-            <div className='tcal-item tcal-name'>Sticker ID</div>
-            <div className='tcal-item tcal-expression'>{v.stickerId}</div>
-        </div>
-        <div className='attachElement'>
-            <div className='tcal-item tcal-name'>Description</div>
-            <div className='tcal-item tcal-expression'>{v.description}</div>
-        </div>
-    </div>
+    <>
+        <div className='tcal-item tcal-name'>ID</div>
+        <div className='tcal-item tcal-expression'>{v.id}</div>
+        <div className='tcal-item tcal-name'>Sticker ID</div>
+        <div className='tcal-item tcal-expression'>{v.stickerId}</div>
+        <div className='tcal-item tcal-name'>Description</div>
+        <div className='tcal-item tcal-expression'>{v.description}</div>
+    </>
 
 export default ItemList;
