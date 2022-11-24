@@ -1,6 +1,6 @@
 ﻿import './TransitPage.sass';
 import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {memo, useEffect, useState} from "react";
 import SelectPicker from "../../SelectPicker/SelectPicker";
 import {useDispatch, useSelector} from "react-redux";
 import {DatePicker} from "../../DatePicker/DatePicker";
@@ -19,7 +19,7 @@ import {
 
 const {getTransitForPage, editTransit, cancelEdit, setClient, setCommentary, setAdditionalTasks, setDate} = actions;
 
-const TransitPage = () => {
+const TransitPage = memo(() => {
 
     const navigate = useNavigate()
     const location = useLocation();
@@ -146,6 +146,6 @@ const TransitPage = () => {
             </div>
         </div>
     )
-};
+});
 
 export default TransitPage;

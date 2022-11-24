@@ -2,22 +2,18 @@
 import BlueTable from "../../../BlueTable/BlueTable";
 import TransitCargoRow from "./TransitCargoRow/TransitCargoRow";
 import {useDispatch} from "react-redux";
-import {useEffect, useRef, useState} from "react";
-import RelativeModal from "../../../RelativeModal/RelativeModal";
-import WideLabel, {WideLabelItem} from "../../../WideLabel/WideLabel";
+import {memo, useState} from "react";
 import Error from "../../../Error/Error";
 import {actions} from "../../../../redux/Slices/transitSlice/transitSlice";
-import SelectPicker from "../../../SelectPicker/SelectPicker";
 import TransitCargoAttachList from "./TransitCargoAttachList/TransitCargoAttachList";
 
 const {addEmptyCargo, attachCargo, setCargoSort} = actions;
 
-const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach, sort}) => {
-    // const [attachFilterType, setAttachFilterType] = useState(0);
-    //
+const TransitCargo = memo(({cargo, edit, cargoValid, transitType, cargoToAttach, sort}) => {
     const [cargoToAttachModal, setCargoToAttachModal] = useState(false);
     
     const dispatch = useDispatch();
+
     const handleAddNewCargoButton = e => {
         e.stopPropagation();
         if (!transitType)
@@ -25,18 +21,6 @@ const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach, sort
         else 
             setCargoToAttachModal(value => !value);
     };
-    
-    // const handleWideLabelClick = id => dispatch(attachCargo(id));
-    
-    // const attachList = cargoToAttach.length > 0 ? cargoToAttach.map((v, i) => {
-    //     return (
-    //         <WideLabel key={i} clickable={true} onClick={() => handleWideLabelClick(v.id)}>
-    //             <WideLabelItem name='id' width='25px'>{v.id}</WideLabelItem>
-    //             <WideLabelItem name='Sticker id' width='maxContent'>{v.stickerId}</WideLabelItem>
-    //             <WideLabelItem name='Description' width='50px'>{v.description ? v.description : 'No'}</WideLabelItem>
-    //         </WideLabel>
-    //     )
-    // }) : 'No cargo to attach';
     
     return (
         <div className='fullRow'>
@@ -61,7 +45,7 @@ const TransitCargo = ({cargo, edit, cargoValid, transitType, cargoToAttach, sort
             </div>
         </div>
     )
-};
+});
 
 export default TransitCargo;
 

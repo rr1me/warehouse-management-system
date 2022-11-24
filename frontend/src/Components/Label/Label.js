@@ -1,6 +1,7 @@
 ﻿import './Label.sass';
+import {memo} from "react";
 
-const Label = ({list, value}) => {
+const Label = memo(({list, value}) => {
     const color = list[value].clr;
     
     return (
@@ -8,6 +9,6 @@ const Label = ({list, value}) => {
             {list[value].text}
         </div>
     )
-};
+});
 
 export default Label;

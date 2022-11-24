@@ -3,14 +3,14 @@ import {memo, useEffect, useRef, useState} from "react";
 import {makeCloseEvent} from "../Properties/makeCloseEvent";
 import SimpleBar from "simplebar-react";
 
-const RelativeModal = memo(({state, children, id, modalStyle, itemClassname, setOpen, upwardModal, stopPropagation}) => {
-    
+const RelativeModal = ({state, children, id, modalStyle, setOpen, upwardModal, stopPropagation}) => {
+
     const modalRef = useRef();
     const contentRef = useRef();
     
     const [height, setHeight] = useState();
-    const [width, setWidth] = useState((modalStyle && modalStyle.width) ? modalStyle.width : 'initial');
-    
+    const [width, setWidth] = useState(check(modalStyle, id))
+
     useEffect(() => {
         if (setOpen)
             makeCloseEvent(id, setOpen);
@@ -24,28 +24,40 @@ const RelativeModal = memo(({state, children, id, modalStyle, itemClassname, set
     
     const getStyle = () => {
         if (!modalStyle) return null;
+        // if (id ==='taskSelector') console.log(modalStyle);
         const top = (height ? -(height + modalStyle.top) : modalStyle.top/2);
-        return {...modalStyle, top: top, width: width};
+
+
+        let newVar = {...modalStyle, top: top, width: width};
+        // if (id ==='taskSelector') console.log(newVar);
+        return newVar;
     }
 
     const onClick = e => stopPropagation ? e.stopPropagation() : null;
-
-    const WrappedOrNot = () => {
-        return !(modalStyle.height || modalStyle.maxHeight) ? children :
-            <SimpleBar style={{height: 'inherit', maxHeight: 'inherit'}}>
-                <div ref={contentRef}>
-                    {children}
-                </div>
-            </SimpleBar>
-    }
     
     if (state) return (
             <div style={{position: 'relative'}} id={id} onClick={onClick}>
                 <div className='absoluteModal' ref={modalRef} style={getStyle()}>
-                    {height !== undefined ? <WrappedOrNot/> : null}
+                    {height !== undefined ? <WrappedOrNot modalStyle={modalStyle} children={children} contentRef={contentRef}/> : null}
                 </div>
             </div>
         )
-});
+};
+
+const check = (modalStyle, id) => {
+    if (modalStyle === null || !modalStyle.width){
+        if (id ==='taskSelector') console.log(modalStyle);
+        return 'initial'
+    }
+    return modalStyle.width
+}
+
+const WrappedOrNot = ({modalStyle, children, contentRef}) =>
+    !(modalStyle.height || modalStyle.maxHeight) ? children :
+    <SimpleBar style={{height: 'inherit', maxHeight: 'inherit'}}>
+        <div ref={contentRef}>
+            {children}
+        </div>
+    </SimpleBar>
 
 export default RelativeModal;

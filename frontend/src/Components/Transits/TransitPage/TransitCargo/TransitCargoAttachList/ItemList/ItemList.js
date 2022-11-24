@@ -1,10 +1,11 @@
 import {actions} from "../../../../../../redux/Slices/transitSlice/transitSlice";
 import {useDispatch} from "react-redux";
 import './ItemList.sass';
+import {memo} from "react";
 
 const {attachCargo} = actions;
 
-const ItemList = ({list}) => {
+const ItemList = memo(({list}) => {
 
     const dispatch = useDispatch();
 
@@ -15,7 +16,7 @@ const ItemList = ({list}) => {
             {list.map((v, i) => <AttachRow key={i} v={v}/>)}
         </div>
     )
-};
+});
 
 const AttachRow = ({v}) =>
     <>
