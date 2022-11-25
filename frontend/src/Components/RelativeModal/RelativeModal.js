@@ -9,7 +9,7 @@ const RelativeModal = ({state, children, id, modalStyle, setOpen, upwardModal, s
     const contentRef = useRef();
     
     const [height, setHeight] = useState();
-    const [width, setWidth] = useState(check(modalStyle, id))
+    const [width, setWidth] = useState();
 
     useEffect(() => {
         if (setOpen)
@@ -18,19 +18,16 @@ const RelativeModal = ({state, children, id, modalStyle, setOpen, upwardModal, s
         if (modalRef.current)
             setHeight(upwardModal ? modalRef.current.getBoundingClientRect().height : false);
 
-        if (contentRef.current && (modalStyle.height || modalStyle.maxHeight) && !modalStyle.width)
+        if (contentRef.current && (modalStyle.height || modalStyle.maxHeight) && (modalStyle && !modalStyle.width))
             setWidth(contentRef.current.children[0].getBoundingClientRect().width);
+        else if (modalStyle && modalStyle.width)
+            setWidth(modalStyle.width);
     });
     
     const getStyle = () => {
         if (!modalStyle) return null;
-        // if (id ==='taskSelector') console.log(modalStyle);
         const top = (height ? -(height + modalStyle.top) : modalStyle.top/2);
-
-
-        let newVar = {...modalStyle, top: top, width: width};
-        // if (id ==='taskSelector') console.log(newVar);
-        return newVar;
+        return {...modalStyle, top: top, width: width};
     }
 
     const onClick = e => stopPropagation ? e.stopPropagation() : null;
@@ -43,14 +40,6 @@ const RelativeModal = ({state, children, id, modalStyle, setOpen, upwardModal, s
             </div>
         )
 };
-
-const check = (modalStyle, id) => {
-    if (modalStyle === null || !modalStyle.width){
-        if (id ==='taskSelector') console.log(modalStyle);
-        return 'initial'
-    }
-    return modalStyle.width
-}
 
 const WrappedOrNot = ({modalStyle, children, contentRef}) =>
     !(modalStyle.height || modalStyle.maxHeight) ? children :
