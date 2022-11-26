@@ -59,20 +59,6 @@ const SelectPicker = ({children, defaultValue, id, customStyle, activeStyle, ope
         return newVar
     }
 
-    const Controls = () => {
-        if (customControls === 'none') return null;
-        return customControls ? customControls
-            :
-            <div className='controls'>
-                <div className='separator'>
-                    {icons.separator}
-                </div>
-                <div className={'arrow'+(open ? ' dark' : ' bright')}>
-                    {icons.arrow}
-                </div>
-            </div>
-    }
-
     return (
         <div className={getStyle()} onClick={handleSPClick} ref={selectPickerRef}>
             <div className='content'>
@@ -80,7 +66,7 @@ const SelectPicker = ({children, defaultValue, id, customStyle, activeStyle, ope
                 <RelativeModal state={open}
                                id={id}
                                modalStyle={getModalStyle()}
-                               upwardModal={upwardModal} stopPropagation>
+                               upwardModal={upwardModal}>
                     {children.map((value, index) => {
                         return (
                             <div className='spItem' onClick={() => handleSPContentClick(index)} key={index}>
@@ -90,9 +76,23 @@ const SelectPicker = ({children, defaultValue, id, customStyle, activeStyle, ope
                     })}
                 </RelativeModal>
             </div>
-            <Controls/>
+            <Controls customControls={customControls} icons={icons} open={open}/>
         </div>
     )
 };
+
+const Controls = ({customControls, icons, open}) => {
+    if (customControls === 'none') return null;
+    return customControls ? customControls
+        :
+        <div className='controls'>
+            <div className='separator'>
+                {icons.separator}
+            </div>
+            <div className={'arrow'+(open ? ' dark' : ' bright')}>
+                {icons.arrow}
+            </div>
+        </div>
+}
 
 export default SelectPicker;
