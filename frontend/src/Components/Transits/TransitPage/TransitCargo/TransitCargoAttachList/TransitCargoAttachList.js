@@ -11,11 +11,13 @@ const AttachList = ({cargoToAttach, open, setOpen}) => {
 
     const handleFilterInput = e => setSearch(e.target.value)
 
+    const stopPropagationClick = e => e.stopPropagation();
+
     return (
         <RelativeModal id={'cargoToAttach'} state={open} setOpen={setOpen} modalStyle={{top: 10, maxHeight: '248px'}}>
-            <div className='cargoToAttachList' onClick={e=>e.stopPropagation()}>
+            <div className='cargoToAttachList'>
                 <div className='attachFilter'>
-                    <input value={search} onChange={handleFilterInput} placeholder='Search' aria-label='Search' className='attachSearch'/>
+                    <input onClick={stopPropagationClick} value={search} onChange={handleFilterInput} placeholder='Search' aria-label='Search' className='attachSearch'/>
                     <SelectPicker id='attachSearchType' defaultValue={attachFilterType} setValue={setAttachFilterType} customStyle='attachSearchTypeSelect' customControls='none'>
                         <div>ID</div>
                         <div>Sticker ID</div>

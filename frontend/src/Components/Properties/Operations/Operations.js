@@ -9,7 +9,7 @@ import {makeCloseEvent} from "../makeCloseEvent";
 const Operations = ({index, editing, id, editDispatch, deleteDispatch, cancelEditDispatch}) => {
 
     useEffect(() => {
-        makeCloseEvent('deleteModal', setDeleting);
+        return makeCloseEvent('deleteModal', setDeleting);
     })
 
     const [deleting, setDeleting] = useState(false);

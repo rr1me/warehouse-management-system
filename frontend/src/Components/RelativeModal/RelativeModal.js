@@ -1,5 +1,5 @@
 ﻿import './RelativeModal.sass'
-import {memo, useEffect, useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {makeCloseEvent} from "../Properties/makeCloseEvent";
 import SimpleBar from "simplebar-react";
 
@@ -12,8 +12,9 @@ const RelativeModal = ({state, children, id, modalStyle, setOpen, upwardModal, s
     const [width, setWidth] = useState();
 
     useEffect(() => {
-        if (setOpen)
-            makeCloseEvent(id, setOpen);
+        let closeReturnEvent
+        if (setOpen && state)
+            closeReturnEvent = makeCloseEvent(id, setOpen);
 
         if (modalRef.current)
             setHeight(upwardModal ? modalRef.current.getBoundingClientRect().height : false);
@@ -22,6 +23,8 @@ const RelativeModal = ({state, children, id, modalStyle, setOpen, upwardModal, s
             setWidth(contentRef.current.children[0].getBoundingClientRect().width);
         else if (modalStyle && modalStyle.width)
             setWidth(modalStyle.width);
+
+        return closeReturnEvent
     });
     
     const getStyle = () => {

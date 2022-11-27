@@ -26,9 +26,12 @@ const SelectPicker = ({children, defaultValue, id, customStyle, activeStyle, ope
     }, [readOnly]);
 
     useEffect(() => {
-        if (!readOnly)
-            makeCloseEvent(id, setOpen);
+        let closeReturnEvent;
+        if (!readOnly && open)
+            closeReturnEvent = makeCloseEvent(id, setOpen);
         spRef.current = true;
+
+        return closeReturnEvent;
     });
     
     const selectPickerRef = useRef();

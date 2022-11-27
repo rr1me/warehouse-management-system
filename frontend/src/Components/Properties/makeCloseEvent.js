@@ -7,5 +7,5 @@
 
     document.body.addEventListener('click', closeDP);
 
-    return () => document.body.removeEventListener('click', closeDP);
+    return () => document.body.removeEventListener('click', closeDP)
 }
