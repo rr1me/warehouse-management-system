@@ -14,7 +14,7 @@ const AttachList = ({cargoToAttach, open, setOpen}) => {
     const stopPropagationClick = e => e.stopPropagation();
 
     return (
-        <RelativeModal id={'cargoToAttach'} state={open} setOpen={setOpen} modalStyle={{top: 10, maxHeight: '248px'}}>
+        <RelativeModal id={'cargoToAttach'} state={open} setOpen={setOpen} modalStyle={{top: 10, maxHeight: '248px'}} elemIndex={9}>
             <div className='cargoToAttachList'>
                 <div className='attachFilter'>
                     <input onClick={stopPropagationClick} value={search} onChange={handleFilterInput} placeholder='Search' aria-label='Search' className='attachSearch'/>

@@ -3,7 +3,7 @@ import {useEffect, useRef, useState} from "react";
 import {makeCloseEvent} from "../Properties/makeCloseEvent";
 import SimpleBar from "simplebar-react";
 
-const RelativeModal = ({state, children, id, modalStyle, setOpen, upwardModal, stopPropagation}) => {
+const RelativeModal = ({state, children, id, modalStyle, setOpen, upwardModal, stopPropagation, elemIndex}) => {
 
     const modalRef = useRef();
     const contentRef = useRef();
@@ -14,7 +14,7 @@ const RelativeModal = ({state, children, id, modalStyle, setOpen, upwardModal, s
     useEffect(() => {
         let closeReturnEvent
         if (setOpen && state)
-            closeReturnEvent = makeCloseEvent(id, setOpen);
+            closeReturnEvent = makeCloseEvent(id, setOpen, elemIndex);
 
         if (modalRef.current)
             setHeight(upwardModal ? modalRef.current.getBoundingClientRect().height : false);
