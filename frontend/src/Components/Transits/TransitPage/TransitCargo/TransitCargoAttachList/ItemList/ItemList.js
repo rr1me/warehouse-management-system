@@ -5,18 +5,17 @@ import {memo} from "react";
 
 const {attachCargo} = actions;
 
-const ItemList = memo(({list}) => {
+const ItemList = memo(({list, search, filterType}) => {
 
     const dispatch = useDispatch();
 
     const handleRowClick = id => dispatch(attachCargo(id));
 
-
-
     return (
         <div className='attachItemList'>
             {!list.length ? 'No cargo to attach'
-                : list.map((v, i) => <AttachRow key={i} v={v} handleRowClick={handleRowClick}/>)
+                : list.filter(v => v[filterType].toString().match(search))
+                    .map((v, i) => <AttachRow key={i} v={v} handleRowClick={handleRowClick}/>)
             }
         </div>
     )
