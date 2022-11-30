@@ -19,9 +19,6 @@ const AttachList = ({cargoToAttach, open, setOpen}) => {
                 <div className='attachFilter'>
                     <input onClick={stopPropagationClick} value={search} onChange={handleFilterInput} placeholder='Search' aria-label='Search' className='attachSearch'/>
                     <SelectPicker id='attachSearchType' defaultValue={attachFilterType} setValue={setAttachFilterType} customStyle='attachSearchTypeSelect' customControls='none'>
-                        {/*<div>ID</div>*/}
-                        {/*<div>Sticker ID</div>*/}
-                        {/*<div>Description</div>*/}
                         {filterTypes.map((v, i) => <div>{v[0]}</div>)}
                     </SelectPicker>
                 </div>
