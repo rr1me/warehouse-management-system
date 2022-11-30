@@ -14,12 +14,6 @@ namespace WebApplication1;
 public class JwtAuthManager
 {
     private readonly JwtOptions jwtOptions;
-    // private readonly ApplicationContext dbContext;
-
-    // private readonly IDictionary<string, string> users = new Dictionary<string, string>()
-    // {
-    //     { "user", "123" }
-    // };
 
     public JwtAuthManager(JwtOptions jwtOptions)
     {
